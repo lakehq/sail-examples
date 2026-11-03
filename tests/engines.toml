@@ -1,0 +1,27 @@
+# Engine environments for the harness. Each engine runs in its own isolated uv
+# environment, in its own process, so the two never share a session or a
+# `pyspark` package. Examples add their own dependencies from their PEP 723
+# header on top of these.
+
+[sail]
+description = "Sail, latest release"
+deps = [
+  "pysail==0.7.3",
+  "pyspark-client==4.1.3",
+  "pyarrow==26.0.0",
+  "pandas==3.0.6",
+]
+
+[spark]
+description = "Apache Spark 4.2.0, local Spark Connect server (needs Java 17)"
+deps = [
+  "pyspark[connect]==4.2.0",
+  "pyarrow==26.0.0",
+  "pandas==3.0.6",
+]
+
+# Named extras an example or fact can ask for (front matter `spark_extras: [delta]`). Each adds
+# Spark configuration to the Spark engine's session; Sail needs none of it.
+[spark.extras.delta]
+description = "Delta Lake for Spark 4.2 (delta-spark 4.4.1 supports pyspark up to 4.2.0)"
+conf = { "spark.jars.packages" = "io.delta:delta-spark_2.13:4.4.1", "spark.sql.extensions" = "io.delta.sql.DeltaSparkSessionExtension", "spark.sql.catalog.spark_catalog" = "org.apache.spark.sql.delta.catalog.DeltaCatalog" }

@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.data/
+.env
+spark-warehouse/
+.pytest_cache/
+.ruff_cache/

@@ -1,0 +1,791 @@
+{
+  "snapshot_id": "support-faq-v1",
+  "label_statement": "Illustrative expectations for fictional support policies, specified independently of retrieval scores. They demonstrate the pipeline, not retrieval quality on a reviewed corpus.",
+  "split_groups": {
+    "purchase": "train",
+    "delivery": "validation",
+    "account": "test"
+  },
+  "documents": [
+    {
+      "row_id": "d01-old",
+      "document_id": "refunds",
+      "revision": 1,
+      "text": "Refund requests were accepted within fourteen days of purchase."
+    },
+    {
+      "row_id": "d01",
+      "document_id": "refunds",
+      "revision": 2,
+      "text": "Refund requests are accepted within thirty days of purchase. The receipt is required."
+    },
+    {
+      "row_id": "d02",
+      "document_id": "returns",
+      "revision": 1,
+      "text": "Return unused items within thirty days. Mail the parcel with the return label."
+    },
+    {
+      "row_id": "d03",
+      "document_id": "receipts",
+      "revision": 1,
+      "text": "Download purchase receipts from the billing page. Receipts list order and payment details."
+    },
+    {
+      "row_id": "d04",
+      "document_id": "address",
+      "revision": 1,
+      "text": "Change the delivery address before dispatch. After dispatch the courier handles address changes."
+    },
+    {
+      "row_id": "d05",
+      "document_id": "delays",
+      "revision": 1,
+      "text": "Track delayed parcels with the shipment tracking link. Delivery estimates appear on the tracking page."
+    },
+    {
+      "row_id": "d06",
+      "document_id": "password",
+      "revision": 1,
+      "text": "Reset a forgotten password using the account recovery link sent by email."
+    },
+    {
+      "row_id": "d07",
+      "document_id": "security",
+      "revision": 1,
+      "text": "Enable two factor authentication in account security settings. Save recovery codes."
+    },
+    {
+      "row_id": "d08-copy",
+      "document_id": "refunds-copy",
+      "revision": 1,
+      "text": "Refund requests are accepted within thirty days of purchase. The receipt is required."
+    },
+    {
+      "row_id": "d09-left",
+      "document_id": "ambiguous",
+      "revision": 1,
+      "text": "Device registration is required for account access."
+    },
+    {
+      "row_id": "d09-right",
+      "document_id": "ambiguous",
+      "revision": 1,
+      "text": "Device registration is not required for account access."
+    },
+    {
+      "row_id": "d10-invalid",
+      "document_id": "invalid",
+      "revision": 0,
+      "text": "An invalid document revision must not enter the corpus."
+    }
+  ],
+  "queries": [
+    {
+      "row_id": "q01-old",
+      "query_id": "refund",
+      "revision": 1,
+      "text": "Can I request a refund within fourteen days?",
+      "query_group": "purchase"
+    },
+    {
+      "row_id": "q01",
+      "query_id": "refund",
+      "revision": 2,
+      "text": "How do I get a refund after buying an item?",
+      "query_group": "purchase"
+    },
+    {
+      "row_id": "q02",
+      "query_id": "return",
+      "revision": 1,
+      "text": "Can I return an unused purchase without a receipt?",
+      "query_group": "purchase"
+    },
+    {
+      "row_id": "q03",
+      "query_id": "shipping",
+      "revision": 1,
+      "text": "Where can I check a parcel that is late?",
+      "query_group": "delivery"
+    },
+    {
+      "row_id": "q04",
+      "query_id": "address",
+      "revision": 1,
+      "text": "How can I change my address after dispatch?",
+      "query_group": "delivery"
+    },
+    {
+      "row_id": "q05",
+      "query_id": "password",
+      "revision": 1,
+      "text": "I forgot the sign in password.",
+      "query_group": "account"
+    },
+    {
+      "row_id": "q06",
+      "query_id": "security",
+      "revision": 1,
+      "text": "How do I turn on an extra login verification factor?",
+      "query_group": "account"
+    },
+    {
+      "row_id": "q07",
+      "query_id": "missing",
+      "revision": 1,
+      "text": "What evidence do I need for a refund?",
+      "query_group": "purchase"
+    },
+    {
+      "row_id": "q08",
+      "query_id": "unanswerable",
+      "revision": 1,
+      "text": "Does this store sell annual travel insurance?",
+      "query_group": "account"
+    },
+    {
+      "row_id": "q09-copy",
+      "query_id": "refund-copy",
+      "revision": 1,
+      "text": "How do I get a refund after buying an item?",
+      "query_group": "purchase"
+    },
+    {
+      "row_id": "q10-left",
+      "query_id": "conflicted",
+      "revision": 1,
+      "text": "Can I register a device?",
+      "query_group": "account"
+    },
+    {
+      "row_id": "q10-right",
+      "query_id": "conflicted",
+      "revision": 1,
+      "text": "Can I unregister a device?",
+      "query_group": "account"
+    }
+  ],
+  "judgments": [
+    {
+      "row_id": "j-refund-address",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-refund-delays",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-refund-password",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-refund-receipts",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-refund-refunds",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-refund-returns",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-refund-security",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-address",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-delays",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-password",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-receipts",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-refunds",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-returns",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-return-security",
+      "query_id": "return",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-address",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-delays",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 2,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-password",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-receipts",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-refunds",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-returns",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-shipping-security",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-address",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 2,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-delays",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-password",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-receipts",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-refunds",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-returns",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-address-security",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-address",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-delays",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-password",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-receipts",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-refunds",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-returns",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-password-security",
+      "query_id": "password",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-address",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-delays",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-password",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-receipts",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-refunds",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-returns",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-security-security",
+      "query_id": "security",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-address",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-delays",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-password",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-refunds",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-returns",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-security",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-address",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-delays",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-password",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "password",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-receipts",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "receipts",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-refunds",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-returns",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "returns",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-unanswerable-security",
+      "query_id": "unanswerable",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-conflict",
+      "query_id": "missing",
+      "query_revision": 1,
+      "document_id": "security",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-stale-query",
+      "query_id": "refund",
+      "query_revision": 1,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-stale-document",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "refunds",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-missing-document",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "absent",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 0,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-invalid-grade",
+      "query_id": "shipping",
+      "query_revision": 1,
+      "document_id": "delays",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 3,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-old-label",
+      "query_id": "address",
+      "query_revision": 1,
+      "document_id": "address",
+      "document_revision": 1,
+      "judgment_revision": 1,
+      "grade": 1,
+      "label_origin": "authored_expected"
+    },
+    {
+      "row_id": "j-copy",
+      "query_id": "refund",
+      "query_revision": 2,
+      "document_id": "refunds",
+      "document_revision": 2,
+      "judgment_revision": 1,
+      "grade": 2,
+      "label_origin": "authored_expected"
+    }
+  ]
+}

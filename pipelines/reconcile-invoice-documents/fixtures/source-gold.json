@@ -1,0 +1,9 @@
+{
+  "provenance": "Publisher's corpus/v1 manifest expected fields, transcribed at the revision in sources.json's accompanying README. Used only by tests, never by extraction or reconciliation.",
+  "rows": [
+    {"source_id":"clean-us-clean-simple","observed_supplier_id":"S-ACME","invoice_id":"ACM-100145","currency":"USD","gross_minor":37249},
+    {"source_id":"clean-us-with-shipping","observed_supplier_id":"S-NORTHWIND","invoice_id":"NWL-20240318-002","currency":"USD","gross_minor":159943},
+    {"source_id":"clean-gb-serif","observed_supplier_id":"S-PENNINE","invoice_id":"IN0049923","currency":"GBP","gross_minor":2161390},
+    {"source_id":"clean-gb-mono-plain","observed_supplier_id":"S-MERSEY","invoice_id":"IN0003904","currency":"GBP","gross_minor":1499034}
+  ]
+}

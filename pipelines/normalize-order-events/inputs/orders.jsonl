@@ -1,0 +1,15 @@
+{"schema_version":1,"order_id":"ORDER-A-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"L1","sku":"WIDGET","quantity":2,"unit_price_minor":1250,"color":"blue"},{"line_id":"L2","sku":"BAG","quantity":1,"unit_price_minor":500}],"promotion":{"campaign":"spring"}}
+{"schema_version":1,"order_id":"ORDER-B-COPY","customer_id":"CUSTOMER-2","currency":"GBP","items":[]}
+{"schema_version":1,"order_id":"ORDER-C-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"L1","sku":"WIDGET","quantity":true,"unit_price_minor":1250}]}
+{"schema_version":1,"order_id":"ORDER-D-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"L1","sku":"WIDGET","quantity":1,"unit_price_minor":1250},{"line_id":"L1","sku":"BAG","quantity":1,"unit_price_minor":500}]}
+{"schema_version":1,"order_id":"ORDER-E-COPY","customer_id":"CUSTOMER-1","currency":"USD"}
+{"schema_version":1,"order_id":"ORDER-F-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":null}
+{"schema_version":2,"order_id":"ORDER-G-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[]}
+{"schema_version":1,"order_id":"ORDER-H-COPY",
+{"schema_version":1,"order_id":"ORDER-I-COPY","order_id":"OTHER-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[]}
+{"schema_version":1,"order_id":"ORDER-J-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"L1","sku":"WIDGET","quantity":1,"unit_price_minor":"1250"}]}
+{"schema_version":1,"order_id":"ORDER-X-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"L1","sku":"WIDGET","quantity":1,"unit_price_minor":1250}]}
+{"schema_version":1,"order_id":"ORDER-X-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"L1","sku":"WIDGET","quantity":2,"unit_price_minor":1250}]}
+[]
+
+{"schema_version":1,"order_id":"ORDER-Z-COPY","customer_id":"CUSTOMER-1","currency":"USD","items":[{"line_id":"FREE","sku":"SAMPLE","quantity":1,"unit_price_minor":0}]}

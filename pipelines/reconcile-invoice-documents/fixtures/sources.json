@@ -1,0 +1,6 @@
+[
+  {"source_id":"clean-us-clean-simple","file":"documents/clean-us-clean-simple.pdf","sha256":"6af9e34707a5b4f99d4a3df0eed3dee9c0d38a11ce5d365819cc4d56b3a95c9f"},
+  {"source_id":"clean-us-with-shipping","file":"documents/clean-us-with-shipping.pdf","sha256":"44a5eec150ca7271a49f6bfe24a5f97a5ecb50b1562cf36910379a33bfe3ebd0"},
+  {"source_id":"clean-gb-serif","file":"documents/clean-gb-serif.pdf","sha256":"750f8ed7d3358e1a1d56ae3510cc1ab22fb1bbe45e2fd8b2ff690616e1f0edb0"},
+  {"source_id":"clean-gb-mono-plain","file":"documents/clean-gb-mono-plain.pdf","sha256":"5e33434870de6f39715e5e492c51e70cf9e6f975e8aa4f5288405cc3ec62d8b3"}
+]
