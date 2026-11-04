@@ -83,4 +83,52 @@ def check(spark, engine):
     coverage = {r.episode_index: r.asDict() for r in aligned["coverage"].collect()}
     assert coverage[0]["matched_frames"] == coverage[0]["unmatched_frames"] == 1
     assert coverage[1]["unmatched_frames"] == 1 and coverage[1]["max_time_error_seconds"] is None
-    return {"engine": engine, "quality_episodes": len(report), "alignment_samples": len(output)}
+    # The humanoid example: 28-joint vectors at 30 Hz, and every decoded frame kept even when unmatched.
+    humanoid = example("curate-humanoid-episodes")
+    joints, fps = [0.5] * 28, 30
+    records = []
+    for episode in range(5):
+        for frame in range(4):
+            records.append([episode, frame, frame / fps, list(joints), list(joints), 0])
+    records = [r for r in records if (r[0], r[1]) != (1, 2)]  # episode 1 loses a record
+    for r in records:
+        if (r[0], r[1]) == (2, 3):
+            r[2] += 0.01  # episode 2: one timestamp off the 30 Hz cadence
+        if (r[0], r[1]) == (3, 1):
+            r[3] = [float("nan")] + joints[1:]  # episode 3: a NaN joint
+        if (r[0], r[1]) == (4, 0):
+            r[4] = joints[:27]  # episode 4: an action vector one joint short
+    humanoid_frames = spark.createDataFrame([tuple(r) for r in records], schema)
+    humanoid_episodes = spark.createDataFrame([(i, 4) for i in range(5)], "episode_index long, length long")
+    curated = humanoid.curate(humanoid_frames, humanoid_episodes, tasks, fps)
+    quality = {r.episode_index: r.asDict() for r in curated["quality"].collect()}
+    assert {ep for ep, row in quality.items() if row["usable"]} == {0}, quality
+    assert quality[1]["frames"] == 3 and quality[2]["bad_timestamps"] > 0
+    assert quality[3]["invalid_vectors"] == quality[4]["invalid_vectors"] == 1
+    assert [r.episode_index for r in curated["selection"].collect()] == [0]
+
+    decoded = spark.createDataFrame(
+        [
+            ("cam", 0, 0, 0.0, 0.0, 640, 480, "a"),
+            ("cam", 0, 1, 1 / 60, 1 / 60, 640, 480, "tie"),
+            ("cam", 0, 2, 0.2, 0.2, 640, 480, "outside"),
+        ],
+        humanoid.FRAME_COLUMNS,
+    )
+    matched = humanoid.align(humanoid_frames.filter("episode_index = 0"), decoded, fps)
+    rows = [r.asDict() for r in matched["alignment"].collect()]
+    assert [r["frame_index"] for r in rows] == [0, 0, None], rows
+    assert [r["matched"] for r in rows] == [True, True, False]
+    coverage = matched["coverage"].collect()[0].asDict()
+    assert (
+        coverage["decoded_frames"] == 3
+        and coverage["matched_frames"] == 2
+        and coverage["distinct_records"] == 1
+    )
+    return {
+        "engine": engine,
+        "quality_episodes": len(report),
+        "alignment_samples": len(output),
+        "humanoid_episodes": len(quality),
+        "humanoid_frames": len(rows),
+    }

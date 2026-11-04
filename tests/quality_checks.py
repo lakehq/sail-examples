@@ -8,6 +8,7 @@ QUALITY_EXAMPLES = {
     "transcribe-audio",
     "ocr-scanned-pdfs",
     "pdf-search",
+    "curate-humanoid-episodes",
 }
 
 
@@ -70,6 +71,26 @@ def check_quality(example_id, tables):
                 assert observed is not None and math.isfinite(observed)
                 assert abs(observed - score) < 0.00050001, f"OCR fixture changed: {file} {key}={observed}"
         assert actual["fifty-famous-stories-1896.pdf"]["character_error_rate"] == 0
+    elif example_id == "curate-humanoid-episodes":
+        quality, selection = rows["quality"], rows["selection"]
+        alignment, coverage = rows["alignment"], rows["coverage"]
+        assert len(quality) == 301 and all(r["usable"] for r in quality)
+        assert {r["task"] for r in quality} == {"stack three block"}
+        assert sum(r["split"] == "train" for r in selection) == 240
+        assert sum(r["split"] == "validation" for r in selection) == 61
+        episode = next(r for r in quality if r["episode_index"] == 279)
+        assert episode["frames"] == episode["expected_frames"] == 666
+        assert next(r["split"] for r in selection if r["episode_index"] == 279) == "train"
+        assert len(alignment) == 4 * 666 and all(r["matched"] for r in alignment)
+        assert [r["camera"] for r in coverage] == [
+            "cam_left_high",
+            "cam_left_wrist",
+            "cam_right_high",
+            "cam_right_wrist",
+        ]
+        for camera in coverage:
+            assert camera["decoded_frames"] == camera["matched_frames"] == camera["distinct_records"] == 666
+            assert camera["max_time_error_seconds"] < 1e-6
     elif example_id == "pdf-search":
         top = rows["top3"]
         assert len(top) == 3
