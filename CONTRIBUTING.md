@@ -18,7 +18,7 @@ examples' images and video.
 
 ```bash
 uv sync --locked
-uv run pytest -q -p no:cacheprovider
+uv run pytest -q -p no:cacheprovider --ignore=tests/test_site.py
 uv run ruff check .
 uv run ruff format --check .
 ```
@@ -100,11 +100,27 @@ uv run pytest tests/test_catalog.py tests/test_context.py tests/test_readme_link
 Review the generated diff as well as the source. Relative README file links are
 checked; external URLs and heading anchors are not.
 
+## Website maintenance
+
+The website creates a page for every example automatically. Contributors do not
+need to edit website files, record output captures, create previews, or check themes
+and layouts. Maintainers handle that work with the
+[prepare-sail-website skill](.github/skills/prepare-sail-website/SKILL.md), which owns
+the website checklist.
+
+The website uses VitePress. Its Node dependencies and visual checks belong to
+the maintainer workflow; the Python command above excludes that separate suite.
+CI builds and validates the site automatically for contributors.
+
+The site checks still protect generated pages and links. They allow examples
+without output captures or previews. A presentation gap does not make the example
+invalid; runtime and reference checks still apply to its code.
+
 ## Automated checks and Sail releases
 
 `Checks` runs on pull requests and pushes to `main`. Its first job checks Python
-syntax, Ruff lint and formatting, example metadata, generated context, README
-links, LFS content. On PRs, the second job selects runtime
+syntax, Ruff lint and formatting, browser JavaScript syntax, example metadata, generated context, README
+links, LFS content and the generated site. On PRs, the second job selects runtime
 checks from the changed paths:
 
 - Example code, inputs or captures: that example's entry point, comparison and
@@ -125,7 +141,7 @@ the selection or run it locally from the repository root:
 
 ```bash
 uv run python tests/change_selection.py --base origin/main
-uv run pytest -ra --changed-since origin/main
+uv run pytest -ra --changed-since origin/main --ignore=tests/test_site.py
 ```
 
 These commands compare tracked changes with the named commit. Add new files to
@@ -170,7 +186,7 @@ compatibility run, copy `SAIL_EXAMPLES_SAIL_DEPS` from its recorded Sail require
 
 ```bash
 SAIL_EXAMPLES_SAIL_DEPS='["pysail==0.7.3", "pyspark-client==4.1.3", "pyarrow==26.0.0", "pandas==3.0.6"]' \
-  uv run pytest -ra
+  uv run pytest -ra --ignore=tests/test_site.py
 ```
 
 Use the actual recorded versions in place of the illustrative list above. Ordinary
