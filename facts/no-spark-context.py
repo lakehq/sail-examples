@@ -1,5 +1,6 @@
 FACT = {
     "id": "no-spark-context",
+    "title": "Use DataFrames and SQL instead of RDDs",
     "category": "missing-features",
     "core": True,
     "text": """`spark.sparkContext` and the RDD API are not available, as on any Spark Connect server.

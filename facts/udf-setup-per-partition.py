@@ -1,5 +1,6 @@
 FACT = {
     "id": "udf-setup-per-partition",
+    "title": "Load a model once per partition",
     "category": "python-udfs",
     "core": True,
     "text": """To load a model or client once per partition, put the setup before the loop in

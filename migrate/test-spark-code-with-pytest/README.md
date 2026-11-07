@@ -1,6 +1,8 @@
 ---
 title: Test Spark code with pytest on Sail
 id: test-spark-code-with-pytest
+facts: [assert-dataframe-equal-needs-full-pyspark, udfs-need-a-session]
+summary: Test Spark DataFrame code locally without Java.
 description: Use when you want local unit tests for Spark DataFrame code in pytest, with a Sail session fixture and no Java.
 tier: migrate
 level: intermediate
@@ -21,11 +23,13 @@ Spark transformation code is ordinary Python functions over DataFrames, so it ca
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run migrate/test-spark-code-with-pytest/main.py
 ```
 
-Running `main.py` runs the four tests in `test_orders.py`. To run them with pytest directly, install the same packages and run `pytest test_orders.py`.
+Running `migrate/test-spark-code-with-pytest/main.py` runs the four tests in `migrate/test-spark-code-with-pytest/test_orders.py`. To run them with pytest directly, install the same packages and run `pytest migrate/test-spark-code-with-pytest/test_orders.py` from the repository root (`sail-examples/`).
 
 <!-- sail-output:start variant=default -->
 
@@ -42,9 +46,9 @@ Current output · Sail 0.7.3.
 
 ## How it works
 
-- **`conftest.py`** defines a session-scoped `spark` fixture. It starts a Sail server in the test process with `SparkConnectServer()` and connects a normal PySpark session to it. Every test in the run shares the one server.
-- **`test_orders.py`** calls `clean_orders` on a small DataFrame. It checks single properties with plain asserts and the whole result by comparing sorted, collected rows.
-- **`main.py`** holds the code under test. The same function runs unchanged in production on Spark or Sail; this repository's checks confirm that `clean_orders` returns the same rows on both engines.
+- **`migrate/test-spark-code-with-pytest/conftest.py`** defines a session-scoped `spark` fixture. It starts a Sail server in the test process with `SparkConnectServer()` and connects a normal PySpark session to it. Every test in the run shares the one server.
+- **`migrate/test-spark-code-with-pytest/test_orders.py`** calls `clean_orders` on a small DataFrame. It checks single properties with plain asserts and the whole result by comparing sorted, collected rows.
+- **`migrate/test-spark-code-with-pytest/main.py`** holds the code under test. The same function runs unchanged in production on Spark or Sail; this repository's checks confirm that `clean_orders` returns the same rows on both engines.
 
 ## With the pyspark-client package
 
@@ -52,4 +56,4 @@ Current output · Sail 0.7.3.
 
 ## Use it in your project
 
-Copy `conftest.py` into your test directory and add `pysail` and a PySpark client to your test dependencies. Tests that take a `spark` fixture and use the DataFrame and SQL APIs then run on Sail; tests that use `spark.sparkContext`, RDDs, `assertDataFrameEqual` with `pyspark-client`, or JVM-only settings need changes first. Store wall-clock times as `TIMESTAMP_NTZ`, as here: `collect()` returns `TIMESTAMP` values as Python datetimes in the client's local time zone, whatever the session time zone is, so tests that compare them depend on the machine they run on.
+Copy `migrate/test-spark-code-with-pytest/conftest.py` into your test directory and add `pysail` and a PySpark client to your test dependencies. Tests that take a `spark` fixture and use the DataFrame and SQL APIs then run on Sail; tests that use `spark.sparkContext`, RDDs, `assertDataFrameEqual` with `pyspark-client`, or JVM-only settings need changes first. Store wall-clock times as `TIMESTAMP_NTZ`, as here: `collect()` returns `TIMESTAMP` values as Python datetimes in the client's local time zone, whatever the session time zone is, so tests that compare them depend on the machine they run on.

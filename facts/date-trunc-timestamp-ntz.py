@@ -1,5 +1,6 @@
 FACT = {
     "id": "date-trunc-timestamp-ntz",
+    "title": "Choose an explicit type when truncating timestamps",
     "category": "silent-behavior",
     "text": """`date_trunc(unit, ts)` on a `TIMESTAMP_NTZ` column (the type Parquet timestamps without a
         time zone are read as) returns `TIMESTAMP_NTZ` on Sail but `TIMESTAMP` on Apache Spark. So the

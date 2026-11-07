@@ -1,5 +1,6 @@
 FACT = {
     "id": "cache-does-not-keep-results",
+    "title": "Caching does not save the result",
     "category": "silent-behavior",
     "core": True,
     "text": """`cache()` and `persist()` are accepted but do not keep results: every action recomputes

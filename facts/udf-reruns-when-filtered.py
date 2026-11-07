@@ -1,5 +1,6 @@
 FACT = {
     "id": "udf-reruns-when-filtered",
+    "title": "A filter can make a Python function run again",
     "category": "python-udfs",
     "text": """As in Spark, a deterministic Python UDF can run more than once per row when the query filters on its
         output. Mark UDFs that are expensive or have side effects (model or API calls) with

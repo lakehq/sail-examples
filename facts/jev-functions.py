@@ -1,5 +1,6 @@
 FACT = {
     "id": "jev-functions",
+    "title": "Call Jev models from SQL",
     "category": "ai-functions",
     "text": """Sail adds SQL functions that call TypeSafe's Jev models: `jev_noul`, `jev_choice`,
         `jev_score`, `jev_system_one` and `jev_models` (Apache Spark has none of them). They need a non-empty

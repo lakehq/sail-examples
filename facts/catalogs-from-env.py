@@ -1,5 +1,6 @@
 FACT = {
     "id": "catalogs-from-env",
+    "title": "Configure catalogs before starting Sail",
     "category": "configure",
     "core": True,
     "text": """Configure catalogs with the `SAIL_CATALOG__LIST` environment variable (a TOML array) and

@@ -1,5 +1,6 @@
 FACT = {
     "id": "udf-dependencies-in-server-env",
+    "title": "Install Python dependencies on the server",
     "category": "python-udfs",
     "core": True,
     "text": """`spark.addArtifacts()` is not supported, so Python files and packages cannot be shipped

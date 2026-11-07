@@ -1,6 +1,8 @@
 ---
 title: Maintain document embeddings as sources change
 id: maintain-document-embeddings
+facts: [vector-functions, cache-does-not-keep-results]
+summary: Update a search dataset without re-embedding unchanged documents.
 description: Use when you need to update a local embedding table after documents are added, edited or removed, while reusing compatible vectors for unchanged content.
 tier: ai
 level: advanced
@@ -23,10 +25,12 @@ ONNX model, and writes vectors before using them in the next table generation.
 Documents with identical paragraphs share vectors. Removing a source document
 removes its chunks from the current search view.
 
-## Run the example
+## Run it
+
+Run all commands below from the repository root (`sail-examples/`):
 
 ```bash
-uv run main.py
+uv run ai/maintain-document-embeddings/main.py
 ```
 
 The isolated demonstration builds a table, edits one document, adds two IDs
@@ -43,6 +47,34 @@ vector, update count and ranked result. This verifies maintenance correctness,
 not retrieval quality on arbitrary questions. The demo question exactly matches
 a supplied paragraph.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3 (revision 2).
+
+```text
++-------+---------+------+--------------+--------------+-------------+-------------+
+|phase  |documents|chunks|unique_content|encoded_chunks|encoder_calls|reused_chunks|
++-------+---------+------+--------------+--------------+-------------+-------------+
+|initial|4        |5     |5             |5             |1            |0            |
+|no-op  |5        |6     |5             |0             |0            |5            |
+|updated|5        |6     |5             |2             |1            |3            |
++-------+---------+------+--------------+--------------+-------------+-------------+
+
++----+-------------+-----------------+-----------+---------------------------------------------------------------+
+|rank|doc_id       |score            |chunk_index|text                                                           |
++----+-------------+-----------------+-----------+---------------------------------------------------------------+
+|1   |parquet-copy |1.0              |0          |Parquet stores data by column.                                 |
+|2   |parquet-guide|1.0              |0          |Parquet stores data by column.                                 |
+|3   |table-guide  |0.581671953201294|0          |Delta Lake adds transactions and time travel to Parquet tables.|
++----+-------------+-----------------+-----------+---------------------------------------------------------------+
+
+The demo uses isolated temporary state. Use --documents and --state-dir to retain your table.
+```
+
+<!-- sail-output:end -->
+
 ## Maintain your own documents
 
 Use a JSONL file containing a **complete snapshot**, with one unique string ID
@@ -53,12 +85,19 @@ and nonempty text per line:
 {"doc_id":"tables","text":"Iceberg records table snapshots."}
 ```
 
+Save the JSONL above as `ai/maintain-document-embeddings/documents.jsonl`, then run:
+
 ```bash
-uv run main.py --documents documents.jsonl --state-dir .data/my-index
-uv run main.py --documents documents.jsonl --state-dir .data/my-index --query "table snapshots"
+uv run ai/maintain-document-embeddings/main.py \
+  --documents ai/maintain-document-embeddings/documents.jsonl \
+  --state-dir ai/maintain-document-embeddings/.data/my-index
+uv run ai/maintain-document-embeddings/main.py \
+  --documents ai/maintain-document-embeddings/documents.jsonl \
+  --state-dir ai/maintain-document-embeddings/.data/my-index \
+  --query "table snapshots"
 ```
 
-Edit the file and run the same command again. IDs absent from the new snapshot
+Edit `ai/maintain-document-embeddings/documents.jsonl` and run the same command again. IDs absent from the new snapshot
 are deleted from the active view. An empty file therefore removes every active
 document. Duplicate IDs or JSON object members, nulls, unknown fields, blank text and oversized input
 reject the entire update; they never silently delete or replace an existing row.
@@ -133,31 +172,3 @@ writer transactions, object-store publication or distributed filesystem support.
 
 Use the simpler [embed-and-search](../embed-and-search/) example for a single
 embedding/search pass without maintained state.
-
-<!-- sail-output:start variant=default -->
-
-## Example output
-
-Current output · Sail 0.7.3 (revision 2).
-
-```text
-+-------+---------+------+--------------+--------------+-------------+-------------+
-|phase  |documents|chunks|unique_content|encoded_chunks|encoder_calls|reused_chunks|
-+-------+---------+------+--------------+--------------+-------------+-------------+
-|initial|4        |5     |5             |5             |1            |0            |
-|no-op  |5        |6     |5             |0             |0            |5            |
-|updated|5        |6     |5             |2             |1            |3            |
-+-------+---------+------+--------------+--------------+-------------+-------------+
-
-+----+-------------+-----------------+-----------+---------------------------------------------------------------+
-|rank|doc_id       |score            |chunk_index|text                                                           |
-+----+-------------+-----------------+-----------+---------------------------------------------------------------+
-|1   |parquet-copy |1.0              |0          |Parquet stores data by column.                                 |
-|2   |parquet-guide|1.0              |0          |Parquet stores data by column.                                 |
-|3   |table-guide  |0.581671953201294|0          |Delta Lake adds transactions and time travel to Parquet tables.|
-+----+-------------+-----------------+-----------+---------------------------------------------------------------+
-
-The demo uses isolated temporary state. Use --documents and --state-dir to retain your table.
-```
-
-<!-- sail-output:end -->

@@ -1,5 +1,6 @@
 FACT = {
     "id": "python-data-source-partitions-concurrent",
+    "title": "Read independent source partitions concurrently",
     "category": "data-sources",
     "text": """A Python data source's partitions are read as separate tasks, so `read()` calls for
         different partitions run at the same time. Return one partition per page, file or key range to

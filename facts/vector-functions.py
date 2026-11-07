@@ -1,5 +1,6 @@
 FACT = {
     "id": "vector-functions",
+    "title": "Store embeddings as arrays of floats",
     "category": "ai-functions",
     "core": True,
     "text": """For embeddings, store vectors as `ARRAY<FLOAT>` and use `vector_cosine_similarity`,

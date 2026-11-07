@@ -1,6 +1,8 @@
 ---
 title: Transcribe audio files with Whisper
 id: transcribe-audio
+facts: [load-files-through-a-path-table, udf-setup-per-partition]
+summary: Turn audio files into transcripts and check their accuracy.
 description: Use when you need speech-to-text for a folder of audio files inside the engine (Whisper on CPU with faster-whisper), one transcript per file, and want to score the transcripts against references in SQL.
 tier: multimodal
 level: intermediate
@@ -21,8 +23,10 @@ This example transcribes 73 short clips of read English speech (about 8 minutes 
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/transcribe-audio/main.py
 ```
 
 The first run downloads the sample clips (a 9 MB Parquet file) and the Whisper tiny.en model converted for CTranslate2 (about 80 MB) from Hugging Face into the local Hugging Face cache. No account or key is needed. The dataset and model revisions are pinned.
@@ -69,10 +73,10 @@ only showing top 5 rows
 
 ## Evaluate the full test set
 
-`full_test_clean.py` runs the same transcription function on all of LibriSpeech test-clean: 2,620 utterances, 5.4 hours of read speech. It normalizes both texts with Whisper's English text normalizer (from `transformers`, with its spelling list from the pinned `openai/whisper-tiny.en` repository), as the [Whisper paper](https://arxiv.org/abs/2212.04356) (Radford et al., 2022) did for its word error rates. It then computes the corpus word error rate in SQL: word edits per utterance from a `pandas_udf`, summed over all utterances and divided by the reference word count.
+`multimodal/transcribe-audio/full_test_clean.py` runs the same transcription function on all of LibriSpeech test-clean: 2,620 utterances, 5.4 hours of read speech. It normalizes both texts with Whisper's English text normalizer (from `transformers`, with its spelling list from the pinned `openai/whisper-tiny.en` repository), as the [Whisper paper](https://arxiv.org/abs/2212.04356) (Radford et al., 2022) did for its word error rates. It then computes the corpus word error rate in SQL: word edits per utterance from a `pandas_udf`, summed over all utterances and divided by the reference word count.
 
 ```bash
-uv run full_test_clean.py
+uv run multimodal/transcribe-audio/full_test_clean.py
 ```
 
 The first run downloads the test set (a 350 MB Parquet file) and the normalizer's spelling list. The word error rate comes out at 5.9%. The Whisper paper reports 5.6% for tiny.en on test-clean with greedy decoding (Appendix D.1.1, Table 8). This run uses faster-whisper's CTranslate2 version of the model, not OpenAI's own code.

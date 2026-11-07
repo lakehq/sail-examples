@@ -1,6 +1,8 @@
 ---
 title: Hello Sail
 id: hello-sail
+facts: [start-and-connect, no-spark-context]
+summary: Run your first Spark SQL and DataFrame queries on Sail.
 description: Use when you want to run existing Spark SQL and DataFrame code on your laptop with Sail, with no Java and no cluster.
 tier: quickstart
 level: beginner
@@ -21,11 +23,13 @@ This example's Spark SQL and DataFrame code runs unchanged on Sail. It starts a 
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run quickstart/hello-sail/main.py
 ```
 
-`uv` installs `pysail` and the PySpark client from the header of `main.py`. Java is not needed.
+`uv` installs `pysail` and the PySpark client from the header of `quickstart/hello-sail/main.py`. Java is not needed.
 
 <!-- sail-output:start variant=default -->
 

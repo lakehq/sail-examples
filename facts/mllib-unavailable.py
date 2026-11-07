@@ -1,5 +1,6 @@
 FACT = {
     "id": "mllib-unavailable",
+    "title": "Use Python model libraries instead of MLlib",
     "category": "missing-features",
     "core": True,
     "text": """`pyspark.ml` (MLlib) is not available, although Spark Connect 4.x supports it. Train and

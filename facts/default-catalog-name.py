@@ -1,5 +1,6 @@
 FACT = {
     "id": "default-catalog-name",
+    "title": "The default catalog is named sail",
     "category": "configure",
     "core": True,
     "text": """With no catalog configured, the current catalog is named `sail`, not `spark_catalog`.

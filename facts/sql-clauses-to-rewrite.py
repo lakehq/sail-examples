@@ -1,5 +1,6 @@
 FACT = {
     "id": "sql-clauses-to-rewrite",
+    "title": "Rewrite unsupported Spark SQL clauses",
     "category": "missing-features",
     "text": """A few Spark SQL clauses need another form on Sail: filter on `row_number()` in a subquery
         instead of `QUALIFY`; use `df.groupBy(...).pivot(col, values)` instead of the SQL `PIVOT` clause;

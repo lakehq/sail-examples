@@ -1,6 +1,8 @@
 ---
 title: Classify images with an ONNX model
 id: classify-images
+facts: [load-files-through-a-path-table, udf-setup-per-partition, udf-batch-size-from-env]
+summary: Label photos and send uncertain predictions for review.
 description: Use when you need to label a folder of images with a pretrained image classifier (batch inference in ONNX Runtime) inside the engine, and send low-confidence predictions to review.
 tier: multimodal
 level: intermediate
@@ -21,8 +23,10 @@ This example labels eight photos with ResNet-18, an image classifier trained on 
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/classify-images/main.py
 ```
 
 The first run downloads the model (about 47 MB) from Hugging Face into the local Hugging Face cache. No account or key is needed. The model revision is pinned, so every run uses the same weights.

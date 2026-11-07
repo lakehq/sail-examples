@@ -1,5 +1,6 @@
 FACT = {
     "id": "udfs-share-one-interpreter",
+    "title": "Python UDFs share an interpreter in local mode",
     "category": "python-udfs",
     "core": True,
     "text": """In local mode (the default), Python UDFs run inside the Sail server process, in one Python

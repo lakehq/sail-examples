@@ -1,6 +1,8 @@
 ---
 title: Read a REST API as a table
 id: rest-api-as-a-table
+facts: [python-data-source-partitions-concurrent, udf-dependencies-in-server-env]
+summary: Query a paginated REST API as a table.
 description: Use when you want to query a paginated REST API with Spark SQL and DataFrames by writing a Python data source that fetches pages in parallel.
 tier: python
 level: advanced
@@ -21,8 +23,10 @@ This example reads 487 support tickets from a paginated JSON API as a DataFrame,
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run python/rest-api-as-a-table/main.py
 ```
 
 A small local service stands in for the API (`GET /tickets?page=N`, 50 tickets per page), so the example runs offline.

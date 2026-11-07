@@ -1,5 +1,6 @@
 FACT = {
     "id": "udf-partitions-are-threads",
+    "title": "Protect libraries that cannot run in concurrent threads",
     "category": "python-udfs",
     "core": True,
     "text": """In local mode, Sail runs the partitions of a Python UDF at the same time as threads of

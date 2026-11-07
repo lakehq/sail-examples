@@ -1,6 +1,8 @@
 ---
 title: Reproduce a report from saved Iceberg snapshots
 id: reproduce-iceberg-report
+facts: [iceberg-support, default-catalog-name]
+summary: Recreate an earlier report after its source tables have changed.
 description: Use when a sales report joins changing Iceberg tables and you need to record its exact input snapshot pair, then replay the original logical rows in another process.
 tier: analytics
 level: advanced
@@ -21,40 +23,51 @@ A report can change when either the facts or a lookup table changes. This exampl
 
 The data is a small generated fixture. Each order contains its original unit price in USD cents. The product table supplies its category. The report counts orders and sums units and sales by category for January 2026, including January 1 and excluding February 1. It compares complete output rows, not only row counts or totals across all categories.
 
-The `QUERY` constant near the top of [main.py](main.py) contains the report SQL. `rows_at()` reads each selected snapshot before executing it.
+The `QUERY` constant near the top of [analytics/reproduce-iceberg-report/main.py](main.py) contains the report SQL. `rows_at()` reads each selected snapshot before executing it.
 
 ## Run it
 
 This example requires a POSIX system and a local directory for its file lock.
-Follow the [repository setup](../../README.md#run-an-example), then start from the repository root:
+Follow the [repository setup](../../README.md#your-first-result), then run all commands below from the repository root (`sail-examples/`):
 
 ```bash
-cd analytics/reproduce-iceberg-report
-uv run main.py
+uv run analytics/reproduce-iceberg-report/main.py
 ```
-
-Run the remaining commands from this example directory.
 
 The default demonstration uses temporary local tables and prints the original, current and replayed reports. The fixture needs no data downloads, credentials or service setup; uv installs the pinned packages on first run. Temporary state is removed on normal process exit.
 
-To retain the state and replay across separate program invocations, run these commands from this directory:
+To retain the state and replay across separate program invocations, run these commands from the repository root (`sail-examples/`):
 
 ```bash
-uv run main.py --state .data/sales-report --phase prepare
-uv run main.py --state .data/sales-report --phase change
-uv run main.py --state .data/sales-report --phase replay
+uv run analytics/reproduce-iceberg-report/main.py \
+  --state analytics/reproduce-iceberg-report/.data/sales-report \
+  --phase prepare
+uv run analytics/reproduce-iceberg-report/main.py \
+  --state analytics/reproduce-iceberg-report/.data/sales-report \
+  --phase change
+uv run analytics/reproduce-iceberg-report/main.py \
+  --state analytics/reproduce-iceberg-report/.data/sales-report \
+  --phase replay
 ```
 
 `prepare` requires a new directory. It creates the tables and saves `report-manifest.json`, its checksum and `original-report.json`. `change` appends an order, updates an existing order, deletes another and moves a product to a different category. It records the resulting snapshot IDs and current report in `changes.json`. `replay` opens the saved snapshot IDs and verifies exact equality with the original report.
 
 The original report has Accessories with one order, three units and 2,400 cents, and Components with two orders, three units and 5,500 cents. The changed report has Components with one order, three units and 4,500 cents, and Hardware with two orders, three units and 7,500 cents. Replaying the saved pair restores the original two rows.
 
-For a larger optional local run, use a different new directory and repeat the last two commands with that directory:
+For a larger optional run, use the new state directory
+`analytics/reproduce-iceberg-report/.data/sales-report-larger/`:
 
 ```bash
-uv run main.py --state .data/sales-report-larger --phase prepare --copies 3000
-uv run main.py --state .data/sales-report-larger --phase change
-uv run main.py --state .data/sales-report-larger --phase replay
+uv run analytics/reproduce-iceberg-report/main.py \
+  --state analytics/reproduce-iceberg-report/.data/sales-report-larger \
+  --phase prepare \
+  --copies 3000
+uv run analytics/reproduce-iceberg-report/main.py \
+  --state analytics/reproduce-iceberg-report/.data/sales-report-larger \
+  --phase change
+uv run analytics/reproduce-iceberg-report/main.py \
+  --state analytics/reproduce-iceberg-report/.data/sales-report-larger \
+  --phase replay
 ```
 
 This starts with 12,000 orders whose IDs are independent across copies. Report counts and monetary totals scale with the copy count. The bound is 1 to 5,000 copies; `--copies` applies only to preparation.

@@ -1,5 +1,6 @@
 FACT = {
     "id": "udf-batch-size-from-env",
+    "title": "Set Python batch sizes through the environment",
     "category": "python-udfs",
     "text": """The number of rows `mapInArrow` and `mapInPandas` receive per batch is capped by the
         `SAIL_EXECUTION__BATCH_SIZE` environment variable, set before the server starts (default 8192 per the

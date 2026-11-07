@@ -1,6 +1,8 @@
 ---
 title: Reconcile orders, captures and refunds
 id: reconcile-orders-payments
+facts: [collect-timestamps-local-time, decimal-division]
+summary: Find payment discrepancies without counting repeated deliveries twice.
 description: Use when separate order and payment feeds contain repeated deliveries, split captures, partial refunds or orphan transactions, and you need an explainable reconciliation at an explicit cutoff.
 tier: analytics
 level: intermediate
@@ -25,8 +27,10 @@ order totals.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run analytics/reconcile-orders-payments/main.py
 ```
 
 The small, generated fixture needs no credentials or downloads. It returns four
