@@ -1,5 +1,6 @@
 FACT = {
     "id": "load-files-through-a-path-table",
+    "title": "Process media through a table of file paths",
     "category": "data-sources",
     "core": True,
     "text": """To process loose files (images, PDFs, audio, documents), build a DataFrame of file paths

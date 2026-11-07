@@ -1,6 +1,8 @@
 ---
 title: Reconcile invoice documents against purchase orders
 id: reconcile-invoice-documents
+facts: [load-files-through-a-path-table, udf-partitions-are-threads]
+summary: Read scanned invoices and check them against purchase orders.
 description: Use when a small set of known invoice layouts needs real CPU OCR followed by supplier, duplicate, currency and gross purchase-order checks, with explicit exceptions and a structured-input baseline.
 tier: pipelines
 level: advanced
@@ -31,8 +33,10 @@ arbitrary invoice layouts or infer fields with a language model.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/reconcile-invoice-documents/main.py
 ```
 
 The first run downloads four small, pinned PDF data files from the public
@@ -50,22 +54,6 @@ PO association and ISO currency. The bare `$` printed on a page does not prove
 USD. The extractor accepts `$` only when intake explicitly supplies `USD`, and
 `£` only for `GBP`. Both currencies use exactly two fractional digits here.
 Amounts are parsed with `Decimal`, without floating-point rounding or a tolerance.
-
-| Document input | Programmed exception or result |
-| --- | --- |
-| Acme source and its second intake alias | Both flagged `duplicate_invoice` |
-| Northwind source | `amount_mismatch`, authored PO is one cent higher |
-| Pennine source | `missing_po`, authored association is absent from the PO dimension |
-| Mersey source | `match` |
-| Authored corrupt file and blank PDF | `extraction_error` |
-
-The six structured inputs include one match, two duplicate aliases, a missing
-PO, a wrong amount and a missing invoice ID. A `match` means only that these
-programmed supplier, duplicate, currency and gross-total checks passed. It is
-not payment approval, evidence of delivery or fraud detection. The PO comparison
-is one invoice gross total against one PO gross amount. Partial invoices,
-credits, zero-value invoices, line-item matching, tax validation and invoices
-covering several POs are outside this example.
 
 <!-- sail-output:start variant=default -->
 
@@ -105,6 +93,22 @@ structured
 
 <!-- sail-output:end -->
 
+## Read the output
+
+The console output has separate `documents` and `structured` reports.
+[Saved console captures](outputs.json) include the Sail version.
+The document inputs exercise duplicate invoices, a one-cent PO mismatch, a missing
+PO, and extraction failures. In the Sail 0.7.3 capture, Mersey also returns
+`extraction_error`: OCR did not produce unambiguous invoice and total labels.
+
+The six structured inputs include one match, two duplicate aliases, a missing
+PO, a wrong amount and a missing invoice ID. A `match` means only that these
+programmed supplier, duplicate, currency and gross-total checks passed. It is
+not payment approval, evidence of delivery or fraud detection. The PO comparison
+is one invoice gross total against one PO gross amount. Partial invoices,
+credits, zero-value invoices, line-item matching, tax validation and invoices
+covering several POs are outside this example.
+
 ## Data flow and local state
 
 1. A manifest carries paths and SHA-256 digests rather than PDF binary columns.
@@ -129,7 +133,7 @@ structured
    keys, excludes missing IDs, and flags every alias. No cross-currency sum or
    duplicate-inclusive payable total is produced.
 6. One local writer holds the report lock. Each run gets new Parquet paths under
-   `.data/runs/`; existing runs are not overwritten by this program. After both
+   `pipelines/reconcile-invoice-documents/.data/runs/`; existing runs are not overwritten by this program. After both
    reports retain exactly one row per unique intake ID, an atomic `CURRENT`
    replacement publishes the complete generation. A failure before publication
    keeps the previous report readable. `current_run()` validates the pointer's

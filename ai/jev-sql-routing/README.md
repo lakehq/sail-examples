@@ -1,6 +1,8 @@
 ---
 title: Route support tickets with a model in SQL (Jev)
 id: jev-sql-routing
+facts: [jev-functions, jev-one-request-per-row, cache-does-not-keep-results]
+summary: Classify support tickets with a model called from SQL.
 description: Use when you want to classify table rows with a model from plain SQL on Sail, using the built-in Jev functions, and call the model once per distinct value.
 tier: ai
 level: intermediate
@@ -21,8 +23,10 @@ Sail has SQL functions that call TypeSafe's Jev models; Apache Spark has none of
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run ai/jev-sql-routing/main.py
 ```
 
 By default the example runs against the local TypeSafe stand-in that ships in pysail for Sail's own tests (`pysail.testing.jev.JevMock`). It needs no account, and nothing leaves the machine. The stand-in picks a team with a keyword rule.

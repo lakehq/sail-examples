@@ -1,6 +1,8 @@
 ---
 title: Build a batch ETL job with data quality checks
 id: taxi-etl-job
+facts: [partition-overwrite, schema-inference, date-trunc-timestamp-ntz]
+summary: Build reporting tables from raw taxi files with data quality checks.
 description: Use when you build a batch pipeline that turns raw files into clean, partitioned Parquet and reporting tables, preserves original rejected records with their source provenance, removes clean duplicates, and replaces one month's outputs on a completed re-run.
 tier: pipelines
 level: intermediate
@@ -21,11 +23,13 @@ This is the shape of most batch pipelines: raw files in, clean partitioned table
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/taxi-etl-job/main.py
 ```
 
-The first run downloads the files (16 MB) into `.data/` next to the script.
+The first run downloads the files (16 MB) into `pipelines/taxi-etl-job/.data/`.
 
 Of 660,218 raw records, 24,946 fail a rule and 635,272 are kept. Most rejected rows (23,603) fail the duration rule. No kept row is an exact duplicate of another. Running March again leaves the table unchanged: the same row count and the same checksum over every row.
 

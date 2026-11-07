@@ -1,6 +1,8 @@
 ---
 title: Explore a year of taxi trips with SQL
 id: explore-taxi-trips
+facts: [query-files-directly, day-of-week-numbering, approximate-results-differ]
+summary: Find seasonal trends and rush hours in a year of NYC taxi trips.
 description: Use when you want to analyze a real dataset on your laptop with SQL (read a folder of Parquet files as one table, filter out bad records, trend by month, find peak hours, compute exact medians and percentiles, rank within groups).
 tier: analytics
 level: beginner
@@ -21,11 +23,13 @@ This example analyzes every NYC green taxi trip record from 2024, 660,218 record
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run analytics/explore-taxi-trips/main.py
 ```
 
-The first run downloads the files into `.data/` next to the script.
+The first run downloads the files into `analytics/explore-taxi-trips/.data/`.
 
 Of the 660,218 records, 635,426 pass the checks. Trips peak on weekday evenings: the busiest hour of the week is Thursday at 5 pm. Manhattan has the most pickups, and East Harlem North is its busiest zone.
 

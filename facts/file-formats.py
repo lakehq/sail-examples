@@ -3,6 +3,7 @@
 # ///
 FACT = {
     "id": "file-formats",
+    "title": "Choose a supported file format",
     "category": "data-sources",
     "core": True,
     "text": """Parquet, CSV, JSON, text and Delta Lake read and write with the standard `spark.read`

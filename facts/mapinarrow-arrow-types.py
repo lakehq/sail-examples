@@ -1,5 +1,6 @@
 FACT = {
     "id": "mapinarrow-arrow-types",
+    "title": "Match Arrow output types to the declared schema",
     "category": "python-udfs",
     "text": """Build `mapInArrow` output batches with an Arrow schema that matches the declared schema
         exactly (int32 for `int`, int64 for `long`), for example `pa.RecordBatch.from_pydict(rows,

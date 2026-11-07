@@ -1,5 +1,6 @@
 FACT = {
     "id": "query-files-directly",
+    "title": "Query files without loading a database",
     "category": "data-sources",
     "text": """Query files in place with `` FROM parquet.`path` ``, `` csv.`path` `` or `` json.`path` ``, where the
         path is a file, a folder, or a glob such as `data/2024-*.parquet` that reads every matching file as one

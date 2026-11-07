@@ -1,6 +1,8 @@
 ---
 title: Find scenes in videos with text search
 id: search-video-frames
+facts: [load-files-through-a-path-table, vector-functions, cache-does-not-keep-results]
+summary: Find a scene in a video by describing it.
 description: Use when you need to search inside video files by description, by sampling frames, embedding them with CLIP (ONNX) inside the engine, splitting videos into scenes with SQL window functions, and ranking scenes per text query.
 tier: multimodal
 level: advanced
@@ -21,8 +23,10 @@ This example searches inside video by description. The video is a 29-second mont
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/search-video-frames/main.py
 ```
 
 The first run downloads the two CLIP ViT-B/32 encoders in ONNX format (about 600 MB together) from Hugging Face into the local Hugging Face cache. No account or key is needed. The model revisions are pinned.
@@ -63,17 +67,17 @@ The example has changed since this capture. This output comes from the earlier s
 
 ## How it works
 
-- **A table of paths.** The videos in `videos/` are listed in a DataFrame with one `path` per file. Each task opens only the files in its own rows.
+- **A table of paths.** The videos in `multimodal/search-video-frames/videos/` are listed in a DataFrame with one `path` per file. Each task opens only the files in its own rows.
 - **One video in, many rows out.** `mapInArrow` downloads the image encoder where the task runs (cached per machine) and loads it once per partition. For each video it decodes the frames with [PyAV](https://pyav.org) and keeps the first frame at or after each whole second, measured from the start of the video stream. It returns one row per kept frame: the video, the second and an `ARRAY<FLOAT>` vector. Frames are embedded and returned at most 32 at a time. This bounds frames per model call and output batch; memory also depends on frame resolution, model size and concurrent partitions.
 - **Save once.** The frame vectors are written to Parquet and read back, so later queries never decode or embed the videos again.
 - **Split into scenes in SQL.** `lag` over each video's sampled frames, in time order, gives the previous sampled frame's vector. When `vector_cosine_similarity` between consecutive sampled frames (one per second) drops below 0.8 (`SCENE_CHANGE_BELOW`), a new scene starts. A running `sum` of those starts numbers the scenes, and a `groupBy` gives each scene's start and end second. Each scene also reports `similarity_at_cut`, the similarity across the cut that starts it (null for a video's first scene), and `lowest_similarity_within`, the lowest similarity between consecutive sampled frames inside it.
 - **Search in SQL.** Each query is embedded with CLIP's text encoder, every frame is scored with `vector_cosine_similarity`, and a scene's score is its best frame's score. A window function keeps the two best scenes per query.
 
-`videos/scenes.csv` records where each clip really starts and ends. The output joins it in, so you can check the matches by eye.
+`multimodal/search-video-frames/videos/scenes.csv` records where each clip really starts and ends. The output joins it in, so you can check the matches by eye.
 
 ## Use your own videos
 
-Put your files in `videos/`, or build the `videos` DataFrame from any list of files, and change `QUERIES`. PyAV's wheels are linked against FFmpeg (per the PyAV README), so it opens the formats that FFmpeg build supports. The paths must be readable from wherever the UDF runs: local paths on one machine, object storage on a cluster (open the file with a client such as `fsspec` and pass the file object to `av.open`). A file that cannot be decoded raises an error and fails the job, and a video with no decodable frames returns no rows. To record such files and keep going, catch the error per file and return a status column, as the [OCR example](../ocr-scanned-pdfs/README.md) does.
+Put your files in `multimodal/search-video-frames/videos/`, or build the `videos` DataFrame from any list of files, and change `QUERIES`. PyAV's wheels are linked against FFmpeg (per the PyAV README), so it opens the formats that FFmpeg build supports. The paths must be readable from wherever the UDF runs: local paths on one machine, object storage on a cluster (open the file with a client such as `fsspec` and pass the file object to `av.open`). A file that cannot be decoded raises an error and fails the job, and a video with no decodable frames returns no rows. To record such files and keep going, catch the error per file and return a status column, as the [OCR example](../ocr-scanned-pdfs/README.md) does.
 
 On this video, the `scenes` output shows consecutive sampled frames (one per second) at least 0.92 similar within each scene, and at most 0.65 similar across each cut, so 0.8 separates them. Footage with fast camera motion or gradual transitions can fall between those values, so check the two similarity columns on a few of your own videos and adjust `SCENE_CHANGE_BELOW`. For long videos, keeping one frame every few seconds reduces the work per video.
 

@@ -1,5 +1,6 @@
 FACT = {
     "id": "iceberg-support",
+    "title": "Read and update Iceberg tables directly",
     "category": "data-sources",
     "text": """Sail reads and writes Apache Iceberg tables with no extra package: `format("iceberg")` writes
         to a path (including `partitionBy`, append and overwrite), `CREATE TABLE ... USING iceberg LOCATION`,

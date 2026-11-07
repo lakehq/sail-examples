@@ -1,6 +1,8 @@
 ---
 title: Apply replayed changes without resurrecting deleted records
 id: apply-versioned-changes
+facts: [delta-lake-support, cache-does-not-keep-results]
+summary: Replay updates safely without bringing deleted records back.
 description: Use when captured change batches contain retries, stale updates and deletes, and you need a current-state table that retains version barriers and quarantines conflicting equal-version payloads.
 tier: pipelines
 level: advanced
@@ -25,8 +27,10 @@ version by choosing whichever payload arrives first.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/apply-versioned-changes/main.py
 ```
 
 The default applies four small batches, replays the last batch and then replays
@@ -132,7 +136,7 @@ effect guarantee follows from this example.
 
 ## Apply your own batch
 
-Create a JSON Lines file with the five input fields, for example:
+Create `pipelines/apply-versioned-changes/changes.jsonl` with the five input fields, for example:
 
 ```json
 {"change_id":"delivery-17","entity_id":"account-8","source_version":2,"operation":"upsert","value":"gold"}
@@ -140,12 +144,14 @@ Create a JSON Lines file with the five input fields, for example:
 ```
 
 ```bash
-uv run main.py --changes changes.jsonl --state-dir .data/customer-state
+uv run pipelines/apply-versioned-changes/main.py \
+  --changes pipelines/apply-versioned-changes/changes.jsonl \
+  --state-dir pipelines/apply-versioned-changes/.data/customer-state
 ```
 
 The command retains the Delta state across invocations. Complete per-run
 outcomes are written to a unique Parquet
-directory beside the state, under `customer-state-outcomes`; `--outcomes-dir`
+directory under `pipelines/apply-versioned-changes/.data/customer-state-outcomes/`; `--outcomes-dir`
 chooses another root. The console is a preview. This separate export happens
 after the state commit, so an export failure can leave committed state without
 that run's outcome files; replay is still needed to obtain a new outcome report.

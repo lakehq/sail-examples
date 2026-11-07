@@ -1,5 +1,6 @@
 FACT = {
     "id": "delta-lake-support",
+    "title": "Read and update Delta Lake tables directly",
     "category": "data-sources",
     "text": """Sail reads and writes Delta Lake with no extra package: `format("delta")` writes
         (`partitionBy`, append, `replaceWhere`), `CREATE TABLE ... USING delta`, `UPDATE`, `DELETE`,

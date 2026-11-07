@@ -1,6 +1,8 @@
 ---
 title: Curate humanoid robot episodes with every camera frame
 id: curate-humanoid-episodes
+facts: [load-files-through-a-path-table, mapinarrow-arrow-types]
+summary: Check humanoid robot recordings and align every camera frame.
 description: Use when real-robot demonstrations with several cameras and many joints need episode-level quality checks, a whole-episode training split, and every camera frame of an episode decoded and matched to its state record.
 tier: multimodal
 level: advanced
@@ -26,11 +28,13 @@ the state record taken at the same moment.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/curate-humanoid-episodes/main.py
 ```
 
-The first run downloads about 63 MB into `.data/`: the state and action records of
+The first run downloads about 63 MB into `multimodal/curate-humanoid-episodes/.data/`: the state and action records of
 every episode, plus their metadata. It then reads episode 279's 22 seconds from
 each of the four camera videos. Each video file holds many episodes, so the run
 seeks to that episode over HTTP instead of downloading the whole file. No key,

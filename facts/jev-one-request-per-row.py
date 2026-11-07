@@ -1,5 +1,6 @@
 FACT = {
     "id": "jev-one-request-per-row",
+    "title": "Deduplicate inputs before calling Jev",
     "category": "ai-functions",
     "text": """A Jev function asks one question per row it evaluates. Adjacent rows with the same text
         share one request, but each row is still its own question, and the same text in rows that are not
