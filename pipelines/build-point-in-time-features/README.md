@@ -40,6 +40,52 @@ different lead time. The coffee decision has zero observed historical orders
 and an unavailable future outcome. Missing and overlapping product intervals
 produce rejected requests rather than arbitrary attribute choices.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+features
++----------+----------+-------------------+--------+---------+-----------+-----+-------------------+
+|request_id|product_id|decision_at        |category|lead_days|order_count|units|last_order_at      |
++----------+----------+-------------------+--------+---------+-----------+-----+-------------------+
+|early     |tea       |2026-01-05 00:00:00|pantry  |3        |3          |12   |2026-01-04 00:00:00|
+|later     |tea       |2026-01-08 00:00:00|pantry  |2        |2          |16   |2026-01-07 00:00:00|
+|zero      |coffee    |2026-01-05 00:00:00|pantry  |5        |0          |0    |NULL               |
++----------+----------+-------------------+--------+---------+-----------+-----+-------------------+
+
+naive_features
++----------+----------+-------------------+--------+---------+-----------+-----+-------------------+
+|request_id|product_id|decision_at        |category|lead_days|order_count|units|last_order_at      |
++----------+----------+-------------------+--------+---------+-----------+-----+-------------------+
+|early     |tea       |2026-01-05 00:00:00|pantry  |3        |4          |25   |2026-01-04 00:00:00|
+|later     |tea       |2026-01-08 00:00:00|pantry  |2        |3          |18   |2026-01-07 00:00:00|
+|zero      |coffee    |2026-01-05 00:00:00|pantry  |5        |0          |0    |NULL               |
++----------+----------+-------------------+--------+---------+-----------+-----+-------------------+
+
+outcomes
++----------+-------------------+------------+--------------+
+|request_id|horizon_end        |target_units|outcome_status|
++----------+-------------------+------------+--------------+
+|early     |2026-01-07 00:00:00|7           |observed      |
+|later     |2026-01-10 00:00:00|NULL        |unavailable   |
+|zero      |2026-01-07 00:00:00|NULL        |unavailable   |
++----------+-------------------+------------+--------------+
+
+rejected
++----------+----------+-------------------+-------------------+-------------------+---------------------------+
+|request_id|product_id|history_start      |decision_at        |horizon_end        |reason                     |
++----------+----------+-------------------+-------------------+-------------------+---------------------------+
+|missing   |cocoa     |2026-01-02 00:00:00|2026-01-05 00:00:00|2026-01-07 00:00:00|missing_product_interval   |
+|overlap   |juice     |2026-01-02 00:00:00|2026-01-05 00:00:00|2026-01-07 00:00:00|ambiguous_product_intervals|
++----------+----------+-------------------+-------------------+-------------------+---------------------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## Input contract
 
 `build_features(spark, requests, orders, products, coverage, evaluation_at)`

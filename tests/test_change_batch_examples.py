@@ -8,7 +8,9 @@ from pathlib import Path
 import pyarrow.parquet as pq
 import pytest
 from catalog import ROOT
-from harness import run
+from harness import run, script_command
+
+pytestmark = pytest.mark.examples("apply-versioned-changes")
 
 
 @pytest.mark.parametrize("engine", ["sail", "spark"])
@@ -61,17 +63,7 @@ def test_change_cli_retains_complete_outcomes_across_runs(tmp_path):
     outputs = []
     for expected in ("accepted", "duplicate"):
         result = subprocess.run(
-            [
-                "uv",
-                "run",
-                "--quiet",
-                "--script",
-                str(script),
-                "--changes",
-                str(source),
-                "--state-dir",
-                str(tmp_path / "state"),
-            ],
+            script_command(script, "--changes", str(source), "--state-dir", str(tmp_path / "state")),
             cwd=script.parent,
             env={key: value for key, value in os.environ.items() if key != "VIRTUAL_ENV"},
             capture_output=True,

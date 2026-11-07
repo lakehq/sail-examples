@@ -67,6 +67,44 @@ is one invoice gross total against one PO gross amount. Partial invoices,
 credits, zero-value invoices, line-item matching, tax validation and invoices
 covering several POs are outside this example.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
+documents
++--------------+----------------+--------+-----------+-----------------+-------------------------------------------+
+|document_id   |invoice_id      |currency|gross_minor|status           |error                                      |
++--------------+----------------+--------+-----------+-----------------+-------------------------------------------+
+|doc-acme      |ACM-100145      |USD     |37249      |duplicate_invoice|NULL                                       |
+|doc-acme-alias|ACM-100145      |USD     |37249      |duplicate_invoice|NULL                                       |
+|doc-blank     |NULL            |USD     |NULL       |extraction_error |blank                                      |
+|doc-corrupt   |NULL            |USD     |NULL       |extraction_error |read_or_ocr_failed:PdfiumError             |
+|doc-mersey    |NULL            |GBP     |NULL       |extraction_error |invoice_or_total_label_missing_or_ambiguous|
+|doc-northwind |NWL-20240318-002|USD     |159943     |amount_mismatch  |NULL                                       |
+|doc-pennine   |IN0049923       |GBP     |2161390    |missing_po       |NULL                                       |
++--------------+----------------+--------+-----------+-----------------+-------------------------------------------+
+
+structured
++-----------------------+----------+--------+-----------+-----------------+------------------+
+|document_id            |invoice_id|currency|gross_minor|status           |error             |
++-----------------------+----------+--------+-----------+-----------------+------------------+
+|structured-duplicate-a |STRUCT-002|GBP     |9000       |duplicate_invoice|NULL              |
+|structured-duplicate-b |STRUCT-002|GBP     |9000       |duplicate_invoice|NULL              |
+|structured-invalid     |NULL      |USD     |NULL       |extraction_error |missing_invoice_id|
+|structured-match       |STRUCT-001|USD     |5000       |match            |NULL              |
+|structured-missing-po  |STRUCT-003|USD     |7000       |missing_po       |NULL              |
+|structured-wrong-amount|STRUCT-004|USD     |4999       |amount_mismatch  |NULL              |
++-----------------------+----------+--------+-----------+-----------------+------------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## Data flow and local state
 
 1. A manifest carries paths and SHA-256 digests rather than PDF binary columns.

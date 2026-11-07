@@ -32,6 +32,45 @@ uv run main.py
 
 It prints a session summary, the ordered funnel and the retention matrix. Funnel counts are sessions, not users or individual purchases. Retention counts distinct users, not events.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++--------+-----+----------------------+----------------------+
+|sessions|users|avg_events_per_session|median_session_minutes|
++--------+-----+----------------------+----------------------+
+|4345    |1500 |3.65                  |6.0                   |
++--------+-----+----------------------+----------------------+
+
++-----------+------------+--------+----------------------+
+|step_number|step        |sessions|share_of_previous_step|
++-----------+------------+--------+----------------------+
+|1          |page_view   |4345    |NULL                  |
+|2          |product_view|2394    |0.551                 |
+|3          |add_to_cart |1348    |0.5631                |
+|4          |checkout    |730     |0.5415                |
+|5          |purchase    |410     |0.5616                |
++-----------+------------+--------+----------------------+
+
++-----------+------------+---+------+------+------+------+------+------+------+
+|cohort_week|cohort_users|0  |1     |2     |3     |4     |5     |6     |7     |
++-----------+------------+---+------+------+------+------+------+------+------+
+|0          |215         |1.0|0.493 |0.307 |0.214 |0.1767|0.1209|0.1116|0.0977|
+|1          |192         |1.0|0.5885|0.375 |0.2448|0.1563|0.1198|0.099 |NULL  |
+|2          |205         |1.0|0.5024|0.3073|0.1854|0.161 |0.1122|NULL  |NULL  |
+|3          |222         |1.0|0.527 |0.3514|0.2207|0.1486|NULL  |NULL  |NULL  |
+|4          |245         |1.0|0.5306|0.3388|0.2204|NULL  |NULL  |NULL  |NULL  |
+|5          |197         |1.0|0.5025|0.3046|NULL  |NULL  |NULL  |NULL  |NULL  |
+|6          |224         |1.0|0.567 |NULL  |NULL  |NULL  |NULL  |NULL  |NULL  |
++-----------+------------+---+------+------+------+------+------+------+------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 1. **Sessions from exact gaps.** Distinct `(user_id, ts)` pairs receive session numbers with `lag` and a running `sum`. Comparing timestamps with a 30-minute interval keeps an exact 30-minute gap in the session and splits a gap even one microsecond longer. Joining back preserves all events at a timestamp, including identical rows, with the same session number.

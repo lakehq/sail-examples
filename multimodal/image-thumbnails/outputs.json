@@ -1,0 +1,32 @@
+{
+  "snapshots": [
+    {
+      "output": "+------+------+-------------+---------------+----------------+\n|format|images|source_pixels|max_thumb_width|max_thumb_height|\n+------+------+-------------+---------------+----------------+\n|  JPEG|    12|      5374528|             64|              64|\n|   PNG|    12|      7142400|             64|              48|\n+------+------+-------------+---------------+----------------+\n\n+------------+-----+------+-----------+------------+\n|        name|width|height|thumb_width|thumb_height|\n+------------+-----+------+-----------+------------+\n|image-00.png|  320|   240|         64|          48|\n|image-01.jpg|  640|   480|         64|          48|\n|image-02.png|  800|   600|         64|          48|\n|image-03.jpg| 1024|   768|         64|          48|\n|image-04.png| 1280|   960|         64|          48|\n+------------+-----+------+-----------+------------+\nonly showing top 5 rows\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:59:02.712124+00:00",
+          "script_sha256": "300510f31539c5885d58c6e5eaefe1c396f107469aabb77e97885c714b41b7c4",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "pillow": "13.0.0",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

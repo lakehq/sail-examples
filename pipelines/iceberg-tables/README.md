@@ -29,6 +29,53 @@ The first run downloads two months of trip records and the zone lookup (2.7 MB) 
 
 The table goes through five snapshots. The first holds January's 182 rows, and the current one holds 293. Every snapshot, read back by its id, has the row count the metadata recorded for it.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+snapshots
++--------+---------+-------------+
+|snapshot|rows_read|rows_recorded|
++--------+---------+-------------+
+|1       |182      |182          |
+|2       |353      |353          |
+|3       |353      |353          |
+|4       |293      |293          |
+|5       |293      |293          |
++--------+---------+-------------+
+
+by_borough
++-------------+-----+----+
+|borough      |trips|days|
++-------------+-----+----+
+|Bronx        |1599 |60  |
+|Brooklyn     |15372|60  |
+|EWR          |5    |5   |
+|Manhattan    |64544|60  |
+|Outside NYC  |66   |41  |
+|Queens       |28493|60  |
+|Staten Island|7    |7   |
++-------------+-----+----+
+
+february_29
++-----+-----------+-----+--------+
+|month|borough    |trips|fares   |
++-----+-----------+-----+--------+
+|2    |Bronx      |28   |752.23  |
+|2    |Brooklyn   |308  |7364.59 |
+|2    |EWR        |1    |144.0   |
+|2    |Manhattan  |1500 |20000.0 |
+|2    |Outside NYC|2    |63.41   |
+|2    |Queens     |618  |11672.17|
++-----+-----------+-----+--------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 | Snapshot | Change | SQL |

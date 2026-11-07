@@ -29,6 +29,31 @@ By default the example runs against the local TypeSafe stand-in that ships in py
 
 To call the real service, set `JEV_LIVE=1` and `TYPESAFE_API_KEY` in the environment of the process that runs Sail. Ticket texts are then sent to TypeSafe, and the answers come from the Jev model.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++-------+-------+
+|   team|tickets|
++-------+-------+
+|billing|    667|
+|    bug|    667|
+| how-to|    666|
++-------+-------+
+
++-------+--------------+--------+
+|tickets|distinct_texts|requests|
++-------+--------------+--------+
+|   2000|            24|      24|
++-------+--------------+--------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **One SQL query asks the model.** `jev_choice(state, instructions, criteria)` returns a struct with the chosen `choice`, its `confidence` and per-choice `probabilities`. Here, `criteria` is a `map` from each team name to a description of the team.

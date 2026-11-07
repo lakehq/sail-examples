@@ -6,7 +6,16 @@ import pytest
 from harness import run
 
 
-@pytest.mark.parametrize("case", ["funnel", "retention", "rejects", "deferred"])
+@pytest.mark.parametrize(
+    "case",
+    [
+        pytest.param(
+            case,
+            marks=pytest.mark.examples("taxi-etl-job" if case == "rejects" else "sessions-funnels-retention"),
+        )
+        for case in ("funnel", "retention", "rejects", "deferred")
+    ],
+)
 @pytest.mark.parametrize("engine", ["sail", "spark"])
 def test_analytics_and_etl_contracts(case, engine, tmp_path):
     meta = run(

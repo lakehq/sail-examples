@@ -29,6 +29,49 @@ The first run downloads both files into `.data/` next to the script.
 
 The busiest pickup zone is East Harlem North, with 12,141 trips. The median trip is 1.79 miles. The longest recorded trip is 201,421.68 miles, which is a data error: real data needs checks, and the [ETL job example](../../pipelines/taxi-etl-job/README.md) shows how to apply them.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++-----+-------------------+-------------------+------------+---------+
+|trips|first_pickup       |last_pickup        |median_miles|max_miles|
++-----+-------------------+-------------------+------------+---------+
+|56551|2023-12-31 14:38:47|2024-01-31 23:57:29|1.79        |201421.68|
++-----+-------------------+-------------------+------------+---------+
+
++---------------------------+---------+-----+
+|pickup_zone                |borough  |trips|
++---------------------------+---------+-----+
+|East Harlem North          |Manhattan|12141|
+|East Harlem South          |Manhattan|8458 |
+|Forest Hills               |Queens   |2915 |
+|Central Park               |Manhattan|2765 |
+|Morningside Heights        |Manhattan|2649 |
+|Elmhurst                   |Queens   |2623 |
+|Central Harlem             |Manhattan|2589 |
+|Fort Greene                |Brooklyn |1898 |
+|Downtown Brooklyn/MetroTech|Brooklyn |1624 |
+|Astoria                    |Queens   |1521 |
++---------------------------+---------+-----+
+
++------------+-----+---------+
+|payment     |trips|tip_share|
++------------+-----+---------+
+|Credit card |36660|0.226    |
+|Cash        |15913|0.0      |
+|Not recorded|3415 |0.11     |
+|No charge   |434  |0.003    |
+|Dispute     |128  |0.0      |
+|Unknown     |1    |0.0      |
++------------+-----+---------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 1. **Query a file in place.** `` FROM parquet.`path` `` reads a Parquet file directly; `` csv.`path` `` and `` json.`path` `` work the same way, but a CSV file read like this keeps its header line as a data row, so the next step reads the zone lookup through a view.

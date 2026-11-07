@@ -1,0 +1,49 @@
+{
+  "snapshots": [
+    {
+      "output": "Which table formats add transactions and snapshots on top of Parquet files?\n  1. 0.619  Parquet stores data by column, so queries read only the columns they need.\n  2. 0.608  Delta Lake adds ACID transactions and time travel on top of Parquet files.\n  3. 0.551  A table format records schema changes so old and new files stay readable.\nWhat happens when events arrive late in a real-time pipeline?\n  1. 0.599  Exactly-once delivery means each event affects the output a single time.\n  2. 0.559  A streaming job reads events continuously and updates results as data arrives.\n  3. 0.489  Kafka topics deliver ordered records that consumers process in real time.\nHow can I find text with a similar meaning?\n  1. 0.443  Retrieval finds the documents most similar to a question before answering it.\n  2. 0.335  An embedding turns a sentence into a vector that captures its meaning.\n  3. 0.320  Tokenizers split text into the pieces a model reads as input.\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:55.973904+00:00",
+          "script_sha256": "e9bf5d9367c52ff40cf1b15e3e16afb8544ef7b77ece12153e6b182e4fd583d4",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "coloredlogs": "15.0.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "sympy": "1.14.0",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

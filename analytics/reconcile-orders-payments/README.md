@@ -49,6 +49,78 @@ though the 600-unit capture arrives twice. A 200-unit refund leaves `refund`
 with a net 800. A 600-unit refund against a 500-unit capture remains visible as
 an over-refund, with net -100. Amounts are never clipped to hide a discrepancy.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+orders
++--------+--------+--------------+--------------+--------------+---------+-------------+-------------+------------+------------------+
+|order_id|currency|expected_minor|captured_minor|refunded_minor|net_minor|balance_minor|capture_count|refund_count|status            |
++--------+--------+--------------+--------------+--------------+---------+-------------+-------------+------------+------------------+
+|over    |USD     |500           |500           |600           |-100     |600          |1            |1           |over_refunded     |
+|paid    |USD     |1000          |1000          |0             |1000     |0            |2            |0           |paid              |
+|partial |USD     |1000          |300           |0             |300      |700          |1            |0           |under_captured    |
+|refund  |USD     |1000          |1000          |200           |800      |200          |1            |1           |partially_refunded|
+|waiting |USD     |700           |0             |0             |0        |700          |0            |0           |unpaid            |
+|yen     |JPY     |1000          |1000          |0             |1000     |0            |1            |0           |paid              |
++--------+--------+--------------+--------------+--------------+---------+-------------+-------------+------------+------------------+
+
+ledger
++-------+---------------------+---------+--------+------------+-------------------+-------------------+----------+-----------------+
+|source |record_id            |parent_id|currency|amount_minor|posted_at          |received_at        |deliveries|status           |
++-------+---------------------+---------+--------+------------+-------------------+-------------------+----------+-----------------+
+|capture|orphan               |absent   |USD     |80          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |missing_order    |
+|capture|over-cap             |over     |USD     |500         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |attributed       |
+|capture|ref                  |refund   |USD     |1000        |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |attributed       |
+|capture|small                |partial  |USD     |300         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |attributed       |
+|capture|split-a              |paid     |USD     |600         |2026-01-01 10:00:00|2026-01-01 11:00:00|2         |attributed       |
+|capture|split-b              |paid     |USD     |400         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |attributed       |
+|capture|wrong-currency       |paid     |EUR     |50          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |currency_mismatch|
+|capture|yen-cap              |yen      |JPY     |1000        |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |attributed       |
+|order  |over                 |NULL     |USD     |500         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |active_order     |
+|order  |paid                 |NULL     |USD     |1000        |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |active_order     |
+|order  |partial              |NULL     |USD     |1000        |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |active_order     |
+|order  |refund               |NULL     |USD     |1000        |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |active_order     |
+|order  |waiting              |NULL     |USD     |700         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |active_order     |
+|order  |yen                  |NULL     |JPY     |1000        |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |active_order     |
+|refund |lost                 |missing  |USD     |25          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |missing_capture  |
+|refund |part-refund          |ref      |USD     |200         |2026-01-01 10:00:00|2026-01-01 11:00:00|2         |attributed       |
+|refund |too-much             |over-cap |USD     |600         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |attributed       |
+|refund |wrong-refund-currency|ref      |EUR     |5           |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |currency_mismatch|
++-------+---------------------+---------+--------+------------+-------------------+-------------------+----------+-----------------+
+
+exceptions
++-------+---------------------+---------+--------+------------+-------------------+-------------------+----------+-----------------+
+|source |record_id            |parent_id|currency|amount_minor|posted_at          |received_at        |deliveries|reason           |
++-------+---------------------+---------+--------+------------+-------------------+-------------------+----------+-----------------+
+|capture|conflict             |paid     |USD     |90          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |conflicting_id   |
+|capture|conflict             |paid     |USD     |91          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |conflicting_id   |
+|capture|late                 |waiting  |USD     |700         |2026-01-01 10:00:00|2026-01-02 00:00:00|1         |not_yet_received |
+|capture|orphan               |absent   |USD     |80          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |missing_order    |
+|capture|over-cap             |over     |USD     |500         |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |over_refunded    |
+|capture|wrong-currency       |paid     |EUR     |50          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |currency_mismatch|
+|refund |lost                 |missing  |USD     |25          |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |missing_capture  |
+|refund |wrong-refund-currency|ref      |EUR     |5           |2026-01-01 10:00:00|2026-01-01 11:00:00|1         |currency_mismatch|
++-------+---------------------+---------+--------+------------+-------------------+-------------------+----------+-----------------+
+
+accounting
++-------+--------+-------+----------+-----------+----------------+---------------+
+|source |currency|records|deliveries|total_minor|attributed_minor|unmatched_minor|
++-------+--------+-------+----------+-----------+----------------+---------------+
+|capture|EUR     |1      |1         |50         |0               |50             |
+|capture|JPY     |1      |1         |1000       |1000            |0              |
+|capture|USD     |6      |7         |2880       |2800            |80             |
+|refund |EUR     |1      |1         |5          |0               |5              |
+|refund |USD     |3      |4         |825        |800             |25             |
++-------+--------+-------+----------+-----------+----------------+---------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## Reconciliation contract
 
 Call `reconcile(orders, captures, refunds, cutoff=...)` with the exact schemas in

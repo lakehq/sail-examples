@@ -8,6 +8,7 @@ from harness import run
 
 
 @pytest.mark.parametrize("engine", ["sail", "spark"])
+@pytest.mark.examples("ocr-scanned-pdfs")
 def test_ocr_streams_pages_and_closes_documents(engine, tmp_path):
     dependencies = script_dependencies(ROOT / "multimodal/ocr-scanned-pdfs/main.py") + ["pypdf==6.21.1"]
     meta = run(
@@ -16,7 +17,13 @@ def test_ocr_streams_pages_and_closes_documents(engine, tmp_path):
     assert meta["status"] == "ok", f"{engine} [{meta['status']}]: {meta.get('message')}"
 
 
-@pytest.mark.parametrize("case,directory", [("video", "search-video-frames"), ("pdf", "pdf-search")])
+@pytest.mark.parametrize(
+    "case,directory",
+    [
+        pytest.param(case, directory, marks=pytest.mark.examples(directory))
+        for case, directory in [("video", "search-video-frames"), ("pdf", "pdf-search")]
+    ],
+)
 @pytest.mark.parametrize("engine", ["sail", "spark"])
 def test_media_chunk_boundaries(case, directory, engine, tmp_path):
     dependencies = script_dependencies(ROOT / "multimodal" / directory / "main.py")
@@ -33,6 +40,7 @@ def test_media_chunk_boundaries(case, directory, engine, tmp_path):
 
 
 @pytest.mark.parametrize("engine", ["sail", "spark"])
+@pytest.mark.examples("search-images-by-text")
 def test_repeated_captions_keep_their_photo_identity(engine, tmp_path):
     dependencies = script_dependencies(ROOT / "multimodal/search-images-by-text/main.py")
     meta = run(

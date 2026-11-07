@@ -8,6 +8,8 @@ import pytest
 from harness import run
 from point_in_time_checks import load_example
 
+pytestmark = pytest.mark.examples("build-point-in-time-features")
+
 
 def test_reference_exposes_late_knowledge_and_unavailable_outcomes():
     module = load_example()

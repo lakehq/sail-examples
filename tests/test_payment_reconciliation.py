@@ -7,6 +7,8 @@ import pytest
 from harness import run
 from payment_reconciliation_checks import adversarial, example, literal_default
 
+pytestmark = pytest.mark.examples("reconcile-orders-payments")
+
 
 def test_python_ledger_literal_totals():
     module = example()

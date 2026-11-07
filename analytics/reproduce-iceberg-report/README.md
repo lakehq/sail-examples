@@ -59,6 +59,41 @@ uv run main.py --state .data/sales-report-larger --phase replay
 
 This starts with 12,000 orders whose IDs are independent across copies. Report counts and monetary totals scale with the copy count. The bound is 1 to 5,000 copies; `--copies` applies only to preparation.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+original
++-----------+------+-----+-----------+
+|category   |orders|units|sales_minor|
++-----------+------+-----+-----------+
+|Accessories|1     |3    |2400       |
+|Components |2     |3    |5500       |
++-----------+------+-----+-----------+
+
+current
++----------+------+-----+-----------+
+|category  |orders|units|sales_minor|
++----------+------+-----+-----------+
+|Components|1     |3    |4500       |
+|Hardware  |2     |3    |7500       |
++----------+------+-----+-----------+
+
+replayed
++-----------+------+-----+-----------+
+|category   |orders|units|sales_minor|
++-----------+------+-----+-----------+
+|Accessories|1     |3    |2400       |
+|Components |2     |3    |5500       |
++-----------+------+-----+-----------+
+
+```
+
+<!-- sail-output:end -->
+
 ## What the manifest binds
 
 The saved manifest records both inputs, rather than using a saved orders snapshot with the current product lookup:

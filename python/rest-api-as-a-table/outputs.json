@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "output": "+-------+------------+\n|tickets|distinct_ids|\n+-------+------------+\n|    487|         487|\n+-------+------------+\n\n+-------+-------+------------+\n| status|tickets|avg_priority|\n+-------+-------+------------+\n| closed|    122|         2.0|\n|   open|    122|         1.0|\n|pending|    121|         4.0|\n| solved|    122|         3.0|\n+-------+-------+------------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:55.011963+00:00",
+          "script_sha256": "391f95edb3214972b9909c692f5aaa358ad85743688e44555de52a6eba5b38b7",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

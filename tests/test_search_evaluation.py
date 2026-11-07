@@ -10,6 +10,8 @@ from catalog import ROOT, script_dependencies
 from harness import run
 from search_evaluation_checks import metric_reference
 
+pytestmark = pytest.mark.examples("evaluate-search-dataset")
+
 
 @pytest.mark.parametrize(
     ("table", "field"),

@@ -29,6 +29,36 @@ The first run downloads the sample clips (a 9 MB Parquet file) and the Whisper t
 
 On these 73 sample clips, the transcripts have a character error rate of about 5% against the references. Some differences are spelling choices rather than mistakes: Whisper writes "Mr." where the reference has "MISTER".
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++----------------+-------+--------------------------------------------------------------------------------+
+|              id|seconds|                                                                      transcript|
++----------------+-------+--------------------------------------------------------------------------------+
+|1272-128104-0000|  5.855|Mr. Quilter is the apostle of the middle classes and we are glad to welcome h...|
+|1272-128104-0001|  4.815|                   Nor is Mr. Quilter's manner less interesting than his matter.|
+|1272-128104-0002| 12.485|He tells us that at this festive season of the year, with Christmas and roast...|
+|1272-128104-0003|    9.9|He has grave doubts whether Sir Frederick Layton's work is really Greek after...|
+|1272-128104-0004|   29.4|Linnell's pictures are a sort of up-guards and atom paintings, and Mason's ex...|
++----------------+-------+--------------------------------------------------------------------------------+
+only showing top 5 rows
+
++-----+-------+--------------------+
+|clips|minutes|character_error_rate|
++-----+-------+--------------------+
+|   73|   8.02|0.054469721243191285|
++-----+-------+--------------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **A table of paths.** The clips are saved as FLAC files, and a DataFrame lists one `path` per file with its reference transcript. Each task opens only the files in its own rows.

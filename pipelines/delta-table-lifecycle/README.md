@@ -30,6 +30,71 @@ The first run downloads three months of trip records and the zone lookup (4 MB) 
 
 The table ends at version 7. Reading version 3 shows March 31 before the corrections: Manhattan with 740 trips, and the borough labels `N/A` and `Unknown` that later versions relabeled or removed.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+versions
++-------+----+
+|version|rows|
++-------+----+
+|0      |0   |
+|1      |182 |
+|2      |353 |
+|3      |531 |
+|4      |531 |
+|5      |531 |
+|6      |440 |
+|7      |441 |
++-------+----+
+
+by_month
++-----+-----+--------------+
+|month|trips|rows_with_tips|
++-----+-----+--------------+
+|1    |56437|151           |
+|2    |53448|0             |
+|3    |57575|148           |
++-----+-----+--------------+
+
+march_31
++---------+-------------+-----+--------+
+|version  |borough      |trips|fares   |
++---------+-------------+-----+--------+
+|current  |Bronx        |17   |347.64  |
+|current  |Brooklyn     |267  |6939.9  |
+|current  |Manhattan    |1000 |15000.0 |
+|current  |Outside NYC  |1    |69.0    |
+|current  |Queens       |446  |8526.5  |
+|current  |Staten Island|1    |20.0    |
+|version 3|Bronx        |17   |347.64  |
+|version 3|Brooklyn     |267  |6939.9  |
+|version 3|Manhattan    |740  |10492.56|
+|version 3|N/A          |1    |69.0    |
+|version 3|Queens       |446  |8526.5  |
+|version 3|Unknown      |4    |129.8   |
++---------+-------------+-----+--------+
+
+boroughs
++-------------+
+|borough      |
++-------------+
+|Bronx        |
+|Brooklyn     |
+|EWR          |
+|Manhattan    |
+|Outside NYC  |
+|Queens       |
+|Staten Island|
++-------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 | Version | Change | How |

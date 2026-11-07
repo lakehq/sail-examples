@@ -22,7 +22,8 @@ SPARK_EXTRAS = set(
     tomllib.loads((Path(__file__).resolve().parent / "engines.toml").read_text())["spark"].get("extras", {})
 )
 
-EXAMPLE_KEYS = {
+RUNTIME_KEYS = {"engines", "ordered", "float_tolerance", "timeout", "needs_key", "needs_gpu", "spark_extras"}
+EXAMPLE_KEYS = RUNTIME_KEYS | {
     "title",
     "id",
     "description",
@@ -30,14 +31,7 @@ EXAMPLE_KEYS = {
     "level",
     "tags",
     "modality",
-    "engines",
-    "ordered",
-    "float_tolerance",
-    "timeout",
-    "needs_key",
-    "needs_gpu",
     "prompt",
-    "spark_extras",
 }
 FACT_KEYS = {
     "id",
@@ -108,10 +102,13 @@ def check_spark_extras(source: Path, meta: dict) -> None:
 
 
 def read_front_matter(readme: Path) -> dict:
-    text = readme.read_text()
+    return parse_front_matter(readme.read_text(), readme)
+
+
+def parse_front_matter(text: str, source: Path) -> dict:
     match = re.match(r"^---\n(.*?)\n---\n", text, re.DOTALL)
     if not match:
-        raise ValueError(f"{readme} has no YAML front matter")
+        raise ValueError(f"{source} has no YAML front matter")
     return yaml.safe_load(match.group(1))
 
 

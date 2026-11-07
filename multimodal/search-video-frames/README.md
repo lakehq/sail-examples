@@ -29,6 +29,38 @@ The first run downloads the two CLIP ViT-B/32 encoders in ONNX format (about 600
 
 The run finds all six scenes, and each query's best match is the scene that shows what the query describes. Times are whole seconds, because the example samples one frame per second: the rocket launch, which runs from 19.2 to 24.2 seconds in the video, comes back as 20 s to 25 s.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++------------------+-----+-----+---+------+-----------------+------------------------+
+|             video|scene|start|end|frames|similarity_at_cut|lowest_similarity_within|
++------------------+-----+-----+---+------+-----------------+------------------------+
+|scenes-montage.mp4|    1|    0|  5|     5|             NULL|                   0.949|
+|scenes-montage.mp4|    2|    5| 10|     5|            0.498|                   0.922|
+|scenes-montage.mp4|    3|   10| 15|     5|            0.465|                   0.977|
+|scenes-montage.mp4|    4|   15| 20|     5|            0.538|                   0.925|
+|scenes-montage.mp4|    5|   20| 25|     5|            0.408|                   0.968|
+|scenes-montage.mp4|    6|   25| 30|     5|            0.635|                    0.98|
++------------------+-----+-----+---+------+-----------------+------------------------+
+
+'a rocket launch at night' #1: scenes-montage.mp4 20s to 25s  score 0.290  (the scene shows: a rocket lifting off from its launch pad at night)
+'a rocket launch at night' #2: scenes-montage.mp4 0s to 5s  score 0.215  (the scene shows: an orange sun low over a calm sea with a small boat)
+'a black cat' #1: scenes-montage.mp4 15s to 20s  score 0.300  (the scene shows: a black cat lying on a light-colored carpet)
+'a black cat' #2: scenes-montage.mp4 0s to 5s  score 0.210  (the scene shows: an orange sun low over a calm sea with a small boat)
+'a waterfall' #1: scenes-montage.mp4 10s to 15s  score 0.291  (the scene shows: a waterfall pouring over a rock ledge into a pool)
+'a waterfall' #2: scenes-montage.mp4 0s to 5s  score 0.204  (the scene shows: an orange sun low over a calm sea with a small boat)
+'a tram on a snowy street' #1: scenes-montage.mp4 5s to 10s  score 0.332  (the scene shows: a tram approaching along tracks on a snowy city street)
+'a tram on a snowy street' #2: scenes-montage.mp4 15s to 20s  score 0.129  (the scene shows: a black cat lying on a light-colored carpet)
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **A table of paths.** The videos in `videos/` are listed in a DataFrame with one `path` per file. Each task opens only the files in its own rows.

@@ -27,6 +27,32 @@ uv run main.py
 
 A small local service stands in for the model, so the example runs offline with no API key. It labels a ticket with a fixed rule after a 20 ms delay and counts its calls.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++-------+-------+
+|  label|tickets|
++-------+-------+
+|billing|   7500|
+|    bug|   5000|
+| how-to|   5000|
+|  other|   2500|
++-------+-------+
+
++-------+--------------+-----------+
+|tickets|distinct_texts|model_calls|
++-------+--------------+-----------+
+|  20000|            48|         48|
++-------+--------------+-----------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 1. **Reduce.** `tickets.select("text").distinct()` turns 20,000 rows into 48 texts, spread over `ASK_TASKS` partitions.

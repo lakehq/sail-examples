@@ -29,6 +29,41 @@ The first run downloads the model (about 47 MB) from Hugging Face into the local
 
 For these eight bundled photos, every top label matches the photo's subject. Five of them score 0.6 or more. The golden retriever, the Siamese cat and the tabby cat score less, so they land in the review table. For the Siamese cat, the runner-up (Persian cat) is close behind.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++---------------------+----------------+-----+
+|file                 |label           |score|
++---------------------+----------------+-----+
+|espresso.jpg         |espresso        |0.779|
+|golden-retriever.jpg |golden retriever|0.493|
+|monarch-butterfly.jpg|monarch         |0.994|
+|red-fox.jpg          |red fox         |0.954|
+|siamese-cat.jpg      |Siamese cat     |0.413|
+|strawberries.jpg     |strawberry      |0.995|
+|tabby-cat.jpg        |tabby           |0.533|
+|zebra.jpg            |zebra           |0.999|
++---------------------+----------------+-----+
+
+Needs review:
++--------------------+----------------+-----+-----------+---------------+
+|file                |label           |score|runner_up  |runner_up_score|
++--------------------+----------------+-----+-----------+---------------+
+|golden-retriever.jpg|golden retriever|0.493|kuvasz     |0.231          |
+|siamese-cat.jpg     |Siamese cat     |0.413|Persian cat|0.379          |
+|tabby-cat.jpg       |tabby           |0.533|hyena      |0.155          |
++--------------------+----------------+-----+-----------+---------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **A table of paths.** The image files become a DataFrame with one `path` row per file, split into two partitions. Each task opens only the files in its own rows.

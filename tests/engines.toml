@@ -4,7 +4,7 @@
 # header on top of these.
 
 [sail]
-description = "Sail, latest release"
+description = "Sail, pinned release"
 deps = [
   "pysail==0.7.3",
   "pyspark-client==4.1.3",

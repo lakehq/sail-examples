@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "output": "quality\n+-------------+-------------------------------------------------+---------------+------+----------------+--------------+---------------+------+\n|episode_index|task                                             |expected_frames|frames|duplicate_frames|bad_timestamps|invalid_vectors|usable|\n+-------------+-------------------------------------------------+---------------+------+----------------+--------------+---------------+------+\n|0            |Push the T-shaped block onto the T-shaped target.|161            |161   |0               |0             |0              |true  |\n|1            |Push the T-shaped block onto the T-shaped target.|118            |118   |0               |0             |0              |true  |\n|2            |Push the T-shaped block onto the T-shaped target.|141            |141   |0               |0             |0              |true  |\n|3            |Push the T-shaped block onto the T-shaped target.|159            |159   |0               |0             |0              |true  |\n|4            |Push the T-shaped block onto the T-shaped target.|159            |159   |0               |0             |0              |true  |\n|5            |Push the T-shaped block onto the T-shaped target.|157            |157   |0               |0             |0              |true  |\n|6            |Push the T-shaped block onto the T-shaped target.|69             |69    |0               |0             |0              |true  |\n|7            |Push the T-shaped block onto the T-shaped target.|169            |169   |0               |0             |0              |true  |\n|8            |Push the T-shaped block onto the T-shaped target.|80             |80    |0               |0             |0              |true  |\n|9            |Push the T-shaped block onto the T-shaped target.|134            |134   |0               |0             |0              |true  |\n+-------------+-------------------------------------------------+---------------+------+----------------+--------------+---------------+------+\nonly showing top 10 rows\n\nselection\n+-------------+-------------------------------------------------+------+----------+\n|episode_index|task                                             |frames|split     |\n+-------------+-------------------------------------------------+------+----------+\n|0            |Push the T-shaped block onto the T-shaped target.|161   |validation|\n|1            |Push the T-shaped block onto the T-shaped target.|118   |train     |\n|2            |Push the T-shaped block onto the T-shaped target.|141   |train     |\n|3            |Push the T-shaped block onto the T-shaped target.|159   |train     |\n|4            |Push the T-shaped block onto the T-shaped target.|159   |train     |\n|5            |Push the T-shaped block onto the T-shaped target.|157   |validation|\n|6            |Push the T-shaped block onto the T-shaped target.|69    |train     |\n|7            |Push the T-shaped block onto the T-shaped target.|169   |train     |\n|8            |Push the T-shaped block onto the T-shaped target.|80    |train     |\n|9            |Push the T-shaped block onto the T-shaped target.|134   |train     |\n+-------------+-------------------------------------------------+------+----------+\nonly showing top 10 rows\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:59:01.176721+00:00",
+          "script_sha256": "d9dec209719a2a898b8ad2d74e44e08dfe575b17a1e4cff8dc7f479ad916d7d3",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

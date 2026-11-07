@@ -32,6 +32,51 @@ The first run downloads about 786 KB of Parquet and metadata into `.data/`.
 No account, key, model, GPU or robot is needed. The dataset revision and file
 SHA-256s are pinned; a checksum mismatch fails the run.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+quality
++-------------+-------------------------------------------------+---------------+------+----------------+--------------+---------------+------+
+|episode_index|task                                             |expected_frames|frames|duplicate_frames|bad_timestamps|invalid_vectors|usable|
++-------------+-------------------------------------------------+---------------+------+----------------+--------------+---------------+------+
+|0            |Push the T-shaped block onto the T-shaped target.|161            |161   |0               |0             |0              |true  |
+|1            |Push the T-shaped block onto the T-shaped target.|118            |118   |0               |0             |0              |true  |
+|2            |Push the T-shaped block onto the T-shaped target.|141            |141   |0               |0             |0              |true  |
+|3            |Push the T-shaped block onto the T-shaped target.|159            |159   |0               |0             |0              |true  |
+|4            |Push the T-shaped block onto the T-shaped target.|159            |159   |0               |0             |0              |true  |
+|5            |Push the T-shaped block onto the T-shaped target.|157            |157   |0               |0             |0              |true  |
+|6            |Push the T-shaped block onto the T-shaped target.|69             |69    |0               |0             |0              |true  |
+|7            |Push the T-shaped block onto the T-shaped target.|169            |169   |0               |0             |0              |true  |
+|8            |Push the T-shaped block onto the T-shaped target.|80             |80    |0               |0             |0              |true  |
+|9            |Push the T-shaped block onto the T-shaped target.|134            |134   |0               |0             |0              |true  |
++-------------+-------------------------------------------------+---------------+------+----------------+--------------+---------------+------+
+only showing top 10 rows
+
+selection
++-------------+-------------------------------------------------+------+----------+
+|episode_index|task                                             |frames|split     |
++-------------+-------------------------------------------------+------+----------+
+|0            |Push the T-shaped block onto the T-shaped target.|161   |validation|
+|1            |Push the T-shaped block onto the T-shaped target.|118   |train     |
+|2            |Push the T-shaped block onto the T-shaped target.|141   |train     |
+|3            |Push the T-shaped block onto the T-shaped target.|159   |train     |
+|4            |Push the T-shaped block onto the T-shaped target.|159   |train     |
+|5            |Push the T-shaped block onto the T-shaped target.|157   |validation|
+|6            |Push the T-shaped block onto the T-shaped target.|69    |train     |
+|7            |Push the T-shaped block onto the T-shaped target.|169   |train     |
+|8            |Push the T-shaped block onto the T-shaped target.|80    |train     |
+|9            |Push the T-shaped block onto the T-shaped target.|134   |train     |
++-------------+-------------------------------------------------+------+----------+
+only showing top 10 rows
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 The frame table contains episode IDs, frame indices, timestamps and two-coordinate

@@ -27,6 +27,31 @@ uv run main.py
 
 The first run downloads the model (about 90 MB) from Hugging Face into the local Hugging Face cache. No account or key is needed. The model revision is pinned, so every run uses the same weights.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
+Which table formats add transactions and snapshots on top of Parquet files?
+  1. 0.619  Parquet stores data by column, so queries read only the columns they need.
+  2. 0.608  Delta Lake adds ACID transactions and time travel on top of Parquet files.
+  3. 0.551  A table format records schema changes so old and new files stay readable.
+What happens when events arrive late in a real-time pipeline?
+  1. 0.599  Exactly-once delivery means each event affects the output a single time.
+  2. 0.559  A streaming job reads events continuously and updates results as data arrives.
+  3. 0.489  Kafka topics deliver ordered records that consumers process in real time.
+How can I find text with a similar meaning?
+  1. 0.443  Retrieval finds the documents most similar to a question before answering it.
+  2. 0.335  An embedding turns a sentence into a vector that captures its meaning.
+  3. 0.320  Tokenizers split text into the pieces a model reads as input.
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **Load once per partition.** `mapInArrow` downloads the model where the task runs (cached per machine), then opens the ONNX session and the tokenizer before its loop over batches. Code before the loop runs once per partition in `mapInArrow`, not once per batch or row.
