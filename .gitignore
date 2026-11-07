@@ -7,4 +7,9 @@ spark-warehouse/
 .pytest_cache/
 .ruff_cache/
 
+_site/
 .reports/
+
+node_modules/
+site/.generated/
+site/.vitepress/cache/

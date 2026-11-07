@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Python and guides
+    name: Python, guides and site
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     outputs:
@@ -43,16 +43,28 @@ jobs:
           else
             uv run python tests/change_selection.py
           fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci --ignore-scripts
       - run: uv run ruff check .
       - run: uv run ruff format --check .
+      - name: Check browser JavaScript syntax
+        run: node --check site/site.js
       - name: Compile Python sources
         run: git ls-files -z '*.py' | xargs -0 uv run python -m py_compile
-      - name: Check metadata, generated context and links
+      - name: Check metadata, generated context, links and site
         run: >-
           uv run pytest -q tests/test_catalog.py tests/test_context.py
           tests/test_readme_links.py tests/test_binary_files.py tests/test_output_comparison.py
-          tests/test_output_presentation.py
+          tests/test_output_presentation.py tests/test_site.py
           tests/test_change_selection.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: site-preview
+          path: _site/
+          retention-days: 7
 
   examples:
     name: Examples (${{ matrix.sail }} Sail)
@@ -123,9 +135,9 @@ jobs:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           if [ -n "$PR_BASE_SHA" ]; then
-            uv run pytest -ra --changed-since "$PR_BASE_SHA" --junitxml=.reports/results.xml
+            uv run pytest -ra --changed-since "$PR_BASE_SHA" --ignore=tests/test_site.py --junitxml=.reports/results.xml
           else
-            uv run pytest -ra --junitxml=.reports/results.xml
+            uv run pytest -ra --ignore=tests/test_site.py --junitxml=.reports/results.xml
           fi
       - name: Summarize console output comparisons
         if: always()
