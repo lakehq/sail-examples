@@ -149,10 +149,15 @@ so source code and output never become executable Vue templates. Use these share
 ## Metadata and social previews
 
 The build derives discovery metadata from the same generated pages as the website.
-New example and public behavior pages get canonical URLs, sitemap entries, links in
-`llms.txt`, and Open Graph/Twitter tags automatically. The 404 page is marked
+New example and public behavior pages get canonical URLs, sitemap entries,
+and Open Graph/Twitter tags automatically. The 404 page is marked
 `noindex` and excluded from discovery files and social images. Metadata is in the
 initial HTML and remains correct after VitePress navigation.
+
+The website publishes the repository's generated `llms.txt`. Only relative catalog
+links change, becoming absolute GitHub URLs. Its guidance, descriptions, ordering,
+and external links stay intact. Update its sources and run `uv run tools/build_context.py`
+before building the website; do not add a separate website summary or catalog.
 
 Edit `site/social-preview.svg` to change the shared image design. Its layout follows
 [LakeSail's social preview](https://lakesail.com/og-default-v2.png). The renderer in

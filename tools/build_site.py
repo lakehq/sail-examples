@@ -537,6 +537,18 @@ def write_page(root, url, title, description, content, *, showcase=False, sectio
     )
 
 
+def publish_llms(output):
+    source = ROOT / "llms.txt"
+
+    def absolute_link(match):
+        prefix, url, closing = match.groups()
+        return prefix + rewrite_link(url, source, {}, output, "") + closing
+
+    # The context generator emits catalog links as Markdown list items; preserve all other text.
+    content = re.sub(r"(?m)^(- \[.*?\]\()([^\n)]+)(\))", absolute_link, source.read_text())
+    (output / "llms.txt").write_text(content)
+
+
 def prepare_site():
     generated = SOURCE / ".generated"
     if generated.exists():
@@ -544,6 +556,7 @@ def prepare_site():
     public = generated / "public"
     public.mkdir(parents=True)
     shutil.copyfile(SOURCE / "sail.svg", public / "sail.svg")
+    publish_llms(public)
     (public / ".nojekyll").touch()
     examples = discover_examples()
     facts = discover_facts()
