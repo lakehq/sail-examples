@@ -234,6 +234,30 @@ def test_failed_rerun_cannot_reuse_success_metadata(tmp_path, monkeypatch):
     assert not (output / "meta.json").exists()
 
 
+def test_runner_reports_the_location_of_a_bare_assertion(tmp_path, monkeypatch):
+    import json
+    from types import SimpleNamespace
+
+    import runner
+
+    script = tmp_path / "bare_assertion.py"
+    script.write_text("def check(spark, engine):\n    assert False\n")
+    output = tmp_path / "result"
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.syspath_prepend(str(tmp_path))
+    monkeypatch.setattr(runner, "_SERVER", None)
+    monkeypatch.setattr(runner, "engine_versions", lambda engine: {})
+    monkeypatch.setattr(runner, "make_session", lambda engine: SimpleNamespace(stop=lambda: None))
+    monkeypatch.setattr(
+        runner.sys, "argv", ["runner.py", "--engine", "sail", "--fact", str(script), "--out", str(output)]
+    )
+    assert runner.main() == 1
+    result = json.loads((output / "meta.json").read_text())
+    assert result["status"] == "failed"
+    assert "bare_assertion.py" in result["message"]
+    assert "assert False" in result["message"]
+
+
 def test_failed_capture_preserves_results_and_successful_retry_clears_failure(tmp_path):
     import json
 

@@ -43,7 +43,8 @@ MAX_RENDER_PIXELS = 2_000_000
 MAX_LINES = 512
 MAX_LINE_CHARS = 2048
 MAX_CACHE_BYTES = 1_100_000
-RENDER_SCALE = 1.5
+# Keep small field labels legible while staying within the render-pixel limit.
+RENDER_SCALE = 1.75
 OCR_PARAMS = {
     "EngineConfig.onnxruntime.intra_op_num_threads": 1,
     "EngineConfig.onnxruntime.inter_op_num_threads": 1,

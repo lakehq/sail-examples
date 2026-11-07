@@ -158,7 +158,7 @@ def main() -> int:
         meta["status"] = "ok"
     except AssertionError as error:
         meta["status"] = "failed"
-        meta["message"] = str(error)
+        meta["message"] = str(error) or traceback.format_exc()
     except Exception:  # noqa: BLE001 - every error is reported back to the harness
         text = traceback.format_exc()
         # Keep the head (where JVM errors put the cause) and the tail (the Python frames).

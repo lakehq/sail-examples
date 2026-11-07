@@ -59,23 +59,21 @@ Amounts are parsed with `Decimal`, without floating-point rounding or a toleranc
 
 ## Example output
 
-Recorded output · Sail 0.7.3.
-
-The example has changed since this capture. This output comes from the earlier script.
+Current output · Sail 0.7.3 (revision 2).
 
 ```text
 documents
-+--------------+----------------+--------+-----------+-----------------+-------------------------------------------+
-|document_id   |invoice_id      |currency|gross_minor|status           |error                                      |
-+--------------+----------------+--------+-----------+-----------------+-------------------------------------------+
-|doc-acme      |ACM-100145      |USD     |37249      |duplicate_invoice|NULL                                       |
-|doc-acme-alias|ACM-100145      |USD     |37249      |duplicate_invoice|NULL                                       |
-|doc-blank     |NULL            |USD     |NULL       |extraction_error |blank                                      |
-|doc-corrupt   |NULL            |USD     |NULL       |extraction_error |read_or_ocr_failed:PdfiumError             |
-|doc-mersey    |NULL            |GBP     |NULL       |extraction_error |invoice_or_total_label_missing_or_ambiguous|
-|doc-northwind |NWL-20240318-002|USD     |159943     |amount_mismatch  |NULL                                       |
-|doc-pennine   |IN0049923       |GBP     |2161390    |missing_po       |NULL                                       |
-+--------------+----------------+--------+-----------+-----------------+-------------------------------------------+
++--------------+----------------+--------+-----------+-----------------+------------------------------+
+|document_id   |invoice_id      |currency|gross_minor|status           |error                         |
++--------------+----------------+--------+-----------+-----------------+------------------------------+
+|doc-acme      |ACM-100145      |USD     |37249      |duplicate_invoice|NULL                          |
+|doc-acme-alias|ACM-100145      |USD     |37249      |duplicate_invoice|NULL                          |
+|doc-blank     |NULL            |USD     |NULL       |extraction_error |blank                         |
+|doc-corrupt   |NULL            |USD     |NULL       |extraction_error |read_or_ocr_failed:PdfiumError|
+|doc-mersey    |IN0003904       |GBP     |1499034    |match            |NULL                          |
+|doc-northwind |NWL-20240318-002|USD     |159943     |amount_mismatch  |NULL                          |
+|doc-pennine   |IN0049923       |GBP     |2161390    |missing_po       |NULL                          |
++--------------+----------------+--------+-----------+-----------------+------------------------------+
 
 structured
 +-----------------------+----------+--------+-----------+-----------------+------------------+
@@ -98,8 +96,9 @@ structured
 The console output has separate `documents` and `structured` reports.
 [Saved console captures](outputs.json) include the Sail version.
 The document inputs exercise duplicate invoices, a one-cent PO mismatch, a missing
-PO, and extraction failures. In the Sail 0.7.3 capture, Mersey also returns
-`extraction_error`: OCR did not produce unambiguous invoice and total labels.
+PO, a matching invoice, and extraction failures. The render resolution keeps small
+field labels legible. The earlier capture rejected Mersey because OCR misread its
+`TOTAL` label; the current example reads it correctly and matches its purchase order.
 
 The six structured inputs include one match, two duplicate aliases, a missing
 PO, a wrong amount and a missing invoice ID. A `match` means only that these
