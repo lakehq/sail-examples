@@ -11,6 +11,7 @@ dev = [
   "pyyaml>=6",
   "ruff>=0.6",
   "markdown-it-py==4.0.0",
+  "pygments==2.21.0",
 ]
 
 [tool.uv]

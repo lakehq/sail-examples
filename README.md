@@ -42,6 +42,8 @@ Model examples download their weights on the first run; each guide states what i
 
 ## Find your next example
 
+Prefer a visual catalog? [Preview the showcase website locally](.github/skills/prepare-sail-website/SKILL.md#validate-and-preview).
+
 Browse by task below. **Beginner** examples start with familiar SQL or Python;
 **intermediate** and **advanced** examples explain more involved workflows.
 
@@ -122,14 +124,15 @@ facts without changing the repository's pins. This detects release regressions o
 supplied inputs; it does not prove every workload or every Sail build compatible.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the commands, limits and release-check process.
-Contributors provide runnable examples; maintainers prepare recorded outputs
+Contributors provide runnable examples; maintainers prepare their website presentation
 with the [prepare-sail-website skill](.github/skills/prepare-sail-website/SKILL.md).
 
 ## Learn the Sail details
 
-The executable notes in [facts/](facts/) cover setup, Python functions, data sources,
-and differences from Spark. Each note states which engines it checks and targets
-the pinned versions.
+The showcase’s **Behavior** page turns [facts/](facts/) into notes on setup, Python
+functions, data sources and differences from Spark. Each note links to its executable
+check and states which engines it checks. The notes target the pinned versions;
+[preview the website locally](.github/skills/prepare-sail-website/SKILL.md#validate-and-preview) to browse them.
 
 ## For coding assistants
 

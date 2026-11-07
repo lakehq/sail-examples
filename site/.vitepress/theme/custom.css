@@ -1,0 +1,627 @@
+/* Brand and typography from docs.lakesail.com/platform, platform-docs/.vitepress/theme/custom.css. */
+:root {
+  --vp-c-brand-1: #3762e0;
+  --vp-c-brand-2: #2c4fbc;
+  --vp-c-brand-3: #2c4fbc;
+  --vp-c-brand-soft: rgba(55, 98, 224, 0.14);
+  --vp-font-family-base: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --vp-font-family-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --ls-font-display: "Outfit Variable", var(--vp-font-family-base);
+  --ink: var(--vp-c-text-1);
+  --body-ink: var(--vp-c-text-1);
+  --muted: var(--vp-c-text-2);
+  --paper: var(--vp-c-bg);
+  --surface: var(--vp-c-bg-elv);
+  --surface-alt: var(--vp-c-bg-soft);
+  --section: var(--vp-c-bg-alt);
+  --line: var(--vp-c-divider);
+  --brand: var(--vp-c-brand-1);
+  --brand-hover: var(--vp-c-brand-2);
+  --on-brand: light-dark(#fff, #1b1b1f);
+  --accent: var(--vp-c-brand-1);
+  --success: var(--vp-c-green-1);
+  --terminal: var(--vp-code-block-bg);
+  --terminal-ink: var(--vp-c-text-1);
+  --terminal-muted: var(--vp-c-text-2);
+  --overlay-ink: #fff;
+  --photo-overlay: #1b1b1fed;
+  --shadow: light-dark(#17255412, #00000038);
+  --added-bg: light-dark(#e4f4e8, #233d30);
+  --added-ink: light-dark(#205b33, #a5e3b7);
+  --removed-bg: light-dark(#fce8e8, #45282d);
+  --removed-ink: light-dark(#92282d, #ffb4b4);
+  --syntax-comment: light-dark(#596579, #a5adb8);
+  --syntax-keyword: light-dark(#743b82, #d8b4fe);
+  --syntax-string: light-dark(#235d3f, #9cdbad);
+  --syntax-number: light-dark(#914522, #ffc28c);
+  --syntax-name: light-dark(#225b87, #93c5fd);
+  --serif: Georgia, "Times New Roman", serif;
+  color-scheme: light;
+}
+.dark {
+  --vp-c-brand-1: #6b8eef;
+  --vp-c-brand-2: #5378e3;
+  --vp-c-brand-3: #5378e3;
+  --vp-c-brand-soft: rgba(107, 142, 239, 0.16);
+  color-scheme: dark;
+}
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  font-family: var(--ls-font-display);
+}
+.sail-docs .VPNavBarTitle img {
+  width: 32px;
+  height: 32px;
+}
+.sail-docs .guide-body pre {
+  white-space: pre;
+}
+.sail-docs .guide-body pre code {
+  display: inline;
+}
+.sail-docs .guide-body .source-viewer pre {
+  display: flex;
+}
+.sail-docs .guide-body .source-viewer pre code {
+  display: block;
+}
+.sail-docs .guide-body .source-viewer {
+  padding: 0;
+}
+.sail-docs .guide-body .source-viewer summary {
+  margin: 0;
+}
+.sail-docs .guide-body pre.code-diff code {
+  display: block;
+}
+.sail-docs .guide-body .command-block {
+  margin: 16px 0;
+  padding-right: 64px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.sail-docs .guide-body .command-block pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  min-height: 64px;
+}
+.sail-docs .command-block > button.copy {
+  opacity: 1;
+}
+.sail-docs .guide-body .guide-related h2 {
+  border-top: 0;
+  padding-top: 0;
+}
+.sail-docs .tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sail-docs .copy-status {
+  min-height: 22px;
+  font-size: 11px;
+  padding: 0 23px;
+  margin: 6px 0 8px;
+}
+.sail-docs .guide-nav .tag {
+  display: block;
+  margin-bottom: 17px;
+}
+.sail-docs .guide-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sail-docs .guide-body p,
+.sail-docs .guide-body li {
+  color: var(--body-ink);
+}
+.sail-docs .guide-body > p:first-of-type {
+  font-size: 19px;
+  color: var(--ink);
+}
+.sail-docs .guide-body > p > img {
+  border-radius: 6px;
+  margin: 26px 0;
+  width: 100%;
+}
+.sail-docs .guide-body pre {
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  padding: 20px;
+  border-radius: 5px;
+  overflow: auto;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.sail-docs .guide-body code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--surface-alt);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+.sail-docs .guide-body pre code {
+  font-size: inherit;
+  padding: 0;
+  background: transparent;
+}
+.sail-docs .guide-body .table-scroll {
+  overflow-x: auto;
+  margin: 24px 0;
+}
+.sail-docs .guide-body table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+.sail-docs .guide-body th,
+.sail-docs .guide-body td {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  text-align: left;
+  min-width: 110px;
+}
+.sail-docs .guide-body th {
+  background: var(--surface-alt);
+}
+.sail-docs .guide-body td img {
+  max-width: 300px;
+  width: 100%;
+  border-radius: 4px;
+}
+.sail-docs .guide-body li {
+  margin-bottom: 10px;
+}
+.sail-docs .guide-source {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  font-size: 12px;
+}
+.sail-docs .guide-source a {
+  color: var(--muted);
+}
+.sail-docs .guide-related {
+  margin-top: 50px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.sail-docs .guide-related-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+}
+.sail-docs .guide-body .guide-related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--body-ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.sail-docs .guide-related-card strong {
+  color: var(--brand);
+  font-size: 18px;
+  line-height: 1.4;
+}
+.sail-docs .guide-related-card:hover,
+.sail-docs .guide-related-card:focus-visible {
+  border-color: var(--brand);
+  background: var(--surface-alt);
+}
+.sail-docs .guide-related-card .tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sail-docs .guide-body blockquote {
+  margin: 20px 0;
+  padding: 5px 20px;
+  border-left: 3px solid var(--brand);
+}
+.sail-docs .guide-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 700px) {
+  .sail-docs .guide-nav .tag {
+    display: none;
+  }
+  .sail-docs .guide-body pre {
+    padding: 14px;
+  }
+  .sail-docs .guide-body th,
+  .sail-docs .guide-body td {
+    padding: 10px;
+  }
+  .sail-docs .guide-body td img {
+    min-width: 150px;
+  }
+  .sail-docs .guide-source {
+    flex-wrap: wrap;
+  }
+}
+
+.sail-docs svg.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.12em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sail-docs .reference-callout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--line);
+}
+.sail-docs .reference-callout p:not(.eyebrow) {
+  color: var(--muted);
+  max-width: 420px;
+}
+.sail-docs .reference-callout ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-self: center;
+}
+.sail-docs .reference-callout li {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.sail-docs .reference-callout li:first-child {
+  border-top: 1px solid var(--line);
+}
+.sail-docs .reference-callout li a {
+  font-weight: 550;
+}
+.sail-docs .reference-callout li span {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.sail-docs .reference-scope {
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-alt);
+  font-size: 14px;
+}
+.sail-docs .reference-scope strong {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 550;
+}
+.sail-docs .reference-scope p:last-child {
+  margin-bottom: 0;
+}
+.sail-docs .behavior-topics {
+  margin: 28px 0;
+}
+.sail-docs .behavior-topics > p {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sail-docs .behavior-topics ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sail-docs .behavior-topics li {
+  margin: 0;
+  min-width: 0;
+}
+.sail-docs .behavior-topics a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.sail-docs .behavior-topics a:hover,
+.sail-docs .behavior-topics a:focus-visible {
+  border-color: var(--brand);
+  background: var(--surface-alt);
+}
+.sail-docs .behavior-topics .topic-icon {
+  margin: 0;
+  color: var(--brand);
+}
+.sail-docs .topic-count {
+  color: var(--muted);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 400;
+}
+.sail-docs .fact-category {
+  margin-top: 48px;
+}
+.sail-docs .fact-note {
+  margin: 18px 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-alt);
+  scroll-margin-top: 96px;
+}
+.sail-docs .fact-note h3 {
+  margin: 0 0 14px;
+  font-size: 21px;
+  line-height: 1.4;
+}
+.sail-docs .fact-note h3 a {
+  text-decoration: none;
+}
+.sail-docs .fact-note h3 a:hover {
+  text-decoration: underline;
+}
+.sail-docs .fact-note p {
+  margin: 0 0 14px;
+}
+.sail-docs .fact-note:target {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 1px var(--brand);
+}
+.sail-docs .fact-evidence {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+.sail-docs .fact-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.sail-docs .fact-actions a:first-child {
+  font-weight: 600;
+}
+@media (max-width: 639px) {
+  .sail-docs .behavior-topics ul {
+    grid-template-columns: 1fr;
+  }
+  .sail-docs .fact-note {
+    padding: 18px;
+  }
+}
+.sail-docs .reference-checks {
+  border-top: 1px solid var(--line);
+  margin-top: 36px;
+}
+@media (max-width: 700px) {
+  .sail-docs .reference-callout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+  .sail-docs .reference-scope {
+    padding: 16px;
+  }
+}
+
+.sail-docs .topic-icon {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  vertical-align: -0.2em;
+  margin-right: 0.3em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sail-docs .guide-body pre.code-diff {
+  padding: 16px 0;
+}
+.sail-docs .code-diff code {
+  display: block;
+  min-width: max-content;
+}
+.sail-docs .diff-line {
+  display: grid;
+  grid-template-columns: 6ch minmax(max-content, 1fr);
+  padding: 0 18px;
+}
+.sail-docs .diff-number {
+  padding-right: 1ch;
+  border-right: 1px solid var(--line);
+  text-align: right;
+  color: var(--muted);
+  user-select: none;
+}
+.sail-docs .diff-code {
+  padding-left: 1ch;
+}
+.sail-docs .diff-columns {
+  display: grid;
+  grid-template-columns: 6ch minmax(max-content, 1fr);
+  padding: 0 18px 10px;
+  color: var(--muted);
+}
+.sail-docs .diff-columns > span {
+  padding-right: 1ch;
+  text-align: right;
+  font-size: 10px;
+  user-select: none;
+}
+.sail-docs .diff-columns a {
+  padding-left: 1ch;
+  font-size: 11px;
+}
+.sail-docs .diff-added {
+  background: var(--added-bg);
+  color: var(--added-ink);
+}
+.sail-docs .diff-removed {
+  background: var(--removed-bg);
+  color: var(--removed-ink);
+}
+.sail-docs .fact-examples {
+  margin-top: 18px;
+  padding: 0;
+  font-size: 14px;
+}
+.sail-docs .fact-examples summary {
+  cursor: pointer;
+  font-weight: 550;
+}
+.sail-docs .fact-examples ul {
+  margin-bottom: 0;
+}
+.sail-docs .output-snapshot {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 14px 0;
+  padding: 18px;
+}
+.sail-docs .output-snapshot summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.sail-docs .output-snapshot .output-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+.sail-docs .output-snapshot pre {
+  max-height: 420px;
+  overflow: auto;
+}
+
+.sail-docs .source-viewer {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 14px 0;
+  overflow: hidden;
+}
+.sail-docs .source-viewer summary {
+  padding: 16px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.sail-docs .source-lines {
+  margin-left: 12px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.sail-docs .source-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.sail-docs .source-toolbar a {
+  overflow-wrap: anywhere;
+}
+.sail-docs .source-toolbar button {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 5px 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.sail-docs .source-toolbar button:hover {
+  background: var(--surface-alt);
+}
+.sail-docs .source-viewer pre {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  max-height: min(640px, 70vh);
+  tab-size: 4;
+}
+.sail-docs .source-line-numbers {
+  flex: none;
+  position: sticky;
+  left: 0;
+  min-width: 4ch;
+  padding-right: 12px;
+  border-right: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--surface-alt);
+  text-align: right;
+  user-select: none;
+}
+.sail-docs .source-viewer .python-source {
+  flex: none;
+}
+.sail-docs .source-viewer summary:focus-visible,
+.sail-docs .source-viewer pre:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+.sail-docs .python-source [class^="c"] {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+.sail-docs .python-source [class^="k"],
+.sail-docs .python-source .ow {
+  color: var(--syntax-keyword);
+  font-weight: 600;
+}
+.sail-docs .python-source [class^="s"] {
+  color: var(--syntax-string);
+}
+.sail-docs .python-source [class^="m"] {
+  color: var(--syntax-number);
+}
+.sail-docs .python-source .nf,
+.sail-docs .python-source .nc,
+.sail-docs .python-source .nb {
+  color: var(--syntax-name);
+}
+.sail-docs .github-link .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.sail-docs .guide-body pre code {
+  color: var(--ink);
+  font-family: var(--vp-font-family-mono);
+}

@@ -1,0 +1,169 @@
+<section class="hero page-width">
+  <div class="hero-copy">
+    <p class="eyebrow">THE SAIL EXAMPLE COLLECTION</p>
+    <h1>Good questions.<br /><em>Runnable answers.</em></h1>
+    <p class="lead">Explore a city’s taxi trips. Find a photo with a sentence. Bring a customer table up to date.</p>
+    <p class="hero-detail">
+      Real tasks, explained step by step, with Spark SQL and Python on Sail. Pick something that makes you curious.
+    </p>
+    <div class="hero-actions">
+      <a class="button" href="examples/query-files-with-sql/index.html"
+        >Run your first example
+        <span aria-hidden="true"
+          ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 18 18 6M6 6h12v12" /></svg></span></a
+      ><a class="text-link" href="#examples">Browse examples <span aria-hidden="true">↓</span></a>
+      <a class="text-link" href="facts/index.html">Explore Sail behavior →</a>
+    </div>
+    <p class="requirements">On your laptop · No Java · No cluster · No API key</p>
+  </div>
+  <figure class="hero-result">
+    <div class="result-top"><span class="status-dot"></span> FROM THE PHOTO SEARCH EXAMPLE</div>
+    <div class="search-query">
+      <span aria-hidden="true"
+        ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="10" cy="10" r="6" />
+          <path d="m15 15 5 5" /></svg
+      ></span>
+      a dog playing in the snow
+    </div>
+    <div class="result-photo">
+      <img
+        src="$hero_photo"
+        alt="A reddish-brown and white dog standing in snow, the first search match"
+        width="512"
+        height="384"
+      /><span class="rank-label">01 / Best match</span>
+    </div>
+    <figcaption>
+      A sentence in. A matching photo out.<br /><a href="examples/search-images-by-text/index.html"
+        >See how the example works
+        <span aria-hidden="true"
+          ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 18 18 6M6 6h12v12" /></svg></span></a
+      ><a
+        class="credit"
+        href="https://github.com/lakehq/sail-examples/blob/main/multimodal/search-images-by-text/images/CREDITS.md"
+        >Photo source &amp; license</a
+      >
+    </figcaption>
+  </figure>
+</section>
+<section class="featured-section" aria-labelledby="featured-title">
+  <div class="page-width">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">A FEW GOOD PLACES TO START</p>
+        <h2 id="featured-title">See it. Run it. Make it yours.</h2>
+      </div>
+      <p>Each guide shows the result,<br />the code, and one change to try.</p>
+    </div>
+    <div class="featured-grid">$featured</div>
+  </div>
+</section>
+<section class="first-run page-width" aria-labelledby="run-title">
+  <div>
+    <p class="eyebrow">FROM CURIOUS TO RUNNING</p>
+    <h2 id="run-title">Your first answer is<br />a few commands away.</h2>
+    <p>
+      Install
+      <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>, then run the taxi example. It handles
+      Python and package setup for you.
+    </p>
+    <p class="small">
+      After <code>cd sail-examples</code>, run all guide commands from that repository root.
+      The first run downloads about 1.4 MB of trip data and a small zone lookup, plus Python packages.
+    </p>
+  </div>
+  <div class="terminal">
+    <div class="terminal-heading">
+      <span>TERMINAL</span><button type="button" data-copy="quickstart-command">Copy commands</button>
+    </div>
+    <pre id="quickstart-command"><code>git clone https://github.com/lakehq/sail-examples.git
+cd sail-examples
+uv run quickstart/query-files-with-sql/main.py</code></pre>
+    <div class="terminal-result">
+      <span>FIRST RESULT</span><strong>East Harlem North <span>12,141 trips</span></strong>
+    </div>
+    <p class="copy-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+<section class="reference-callout page-width" aria-labelledby="reference-title">
+  <div>
+    <p class="eyebrow">KNOW WHAT TO EXPECT</p>
+    <h2 id="reference-title">How Sail behaves.</h2>
+    <p>From caching to file formats, these checked notes explain behavior that can change how you write a query.</p>
+    <a class="text-link" href="facts/index.html">Browse all $fact_count notes →</a>
+  </div>
+  <ul>
+    <li>
+      <a href="facts/cache-does-not-keep-results/index.html">Why did my model run again?</a
+      ><span>Saving and reusing results</span>
+    </li>
+    <li>
+      <a href="facts/engine-config-from-env/index.html">Where do I set engine options?</a
+      ><span>Configuration before startup</span>
+    </li>
+    <li>
+      <a href="facts/index.html#silent-behavior">What behaves differently from Spark?</a
+      ><span>Types, timestamps and query results</span>
+    </li>
+  </ul>
+</section>
+<section class="catalog-section page-width" id="examples" aria-labelledby="catalog-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">FOLLOW YOUR CURIOSITY</p>
+      <h2 id="catalog-title">What would you like to build?</h2>
+    </div>
+    <p>Browse all $count runnable examples.</p>
+  </div>
+  <div class="catalog-controls" hidden>
+    <label class="search-field"
+      ><span>Find an example</span
+      ><input
+        id="example-search"
+        type="search"
+        placeholder="Try “SQL”, “photos” or “Delta”…"
+        autocomplete="off" /></label
+    ><label class="level-field"
+      ><span>Experience</span
+      ><select id="example-level">
+        <option value="">All levels</option>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select></label
+    >
+  </div>
+  <div class="category-filters" role="group" aria-label="Filter by topic" hidden>$filters</div>
+  <p id="result-count" class="result-count" role="status" aria-live="polite">$count examples</p>
+  <div class="catalog-grid">$catalog</div>
+  <div id="no-results" class="empty-state" hidden>
+    <h3>No examples match those filters.</h3>
+    <p>Try a broader search, or clear the filters to see the whole collection.</p>
+    <button type="button" id="clear-filters">Clear filters</button>
+  </div>
+</section>
+<section class="trust-section page-width">
+  <div>
+    <p class="eyebrow">CODE YOU CAN INSPECT</p>
+    <h2>Learn from the result.<br />Keep the useful parts.</h2>
+  </div>
+  <div>
+    <p>
+      Every guide links to its runnable source. The test suite compares portable examples with Apache Spark and checks
+      selected results against independent answers.
+    </p>
+    <p>
+      These are examples with bounded inputs, not a promise about every workload. Each guide explains its requirements
+      and limits.
+    </p>
+    <a class="text-link" href="https://github.com/lakehq/sail-examples/blob/main/CONTRIBUTING.md"
+      >How the examples are checked
+      <span aria-hidden="true"
+        ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 18 18 6M6 6h12v12" /></svg></span
+    ></a>
+  </div>
+</section>
