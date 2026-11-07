@@ -27,7 +27,7 @@ def run(spark: SparkSession) -> DataFrame:
         """
         SELECT customer_id,
                count(*)    AS orders,
-               sum(amount) AS spend,
+               round(sum(amount), 2) AS spend,
                max(day)    AS last_day
         FROM orders
         GROUP BY customer_id

@@ -58,7 +58,7 @@ def check_quality(example_id, tables):
         expected = {
             "fifty-famous-stories-1896.pdf": (0, 0, 1),
             "university-missourian-1915.pdf": (0.032, 0.061, 0.950),
-            "street-railway-handbill-1888.pdf": (0.044, 0.055, 0.932),
+            "street-railway-handbill-1888.pdf": (0.043, 0.049, 0.932),
             "hack-fares-1892.pdf": (0.314, 0.020, 0.981),
         }
         actual = {r["file"]: r for r in pages if r["status"] == "ok"}

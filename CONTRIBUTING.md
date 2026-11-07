@@ -6,8 +6,10 @@ for portable Spark SQL and DataFrame code.
 
 ## Set up and check a change
 
-Use Python 3.12, [uv](https://docs.astral.sh/uv/) 0.13.4 or newer and Java 17 for the Apache Spark
-checks. The repository's `.python-version` selects the Python version. Install
+Use [uv](https://docs.astral.sh/uv/) 0.13.4 or newer and Java 17 for the Apache Spark
+checks. The repository's `.python-version` selects Python for local runs and tests.
+Keep it on the newest stable Python minor supported by PySail, and check the
+example dependencies when updating it. Install
 [Git LFS](https://git-lfs.com) and run `git lfs install` once before cloning, since it stores the
 examples' images and video.
 
