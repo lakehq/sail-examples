@@ -9,13 +9,19 @@ package, because it runs inside the engine environment, not the dev one.
 """
 
 import argparse
+import contextlib
+import hashlib
+import importlib.metadata
 import importlib.util
+import io
 import json
 import os
 import platform
+import runpy
 import sys
 import time
 import traceback
+from datetime import UTC, datetime
 from pathlib import Path
 
 _SERVER = None  # keeps the in-process Sail server alive for the whole run
@@ -86,12 +92,46 @@ def write_references(reference: dict, out: Path) -> list[str]:
     return list(reference)
 
 
+def capture_entry_point(path: Path) -> dict:
+    """Capture the reader's command, keeping diagnostics out of the displayed output."""
+    stdout = io.StringIO()
+    script_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+    previous_argv = sys.argv
+    sys.argv = [str(path)]
+    sys.path.insert(0, str(path.parent))
+    try:
+        with contextlib.redirect_stdout(stdout):
+            try:
+                runpy.run_path(str(path), run_name="__main__")
+            except SystemExit as error:
+                if error.code not in (None, 0):
+                    raise RuntimeError(f"Entry point exited with {error.code}") from error
+    finally:
+        sys.argv = previous_argv
+    output = stdout.getvalue()
+    if not output.strip():
+        raise ValueError("The entry point printed no output; no snapshot was recorded")
+    return {
+        "output": output,
+        "run": {
+            "sail": importlib.metadata.version("pysail"),
+            "python": platform.python_version(),
+            "captured_at": datetime.now(UTC).isoformat(),
+            "script_sha256": script_hash,
+            "packages": dict(
+                sorted((dist.metadata["Name"], dist.version) for dist in importlib.metadata.distributions())
+            ),
+        },
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--engine", required=True, choices=["sail", "spark"])
     target = parser.add_mutually_exclusive_group(required=True)
     target.add_argument("--example", type=Path)
     target.add_argument("--fact", type=Path)
+    target.add_argument("--entry-point", type=Path)
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()
 
@@ -100,16 +140,21 @@ def main() -> int:
     started = time.monotonic()
     spark = None
     try:
-        path = (args.example or args.fact).resolve()
+        path = (args.example or args.fact or args.entry_point).resolve()
         os.chdir(path.parent)
-        module = load_module(path)
-        spark = make_session(args.engine)
-        if args.example:
-            meta["outputs"] = write_results(module.run(spark), args.out)
-            if hasattr(module, "reference"):
-                meta["references"] = write_references(module.reference(), args.out)
+        if args.entry_point:
+            if args.engine != "sail":
+                raise ValueError("Output snapshots require the Sail engine")
+            meta["capture"] = capture_entry_point(path)
         else:
-            meta["observed"] = module.check(spark, args.engine)
+            module = load_module(path)
+            spark = make_session(args.engine)
+            if args.example:
+                meta["outputs"] = write_results(module.run(spark), args.out)
+                if hasattr(module, "reference"):
+                    meta["references"] = write_references(module.reference(), args.out)
+            else:
+                meta["observed"] = module.check(spark, args.engine)
         meta["status"] = "ok"
     except AssertionError as error:
         meta["status"] = "failed"

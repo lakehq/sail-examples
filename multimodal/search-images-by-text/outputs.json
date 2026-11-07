@@ -1,0 +1,91 @@
+{
+  "snapshots": [
+    {
+      "output": "a dog playing in the snow\n  1. 0.279  dog-snow.jpg\n  2. 0.254  fox.jpg\n  3. 0.225  snow-trees.jpg\na sailboat on the water\n  1. 0.268  sailboat-bay.jpg\n  2. 0.254  sailboat.jpg\n  3. 0.243  beach-tropical.jpg\na cat asleep\n  1. 0.303  cat-sleeping-orange.jpg\n  2. 0.295  cat-sleeping-curled.jpg\n  3. 0.259  cat-tabby.jpg\na city street at night\n  1. 0.307  street-night.jpg\n  2. 0.234  bridge-night.jpg\n  3. 0.196  bicycle-snow-night.jpg\nbreakfast on a plate\n  1. 0.283  food-english-breakfast.jpg\n  2. 0.265  food-pizza.jpg\n  3. 0.242  food-caesar-salad.jpg\n+--------+------------------+-----------+\n|captions|       recall_at_1|recall_at_5|\n+--------+------------------+-----------+\n|      53|0.9811320754716981|        1.0|\n+--------+------------------+-----------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.2",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T19:34:19.722504+00:00",
+          "script_sha256": "ed3c55b268788f3eaf7cab0443bf744b179861bdbc787fd2226f546a85d81fa3",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "coloredlogs": "15.0.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "pillow": "13.0.0",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.2",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "sympy": "1.14.0",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          }
+        },
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T19:32:57.952142+00:00",
+          "script_sha256": "ed3c55b268788f3eaf7cab0443bf744b179861bdbc787fd2226f546a85d81fa3",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "coloredlogs": "15.0.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "pillow": "13.0.0",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "sympy": "1.14.0",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

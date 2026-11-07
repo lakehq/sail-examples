@@ -28,6 +28,39 @@ uv run main.py
 
 Sail reads and writes Delta Lake natively, so no Delta package or JVM jars are needed.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+After MERGE:
++---+-----+------+
+| id| name|  tier|
++---+-----+------+
+|  1|  Ana|  gold|
+|  2|   Bo|  gold|
+|  3|Cyrus|bronze|
+|  4|   Di|silver|
+|  6|  Fay|silver|
++---+-----+------+
+
+Version 0 (before MERGE):
++---+----+------+
+| id|name|  tier|
++---+----+------+
+|  1| Ana|  gold|
+|  2|  Bo|silver|
+|  3|  Cy|bronze|
+|  4|  Di|silver|
+|  5|  Ed|bronze|
++---+----+------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **Create the table.** The initial rows are written with `df.write.format("delta")`, and `CREATE TABLE ... USING delta LOCATION` registers the path so SQL can refer to it by name.

@@ -35,6 +35,48 @@ uv run main.py --export-dir .data/support-faq-v1
 
 An existing export directory is rejected. The program prints per-query metrics and the number of ranked pairs loaded for each split. All exported tables, including quarantined input rows, remain in the retained directory.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++-------------+------------+----------+---------+----------------+------------------+-----------------+---------------------+------------------+------------------+------------------+
+|method       |query_id    |split     |documents|judged_documents|relevant_documents|unjudged_in_top_k|status               |recall_at_k       |mrr_at_k          |ndcg_at_k         |
++-------------+------------+----------+---------+----------------+------------------+-----------------+---------------------+------------------+------------------+------------------+
+|minilm       |address     |validation|7        |7               |1                 |0                |scored               |1.0               |1.0               |1.0               |
+|minilm       |missing     |train     |7        |5               |2                 |1                |incomplete_judgments |NULL              |NULL              |NULL              |
+|minilm       |password    |test      |7        |7               |2                 |0                |scored               |1.0               |1.0               |1.0               |
+|minilm       |refund      |train     |7        |7               |3                 |0                |scored               |1.0               |1.0               |1.0               |
+|minilm       |return      |train     |7        |7               |3                 |0                |scored               |1.0               |1.0               |1.0               |
+|minilm       |security    |test      |7        |7               |1                 |0                |scored               |1.0               |1.0               |1.0               |
+|minilm       |shipping    |validation|7        |7               |1                 |0                |scored               |1.0               |0.5               |0.6309297535714574|
+|minilm       |unanswerable|test      |7        |7               |0                 |0                |no_relevant_documents|NULL              |NULL              |NULL              |
+|token_overlap|address     |validation|7        |7               |1                 |0                |scored               |1.0               |1.0               |1.0               |
+|token_overlap|missing     |train     |7        |5               |2                 |0                |incomplete_judgments |NULL              |NULL              |NULL              |
+|token_overlap|password    |test      |7        |7               |2                 |0                |scored               |0.5               |1.0               |0.8262346571285599|
+|token_overlap|refund      |train     |7        |7               |3                 |0                |scored               |0.3333333333333333|0.3333333333333333|0.3631143808977028|
+|token_overlap|return      |train     |7        |7               |3                 |0                |scored               |0.6666666666666666|1.0               |0.7002755876478819|
+|token_overlap|security    |test      |7        |7               |1                 |0                |scored               |1.0               |0.5               |0.6309297535714574|
+|token_overlap|shipping    |validation|7        |7               |1                 |0                |scored               |0.0               |0.0               |0.0               |
+|token_overlap|unanswerable|test      |7        |7               |0                 |0                |no_relevant_documents|NULL              |NULL              |NULL              |
++-------------+------------+----------+---------+----------------+------------------+-----------------+---------------------+------------------+------------------+------------------+
+
++----------+----+--------------+
+|split     |rows|snapshot_id   |
++----------+----+--------------+
+|test      |42  |support-faq-v1|
+|train     |42  |support-faq-v1|
+|validation|28  |support-faq-v1|
++----------+----+--------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## Keep versions and judgments together
 
 [fixture.json](fixture.json) contains three input tables and a fixed query-group split map:

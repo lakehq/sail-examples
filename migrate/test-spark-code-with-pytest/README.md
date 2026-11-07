@@ -27,6 +27,19 @@ uv run main.py
 
 Running `main.py` runs the four tests in `test_orders.py`. To run them with pytest directly, install the same packages and run `pytest test_orders.py`.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+....                                                                     [100%]
+4 passed in 1.25s
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **`conftest.py`** defines a session-scoped `spark` fixture. It starts a Sail server in the test process with `SparkConnectServer()` and connects a normal PySpark session to it. Every test in the run shares the one server.

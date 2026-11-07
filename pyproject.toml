@@ -19,6 +19,7 @@ package = false
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["tests"]
+markers = ["examples(*ids): examples covered by a custom test or test module"]
 
 [tool.ruff]
 line-length = 110

@@ -1,0 +1,156 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "23 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Python and guides
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      runtime: ${{ steps.selection.outputs.runtime }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: true
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.7"
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Select runtime checks
+        id: selection
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ -n "$PR_BASE_SHA" ]; then
+            uv run python tests/change_selection.py --base "$PR_BASE_SHA"
+          else
+            uv run python tests/change_selection.py
+          fi
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - name: Compile Python sources
+        run: git ls-files -z '*.py' | xargs -0 uv run python -m py_compile
+      - name: Check metadata, generated context and links
+        run: >-
+          uv run pytest -q tests/test_catalog.py tests/test_context.py
+          tests/test_readme_links.py tests/test_binary_files.py tests/test_output_comparison.py
+          tests/test_output_presentation.py
+          tests/test_change_selection.py
+
+  examples:
+    name: Examples (${{ matrix.sail }} Sail)
+    needs: validate
+    if: needs.validate.outputs.runtime == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        sail: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["pinned", "latest"]' || '["pinned"]') }}
+    env:
+      SPARK_LOCAL_IP: 127.0.0.1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: true
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.7"
+          enable-cache: true
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: "17"
+      - run: uv sync --locked
+      - name: Resolve the latest stable Sail for the repository Python version
+        if: matrix.sail == 'latest'
+        run: |
+          mkdir -p .reports
+          uv run --no-project --isolated --python "$(cat .python-version)" --with pysail --upgrade-package pysail --prerelease disallow \
+            python -c 'from importlib.metadata import version; print(version("pysail"))' > .reports/latest-sail.txt
+          uv run python - <<'PY'
+          import json
+          import os
+          import tomllib
+          from pathlib import Path
+
+          version = Path('.reports/latest-sail.txt').read_text().strip()
+          pins = tomllib.loads(Path('tests/engines.toml').read_text())['sail']['deps']
+          deps = [f'pysail=={version}' if dep.startswith('pysail==') else dep for dep in pins]
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('SAIL_EXAMPLES_SAIL_DEPS=' + json.dumps(deps) + '\n')
+          PY
+      - name: Record tested dependencies
+        run: |
+          mkdir -p .reports
+          uv run python - <<'PY'
+          import json
+          import os
+          import platform
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, 'tests')
+          from harness import engine_deps
+
+          deps = {engine: engine_deps(engine) for engine in ('sail', 'spark')}
+          report = {'python': platform.python_version(), 'engines': deps}
+          Path('.reports/engines.json').write_text(json.dumps(report, indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+              output.write('Tested Python and engine requirements:\n```json\n' + json.dumps(report, indent=2) + '\n```\n')
+          PY
+      - name: Run examples, entry points, reference checks and facts
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ -n "$PR_BASE_SHA" ]; then
+            uv run pytest -ra --changed-since "$PR_BASE_SHA" --junitxml=.reports/results.xml
+          else
+            uv run pytest -ra --junitxml=.reports/results.xml
+          fi
+      - name: Summarize console output comparisons
+        if: always()
+        run: |
+          uv run python - <<'PY'
+          import json
+          import os
+          from collections import Counter
+          from pathlib import Path
+
+          reports = Path('.reports/output-comparisons').rglob('result.json')
+          counts = Counter(json.loads(path.read_text())['status'] for path in reports)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+              output.write('\n### Console output comparisons\n\n')
+              for status, count in sorted(counts.items()):
+                  output.write(f'- {status}: {count}\n')
+              if not counts:
+                  output.write('No output comparisons ran. Check the test results.\n')
+              output.write('\nExpected output, actual output, and text diffs are in the results artifact under `output-comparisons/`. Stored captures were not updated.\n')
+          PY
+      - name: Save results even when a check fails
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: results-${{ matrix.sail }}
+          path: .reports/
+          if-no-files-found: warn
+          retention-days: 14

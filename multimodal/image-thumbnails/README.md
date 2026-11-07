@@ -25,6 +25,35 @@ This example creates 24 test images (PNG and JPEG, 320 to 1280 pixels wide). It 
 uv run main.py
 ```
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++------+------+-------------+---------------+----------------+
+|format|images|source_pixels|max_thumb_width|max_thumb_height|
++------+------+-------------+---------------+----------------+
+|  JPEG|    12|      5374528|             64|              64|
+|   PNG|    12|      7142400|             64|              48|
++------+------+-------------+---------------+----------------+
+
++------------+-----+------+-----------+------------+
+|        name|width|height|thumb_width|thumb_height|
++------------+-----+------+-----------+------------+
+|image-00.png|  320|   240|         64|          48|
+|image-01.jpg|  640|   480|         64|          48|
+|image-02.png|  800|   600|         64|          48|
+|image-03.jpg| 1024|   768|         64|          48|
+|image-04.png| 1280|   960|         64|          48|
++------------+-----+------+-----------+------------+
+only showing top 5 rows
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **A table of paths.** The file list becomes a DataFrame with one `path` row per file, split into four partitions. Each task opens only the files in its own rows.

@@ -8,7 +8,10 @@ from harness import run
 from inference_checks import CASES
 
 
-@pytest.mark.parametrize("case", CASES)
+@pytest.mark.parametrize(
+    "case",
+    [pytest.param(case, marks=pytest.mark.examples(Path(values[0]).name)) for case, values in CASES.items()],
+)
 @pytest.mark.parametrize("engine", ["sail", "spark"])
 def test_bounded_model_inference(case, engine, tmp_path):
     directory = CASES[case][0]

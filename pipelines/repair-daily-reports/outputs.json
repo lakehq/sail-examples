@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "output": "orders\n+--------+--------------+-------+--------+-------------+------------+\n|order_id|source_version|status |store_id|business_date|amount_minor|\n+--------+--------------+-------+--------+-------------+------------+\n|a       |2             |active |south   |2026-01-02   |1200        |\n|b       |3             |active |north   |2026-01-02   |600         |\n|c       |2             |deleted|NULL    |NULL         |NULL        |\n+--------+--------------+-------+--------+-------------+------------+\n\ndaily\n+--------+-------------+-----------+------------+\n|store_id|business_date|order_count|amount_minor|\n+--------+-------------+-----------+------------+\n|north   |2026-01-02   |1          |600         |\n|south   |2026-01-02   |1          |1200        |\n+--------+-------------+-----------+------------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:51.313074+00:00",
+          "script_sha256": "ea8c8caef1c43f13e216020412fbd60fe17fd063069543b47d472e45796a1bd0",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}
