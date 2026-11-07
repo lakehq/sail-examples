@@ -76,6 +76,53 @@ exist. Writes are not an atomic publication protocol: failure can leave partial
 output, so inspect it and choose a new directory when retrying. Without this
 option, output datasets are temporary and removed at process exit.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+orders
++----------------+----------------------------------------------------------------+-----------+------------+-----------+--------+----------+-----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+|       source_id|                                                   source_sha256|line_number|    order_id|customer_id|currency|item_count|gross_minor|                                                               raw_record_base64|                                                                        raw_json|
++----------------+----------------------------------------------------------------+-----------+------------+-----------+--------+----------+-----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          1|ORDER-A-0000| CUSTOMER-1|     USD|         2|       3000|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1BLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-A-0000","customer_id":"CUSTOMER-1","cur...|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          2|ORDER-B-0000| CUSTOMER-2|     GBP|         0|          0|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1CLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-B-0000","customer_id":"CUSTOMER-2","cur...|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         15|ORDER-Z-0000| CUSTOMER-1|     USD|         1|          0|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1aLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-Z-0000","customer_id":"CUSTOMER-1","cur...|
++----------------+----------------------------------------------------------------+-----------+------------+-----------+--------+----------+-----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+
+lines
++----------------+----------------------------------------------------------------+-----------+------------+-------+------+--------+----------------+-----------+
+|       source_id|                                                   source_sha256|line_number|    order_id|line_id|   sku|quantity|unit_price_minor|gross_minor|
++----------------+----------------------------------------------------------------+-----------+------------+-------+------+--------+----------------+-----------+
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          1|ORDER-A-0000|     L1|WIDGET|       2|            1250|       2500|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          1|ORDER-A-0000|     L2|   BAG|       1|             500|        500|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         15|ORDER-Z-0000|   FREE|SAMPLE|       1|               0|          0|
++----------------+----------------------------------------------------------------+-----------+------------+-------+------+--------+----------------+-----------+
+
+rejects
++----------------+----------------------------------------------------------------+-----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-----------------------------------+
+|       source_id|                                                   source_sha256|line_number|                                                               raw_record_base64|                                                                        raw_json|                            reasons|
++----------------+----------------------------------------------------------------+-----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-----------------------------------+
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          3|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1DLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-C-0000","customer_id":"CUSTOMER-1","cur...|        [items[0].invalid_quantity]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          4|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1ELTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-D-0000","customer_id":"CUSTOMER-1","cur...|       [items[1].duplicate_line_id]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          5|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1FLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-E-0000","customer_id":"CUSTOMER-1","cur...|                    [missing_items]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          6|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1GLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-F-0000","customer_id":"CUSTOMER-1","cur...|                       [null_items]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          7|eyJzY2hlbWFfdmVyc2lvbiI6Miwib3JkZXJfaWQiOiJPUkRFUi1HLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":2,"order_id":"ORDER-G-0000","customer_id":"CUSTOMER-1","cur...|       [unsupported_schema_version]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          8|                eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1ILTAwMDAiLAo=|                                {"schema_version":1,"order_id":"ORDER-H-0000",\n|                   [malformed_json]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|          9|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1JLTAwMDAiLCJvcmRlcl9pZCI6I...|{"schema_version":1,"order_id":"ORDER-I-0000","order_id":"OTHER-0000","custom...|            [duplicate_json_member]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         10|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1KLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-J-0000","customer_id":"CUSTOMER-1","cur...|[items[0].invalid_unit_price_minor]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         11|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1YLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-X-0000","customer_id":"CUSTOMER-1","cur...|               [duplicate_order_id]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         12|eyJzY2hlbWFfdmVyc2lvbiI6MSwib3JkZXJfaWQiOiJPUkRFUi1YLTAwMDAiLCJjdXN0b21lcl9pZ...|{"schema_version":1,"order_id":"ORDER-X-0000","customer_id":"CUSTOMER-1","cur...|               [duplicate_order_id]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         13|                                                                            W10K|                                                                            []\n|             [top_level_not_object]|
+|orders-000.jsonl|baffe6dcc7fc6ae30fa2c561e323c1daa1de9180f5c4b1a13a5277a4ce166783|         14|                                                                            Cg==|                                                                              \n|                     [empty_record]|
++----------------+----------------------------------------------------------------+-----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-----------------------------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## The supported contract
 
 Only integer `schema_version: 1` is supported. Missing, null, boolean, string and

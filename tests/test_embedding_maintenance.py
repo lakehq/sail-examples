@@ -6,6 +6,8 @@ import pytest
 from catalog import ROOT, script_dependencies
 from harness import run
 
+pytestmark = pytest.mark.examples("maintain-document-embeddings")
+
 
 def run_case(engine, phase, tmp_path, state):
     return run(

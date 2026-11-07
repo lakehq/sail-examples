@@ -10,6 +10,8 @@ import pytest
 from catalog import ROOT, script_dependencies
 from harness import run
 
+pytestmark = pytest.mark.examples("support-intent-analytics")
+
 
 @pytest.fixture
 def example():

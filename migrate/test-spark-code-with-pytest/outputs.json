@@ -1,0 +1,36 @@
+{
+  "snapshots": [
+    {
+      "output": "....                                                                     [100%]\n4 passed in 1.25s\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:59:15.992664+00:00",
+          "script_sha256": "235bbd798cb9a1617a3e54219d039b8aceb30f75acc8d179c80a5ec29afc39aa",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "Pygments": "2.21.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "iniconfig": "2.3.1",
+            "numpy": "2.5.4",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "pluggy": "1.7.0",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "pytest": "9.1.1",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

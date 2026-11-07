@@ -33,6 +33,62 @@ The default applies four small batches, replays the last batch and then replays
 an old batch. It prints current state and per-input outcomes. Its local state is
 temporary and is removed when the process exits.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++---------+--------------+-------+--------+
+|entity_id|source_version|status |value   |
++---------+--------------+-------+--------+
+|a        |3             |active |platinum|
+|b        |5             |active |gold    |
+|c        |3             |active |bronze  |
+|d        |8             |active |silver  |
+|e        |6             |deleted|NULL    |
++---------+--------------+-------+--------+
+
++-----+-----------+---------+--------------+---------+--------+-------------------+
+|batch|change_id  |entity_id|source_version|operation|value   |outcome            |
++-----+-----------+---------+--------------+---------+--------+-------------------+
+|1    |a1         |a        |1             |upsert   |bronze  |superseded_in_batch|
+|1    |a2         |a        |2             |upsert   |silver  |accepted           |
+|1    |b3         |b        |3             |upsert   |bronze  |accepted           |
+|1    |c2         |c        |2             |delete   |NULL    |accepted           |
+|1    |e6         |e        |6             |delete   |NULL    |accepted           |
+|2    |a2-conflict|a        |2             |upsert   |gold    |conflict           |
+|2    |b4         |b        |4             |delete   |NULL    |accepted           |
+|2    |c1-stale   |c        |1             |upsert   |gold    |stale              |
+|2    |d7-left    |d        |7             |upsert   |silver  |conflict           |
+|2    |d7-right   |d        |7             |upsert   |gold    |conflict           |
+|3    |a2-replay  |a        |2             |upsert   |silver  |conflict           |
+|3    |b3-stale   |b        |3             |upsert   |gold    |stale              |
+|3    |bad-key    |NULL     |1             |upsert   |gold    |invalid_entity_id  |
+|3    |bad-version|f        |0             |upsert   |gold    |invalid_version    |
+|3    |c2-replay  |c        |2             |delete   |NULL    |duplicate          |
+|3    |d7-replay  |d        |7             |upsert   |gold    |conflict           |
+|3    |e5-stale   |e        |5             |upsert   |gold    |stale              |
+|4    |a3         |a        |3             |upsert   |platinum|accepted           |
+|4    |b5         |b        |5             |upsert   |gold    |accepted           |
+|4    |c3         |c        |3             |upsert   |bronze  |accepted           |
+|4    |d8         |d        |8             |upsert   |silver  |accepted           |
+|5    |a3         |a        |3             |upsert   |platinum|duplicate          |
+|5    |b5         |b        |5             |upsert   |gold    |duplicate          |
+|5    |c3         |c        |3             |upsert   |bronze  |duplicate          |
+|5    |d8         |d        |8             |upsert   |silver  |duplicate          |
+|6    |a1         |a        |1             |upsert   |bronze  |superseded_in_batch|
+|6    |a2         |a        |2             |upsert   |silver  |stale              |
+|6    |b3         |b        |3             |upsert   |bronze  |stale              |
+|6    |c2         |c        |2             |delete   |NULL    |stale              |
+|6    |e6         |e        |6             |delete   |NULL    |duplicate          |
++-----+-----------+---------+--------------+---------+--------+-------------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## The contract
 
 Each input has `change_id`, `entity_id`, `source_version`, `operation` and `value`.

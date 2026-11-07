@@ -8,8 +8,10 @@ from pathlib import Path
 
 import pytest
 from catalog import ROOT, script_dependencies
-from harness import run
+from harness import run, script_command
 from iceberg_report_checks import literal_rows, load_example
+
+pytestmark = pytest.mark.examples("reproduce-iceberg-report")
 
 
 def metadata_fixture(tmp_path):
@@ -267,19 +269,7 @@ def test_retained_state_cli_reopens_in_separate_invocations(tmp_path):
     state = tmp_path / "cli-state"
     for phase in ["prepare", "change", "replay"]:
         proc = subprocess.run(
-            [
-                "uv",
-                "run",
-                "--quiet",
-                "--python",
-                "3.12",
-                "--script",
-                str(script),
-                "--state",
-                str(state),
-                "--phase",
-                phase,
-            ],
+            script_command(script, "--state", str(state), "--phase", phase),
             cwd=script.parent,
             text=True,
             capture_output=True,

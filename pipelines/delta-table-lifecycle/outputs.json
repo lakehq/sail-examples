@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "output": "versions\n+-------+----+\n|version|rows|\n+-------+----+\n|0      |0   |\n|1      |182 |\n|2      |353 |\n|3      |531 |\n|4      |531 |\n|5      |531 |\n|6      |440 |\n|7      |441 |\n+-------+----+\n\nby_month\n+-----+-----+--------------+\n|month|trips|rows_with_tips|\n+-----+-----+--------------+\n|1    |56437|151           |\n|2    |53448|0             |\n|3    |57575|148           |\n+-----+-----+--------------+\n\nmarch_31\n+---------+-------------+-----+--------+\n|version  |borough      |trips|fares   |\n+---------+-------------+-----+--------+\n|current  |Bronx        |17   |347.64  |\n|current  |Brooklyn     |267  |6939.9  |\n|current  |Manhattan    |1000 |15000.0 |\n|current  |Outside NYC  |1    |69.0    |\n|current  |Queens       |446  |8526.5  |\n|current  |Staten Island|1    |20.0    |\n|version 3|Bronx        |17   |347.64  |\n|version 3|Brooklyn     |267  |6939.9  |\n|version 3|Manhattan    |740  |10492.56|\n|version 3|N/A          |1    |69.0    |\n|version 3|Queens       |446  |8526.5  |\n|version 3|Unknown      |4    |129.8   |\n+---------+-------------+-----+--------+\n\nboroughs\n+-------------+\n|borough      |\n+-------------+\n|Bronx        |\n|Brooklyn     |\n|EWR          |\n|Manhattan    |\n|Outside NYC  |\n|Queens       |\n|Staten Island|\n+-------------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:33.683279+00:00",
+          "script_sha256": "0907c8be7d3cf426c4ef822df04e58e969bf6058e0814f576bb6f1d822f6903a",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

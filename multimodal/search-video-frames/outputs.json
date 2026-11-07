@@ -1,0 +1,51 @@
+{
+  "snapshots": [
+    {
+      "output": "+------------------+-----+-----+---+------+-----------------+------------------------+\n|             video|scene|start|end|frames|similarity_at_cut|lowest_similarity_within|\n+------------------+-----+-----+---+------+-----------------+------------------------+\n|scenes-montage.mp4|    1|    0|  5|     5|             NULL|                   0.949|\n|scenes-montage.mp4|    2|    5| 10|     5|            0.498|                   0.922|\n|scenes-montage.mp4|    3|   10| 15|     5|            0.465|                   0.977|\n|scenes-montage.mp4|    4|   15| 20|     5|            0.538|                   0.925|\n|scenes-montage.mp4|    5|   20| 25|     5|            0.408|                   0.968|\n|scenes-montage.mp4|    6|   25| 30|     5|            0.635|                    0.98|\n+------------------+-----+-----+---+------+-----------------+------------------------+\n\n'a rocket launch at night' #1: scenes-montage.mp4 20s to 25s  score 0.290  (the scene shows: a rocket lifting off from its launch pad at night)\n'a rocket launch at night' #2: scenes-montage.mp4 0s to 5s  score 0.215  (the scene shows: an orange sun low over a calm sea with a small boat)\n'a black cat' #1: scenes-montage.mp4 15s to 20s  score 0.300  (the scene shows: a black cat lying on a light-colored carpet)\n'a black cat' #2: scenes-montage.mp4 0s to 5s  score 0.210  (the scene shows: an orange sun low over a calm sea with a small boat)\n'a waterfall' #1: scenes-montage.mp4 10s to 15s  score 0.291  (the scene shows: a waterfall pouring over a rock ledge into a pool)\n'a waterfall' #2: scenes-montage.mp4 0s to 5s  score 0.204  (the scene shows: an orange sun low over a calm sea with a small boat)\n'a tram on a snowy street' #1: scenes-montage.mp4 5s to 10s  score 0.332  (the scene shows: a tram approaching along tracks on a snowy city street)\n'a tram on a snowy street' #2: scenes-montage.mp4 15s to 20s  score 0.129  (the scene shows: a black cat lying on a light-colored carpet)\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:59:13.283054+00:00",
+          "script_sha256": "e4ba63bb84eeb576d9a51c3f590927eb5b48d252c633bd1f9b365601da43e392",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "av": "18.0.0",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "coloredlogs": "15.0.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "pillow": "13.0.0",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "sympy": "1.14.0",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

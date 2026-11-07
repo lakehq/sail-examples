@@ -8,8 +8,10 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from harness import run
+from harness import run, script_command
 from order_event_checks import example, reference
+
+pytestmark = pytest.mark.examples("normalize-order-events")
 
 
 def value():
@@ -215,18 +217,9 @@ def test_order_cli_retains_complete_datasets_and_refuses_an_existing_output_dire
     module = example()
     source, output = tmp_path / "source.jsonl", tmp_path / "normalized"
     source.write_text(json.dumps(value()) + "\n[]\n")
-    command = [
-        "uv",
-        "run",
-        "--quiet",
-        "--script",
-        str(Path(module.__file__)),
-        "--input",
-        str(source),
-        "--output-dir",
-        str(output),
-        "--json",
-    ]
+    command = script_command(
+        Path(module.__file__), "--input", str(source), "--output-dir", str(output), "--json"
+    )
     env = {key: value for key, value in os.environ.items() if key != "VIRTUAL_ENV"}
     completed = subprocess.run(command, env=env, capture_output=True, text=True, timeout=300, check=False)
     assert completed.returncode == 0, completed.stderr[-2000:]

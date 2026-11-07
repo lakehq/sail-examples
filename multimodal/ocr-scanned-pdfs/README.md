@@ -36,6 +36,57 @@ The OCR models ship inside the `rapidocr` package, so nothing is downloaded at r
 
 The fare table shows why the example reports more than one measure. OCR returns the table one printed line at a time across its columns, so a cell printed on two lines comes out in two pieces, while the transcription keeps each cell whole. The printout shows the first lines of both. The character error rate counts order, so it is 0.314. With the words of both texts sorted it is 0.02, and the word recall is 0.981, so almost all of the 0.314 comes from the order, not from misread words. The blank page comes back as `blank`, and the file that is not a PDF as one `error` row whose `error` column gives the reason.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++--------------------------------+----+------+-----+----------+-----+----------------+-----------+-----------------------------------------------------------------+
+|file                            |page|status|lines|confidence|cer  |cer_sorted_words|word_recall|error                                                            |
++--------------------------------+----+------+-----+----------+-----+----------------+-----------+-----------------------------------------------------------------+
+|damaged.pdf                     |NULL|error |0    |NULL      |NULL |NULL            |NULL       |PdfiumError: Failed to load document (PDFium: Data format error).|
+|fifty-famous-stories-1896.pdf   |1   |ok    |11   |0.9878    |0.0  |0.0             |1.0        |NULL                                                             |
+|fifty-famous-stories-1896.pdf   |2   |blank |0    |NULL      |0.0  |0.0             |NULL       |NULL                                                             |
+|hack-fares-1892.pdf             |1   |ok    |39   |0.9929    |0.314|0.02            |0.981      |NULL                                                             |
+|street-railway-handbill-1888.pdf|1   |ok    |27   |0.9778    |0.043|0.049           |0.932      |NULL                                                             |
+|university-missourian-1915.pdf  |1   |ok    |20   |0.9775    |0.032|0.061           |0.95       |NULL                                                             |
++--------------------------------+----+------+-----+----------+-----+----------------+-----------+-----------------------------------------------------------------+
+
+Highest character error rate, hack-fares-1892.pdf page 1:
+  OCR                                                  TRANSCRIPTION
+  DISTRICT OF COLUMBIA,                                DISTRICT OF COLUMBIA,
+  RATES OF FARE FOR PUBLIC CONVEYANCE OF PASSENGERS.   RATES OF FARE FOR PUBLIC CONVEYANCE OF PASSENGERS.
+  ONE-HORSE VEHICLES.                                  ONE-HORSE VEHICLES.
+  MidnightRates.                                       Day Rates.
+  Day                                                  Between 5 A. M. and 12.30 A. M.
+  Rates.                                               Midnight Rates.
+  Between 5 A. M. and 12.30 A. M.                      Between 12.30 A. M. and 5 A. M.
+  Between 12.30 A. M. and 5 A. M.                      BY THE TRIP.
+  BY THE TRIP.                                         Fifteen Squares or Less.
+  Fifteen Squares                                      Each Additional Five Squares or parts of Squares.
+  Each Additional Five Squares                         Fifteen Squares. or Less.
+  Fifteen Squares.                                     Each Additional Five Squares or parts of Squares.
+  Each Additional Five Squares                         Each Passenger
+  or Less.                                             25 Cts.
+  or parts of Squares.                                 10 Cents.
+  or Less.                                             40 Cts.
+
++------+-----+-------------------------+----------------+
+|status|pages|mean_character_error_rate|mean_word_recall|
++------+-----+-------------------------+----------------+
+| blank|    1|                      0.0|            NULL|
+| error|    1|                     NULL|            NULL|
+|    ok|    4|                   0.0972|          0.9657|
++------+-----+-------------------------+----------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **A table of paths.** The PDFs are listed in a DataFrame with one `path` per file. Each task opens only the files in its own rows.

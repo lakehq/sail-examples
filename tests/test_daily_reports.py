@@ -9,6 +9,8 @@ import pytest
 from daily_report_checks import load_example
 from harness import run
 
+pytestmark = pytest.mark.examples("repair-daily-reports")
+
 
 def test_full_rebuild_has_independent_literal_totals():
     module = load_example()
