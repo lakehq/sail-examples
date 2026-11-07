@@ -1,6 +1,8 @@
 ---
 title: Build a versioned search evaluation dataset
 id: evaluate-search-dataset
+facts: [vector-functions, cache-does-not-keep-results]
+summary: Compare search methods against a versioned set of relevance judgments.
 description: Use when you need to curate versioned documents, queries and relevance judgments, compare two retrieval methods, and validate a Parquet snapshot with a dataset loader.
 tier: pipelines
 level: advanced
@@ -23,14 +25,17 @@ The committed support-policy fixture has seven retained documents and eight reta
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/evaluate-search-dataset/main.py
 ```
 
 The first run downloads the pinned model and tokenizer from Hugging Face. It runs on a CPU without credentials. The default export is temporary. To keep a snapshot in a new directory:
 
 ```bash
-uv run main.py --export-dir .data/support-faq-v1
+uv run pipelines/evaluate-search-dataset/main.py \
+  --export-dir pipelines/evaluate-search-dataset/.data/support-faq-v1
 ```
 
 An existing export directory is rejected. The program prints per-query metrics and the number of ranked pairs loaded for each split. All exported tables, including quarantined input rows, remain in the retained directory.
@@ -111,6 +116,6 @@ The fixture intentionally includes one incomplete query and one exhaustively jud
 
 The export contains `documents`, `queries`, `judgments`, `quarantine`, `rankings` and `metrics` Parquet directories. `manifest.json` records the snapshot ID, fixture checksum, model revision, processing configuration, file checksums and row counts. The configuration records `k`, token truncation, pooling, normalization, lexical tokenization and the tie break. Ranked pairs carry the exact query and document revisions, relevance grade, label origin, method, split, rank and score.
 
-`consume_export(path, expected_snapshot)` in [main.py](main.py) verifies the snapshot and model revisions, requires the current processing configuration, and checks file checksums and exported row counts. It then uses `datasets.load_dataset("parquet", ...)` to load the complete ranked-pair table. It checks column types, unique and complete query-document-method keys, contiguous ranks and the correspondence of content and judgments to the exported source tables. Its optional `expected_fixture_sha256` argument also checks the manifest against a caller-supplied fixture checksum. Checksums detect changed files relative to the manifest; they do not authenticate a manifest received from another party.
+`consume_export(path, expected_snapshot)` in [pipelines/evaluate-search-dataset/main.py](main.py) verifies the snapshot and model revisions, requires the current processing configuration, and checks file checksums and exported row counts. It then uses `datasets.load_dataset("parquet", ...)` to load the complete ranked-pair table. It checks column types, unique and complete query-document-method keys, contiguous ranks and the correspondence of content and judgments to the exported source tables. Its optional `expected_fixture_sha256` argument also checks the manifest against a caller-supplied fixture checksum. Checksums detect changed files relative to the manifest; they do not authenticate a manifest received from another party.
 
 The consumer reads actual records, including null judgments. This establishes that the snapshot can be ingested by that loader. It does not train or qualify a model. Adapt the three fixture tables and query-group map for another corpus, increment content revisions when text changes, and supply judgments for those exact revisions before interpreting quality metrics.

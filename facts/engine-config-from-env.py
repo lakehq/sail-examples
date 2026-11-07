@@ -1,5 +1,6 @@
 FACT = {
     "id": "engine-config-from-env",
+    "title": "Set engine options through the environment",
     "category": "configure",
     "core": True,
     "text": """Set Sail engine options as `SAIL_<SECTION>__<KEY>` environment variables before the server

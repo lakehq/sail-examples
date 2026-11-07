@@ -1,5 +1,6 @@
 FACT = {
     "id": "assert-dataframe-equal-needs-full-pyspark",
+    "title": "Compare rows with the lightweight Spark client",
     "category": "run-and-connect",
     "text": """With the lightweight `pyspark-client` package, `pyspark.testing.assertDataFrameEqual`
         fails before comparing anything (it imports pandas-on-Spark and looks for a local Spark

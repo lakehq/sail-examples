@@ -1,5 +1,6 @@
 FACT = {
     "id": "partition-overwrite",
+    "title": "Take care when overwriting Parquet partitions",
     "category": "silent-behavior",
     "core": True,
     "text": """Sail does not support dynamic partition overwrite for Parquet: with `partitionOverwriteMode`

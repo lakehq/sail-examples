@@ -1,5 +1,6 @@
 FACT = {
     "id": "regex-character-classes",
+    "title": "Make regular-expression character classes explicit",
     "category": "silent-behavior",
     "core": True,
     "text": """In regular expressions (`regexp_replace`, `regexp_extract`, `rlike`, `split`), Sail's `\\s`,

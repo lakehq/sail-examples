@@ -1,6 +1,8 @@
 ---
 title: Search a folder of PDFs
 id: pdf-search
+facts: [load-files-through-a-path-table, vector-functions, udf-partitions-are-threads]
+summary: Turn PDFs into searchable passages.
 description: Use when you need to turn PDF documents into searchable text chunks with embeddings (extract, chunk, embed, search) inside the engine, one row per file in and small rows out.
 tier: multimodal
 level: intermediate
@@ -21,8 +23,10 @@ This example writes four short PDF documents (ten pages in all), splits every pa
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/pdf-search/main.py
 ```
 
 The first run downloads the all-MiniLM-L6-v2 ONNX model (about 90 MB) into the Hugging Face cache. The model revision is pinned.

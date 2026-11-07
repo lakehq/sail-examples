@@ -1,5 +1,6 @@
 FACT = {
     "id": "json-multiline-unsupported",
+    "title": "Use JSON Lines for the JSON reader",
     "category": "data-sources",
     "text": """The JSON reader's `multiLine` option is not supported: JSON Lines files read correctly, but
         a pretty-printed JSON document fails to parse. Convert such files to JSON Lines, or read each file

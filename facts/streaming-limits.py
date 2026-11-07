@@ -1,5 +1,6 @@
 FACT = {
     "id": "streaming-limits",
+    "title": "Check streaming support before porting a job",
     "category": "missing-features",
     "text": """Structured Streaming support is partial: `writeStream.foreachBatch()` fails and the
         `memory` sink is not available, while both work on Apache Spark. Check the Sail streaming docs before

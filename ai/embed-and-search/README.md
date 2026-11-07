@@ -1,6 +1,8 @@
 ---
 title: Embed text and search it with vector functions
 id: embed-and-search
+facts: [vector-functions, udf-setup-per-partition]
+summary: Find related documents using text embeddings and SQL.
 description: Use when you want to compute text embeddings inside the engine with an ONNX model and find the most similar documents with SQL vector functions.
 tier: ai
 level: intermediate
@@ -21,8 +23,10 @@ This example embeds 24 short documents with the all-MiniLM-L6-v2 sentence model 
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run ai/embed-and-search/main.py
 ```
 
 The first run downloads the model (about 90 MB) from Hugging Face into the local Hugging Face cache. No account or key is needed. The model revision is pinned, so every run uses the same weights.

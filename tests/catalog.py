@@ -27,6 +27,10 @@ EXAMPLE_KEYS = RUNTIME_KEYS | {
     "title",
     "id",
     "description",
+    "summary",
+    "facts",
+    "featured",
+    "preview",
     "tier",
     "level",
     "tags",
@@ -34,6 +38,7 @@ EXAMPLE_KEYS = RUNTIME_KEYS | {
     "prompt",
 }
 FACT_KEYS = {
+    "title",
     "id",
     "category",
     "text",

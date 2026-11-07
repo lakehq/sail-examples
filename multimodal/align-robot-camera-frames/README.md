@@ -1,6 +1,8 @@
 ---
 title: Align robot camera frames with state and actions
 id: align-robot-camera-frames
+facts: [load-files-through-a-path-table, mapinarrow-arrow-types]
+summary: Match robot camera frames to nearby state and action records.
 description: Use when robot demonstrations store camera video separately from state/action records and you need sampled frames joined to nearby state timestamps with alignment errors and unmatched frames visible.
 tier: multimodal
 level: advanced
@@ -25,11 +27,13 @@ coordinates and the timestamp error.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/align-robot-camera-frames/main.py
 ```
 
-The first run downloads about 7.7 MB into `.data/`. The dataset revision and every
+The first run downloads about 7.7 MB into `multimodal/align-robot-camera-frames/.data/`. The dataset revision and every
 downloaded file's SHA-256 are pinned. No key, model, GPU or robot is needed.
 
 <!-- sail-output:start variant=default -->

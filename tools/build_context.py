@@ -183,12 +183,12 @@ def render_gallery(examples) -> str:
             "",
             f"### {heading}",
             "",
-            "| Example | Use it when |",
+            "| Example | What you will do |",
             "|---|---|",
         ]
         for example in chosen:
             rel = example.path.parent.relative_to(ROOT)
-            use = example.meta["description"].removeprefix("Use when ")
+            use = example.meta.get("summary", example.meta["description"].removeprefix("Use when "))
             level = example.meta["level"]
             lines.append(f"| [{example.meta['title']}]({rel}/README.md) ({level}) | {use} |")
     lines += ["", GALLERY_END]

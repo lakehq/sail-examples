@@ -1,6 +1,8 @@
 ---
 title: Extract text from scanned PDFs with OCR
 id: ocr-scanned-pdfs
+facts: [udf-partitions-are-threads, regex-character-classes, load-files-through-a-path-table]
+summary: Extract text from old scans and see where OCR makes mistakes.
 description: Use when you need the text of scanned or image-only PDFs (no text layer) inside the engine, one row per page with an explicit status for blank pages and unreadable files, using OCR on the CPU (RapidOCR with ONNX Runtime), and want to measure OCR accuracy in SQL.
 tier: multimodal
 level: advanced
@@ -21,20 +23,13 @@ A scanned PDF holds pictures of pages, not text, so a PDF text extractor finds n
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/ocr-scanned-pdfs/main.py
 ```
 
 The OCR models ship inside the `rapidocr` package, so nothing is downloaded at run time.
-
-| Page | Character error rate | Same, words sorted | Word recall |
-|---|---|---|---|
-| Book page, 1896 | 0.0 | 0.0 | 1.0 |
-| Newspaper column, 1915 | 0.032 | 0.061 | 0.95 |
-| Handbill, 1888, downscaled | 0.043 | 0.049 | 0.932 |
-| Fare table, 1892 | 0.314 | 0.02 | 0.981 |
-
-The fare table shows why the example reports more than one measure. OCR returns the table one printed line at a time across its columns, so a cell printed on two lines comes out in two pieces, while the transcription keeps each cell whole. The printout shows the first lines of both. The character error rate counts order, so it is 0.314. With the words of both texts sorted it is 0.02, and the word recall is 0.981, so almost all of the 0.314 comes from the order, not from misread words. The blank page comes back as `blank`, and the file that is not a PDF as one `error` row whose `error` column gives the reason.
 
 <!-- sail-output:start variant=default -->
 
@@ -86,6 +81,20 @@ Highest character error rate, hack-fares-1892.pdf page 1:
 ```
 
 <!-- sail-output:end -->
+
+## Read the output
+
+The console output reports each page's status and OCR scores, followed by a text
+comparison and totals. [Saved console captures](outputs.json) include the Sail version.
+
+The fare table shows why the example reports more than one measure. OCR reads
+across its columns, splitting cells that span two lines. The transcription keeps
+each cell whole. Compare `cer` with `cer_sorted_words`: the lower score after
+sorting shows how much reading order affects the result. `word_recall` measures
+how many distinct words OCR recovered.
+
+The blank page returns `blank`. The invalid PDF returns one `error` row with the
+reason in its `error` column.
 
 ## How it works
 

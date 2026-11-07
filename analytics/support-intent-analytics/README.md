@@ -1,6 +1,8 @@
 ---
 title: Turn spoken requests into intent analytics
 id: support-intent-analytics
+facts: [load-files-through-a-path-table, udf-setup-per-partition, mapinarrow-arrow-types]
+summary: Turn spoken support requests into a report of customer needs.
 description: Use when you want to transcribe short spoken requests, compare intent predictions with labels, and aggregate the results with SQL.
 tier: analytics
 level: advanced
@@ -22,8 +24,12 @@ keyword baseline, and use SQL to report intent counts and classification errors.
 The same baseline also scores the dataset's supplied ASR text, so the two input
 paths can be compared on the same requests and independent intent labels.
 
-```sh
-uv run main.py
+## Run it
+
+Run all commands below from the repository root (`sail-examples/`):
+
+```bash
+uv run analytics/support-intent-analytics/main.py
 ```
 
 The default downloads the pinned English-US MINDS-14 shard (34.2 MB) and the
@@ -40,7 +46,7 @@ Its catalog timeout is 120 seconds.
 For a longer, still bounded evaluation, request up to 96 clips and 600 seconds:
 
 ```sh
-uv run main.py --max-clips 96 --max-seconds 600 --json
+uv run analytics/support-intent-analytics/main.py --max-clips 96 --max-seconds 600 --json
 ```
 
 `--json` prints all result tables, including per-request statuses and predictions.
@@ -48,6 +54,54 @@ The CLI rejects more than 563 clips, more than 3,600 seconds, or nonpositive or
 nonfinite bounds before starting the engine. The larger run may take longer than
 the default example. Inspect test-split metrics and class coverage independently
 for both text sources; a successful run alone does not establish routing quality.
+
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
+|text_source |split|selected_requests|correct_requests|unknown_requests|input_errors|observed_intents|accuracy|coverage|macro_f1_all_14    |
++------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
+|supplied_asr|test |8                |5               |3               |0           |7               |0.625   |0.625   |0.3333333333333333 |
+|supplied_asr|train|4                |2               |1               |0           |4               |0.5     |0.75    |0.14285714285714285|
+|whisper     |test |8                |5               |3               |0           |7               |0.625   |0.625   |0.3333333333333333 |
+|whisper     |train|4                |2               |1               |0           |4               |0.5     |0.75    |0.14285714285714285|
++------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
+
++------------+-----+---------------+------------------+--------+
+|text_source |split|reporting_group|predicted_intent  |requests|
++------------+-----+---------------+------------------+--------+
+|supplied_asr|test |synthetic-0    |abroad            |1       |
+|supplied_asr|test |synthetic-0    |high_value_payment|1       |
+|supplied_asr|test |synthetic-0    |unknown           |1       |
+|supplied_asr|test |synthetic-1    |app_error         |1       |
+|supplied_asr|test |synthetic-1    |card_issues       |1       |
+|supplied_asr|test |synthetic-1    |pay_bill          |1       |
+|supplied_asr|test |synthetic-1    |unknown           |2       |
+|supplied_asr|train|synthetic-1    |app_error         |1       |
+|supplied_asr|train|synthetic-1    |balance           |1       |
+|supplied_asr|train|synthetic-1    |cash_deposit      |1       |
+|supplied_asr|train|synthetic-1    |unknown           |1       |
+|whisper     |test |synthetic-0    |abroad            |1       |
+|whisper     |test |synthetic-0    |high_value_payment|1       |
+|whisper     |test |synthetic-0    |unknown           |1       |
+|whisper     |test |synthetic-1    |app_error         |1       |
+|whisper     |test |synthetic-1    |card_issues       |1       |
+|whisper     |test |synthetic-1    |pay_bill          |1       |
+|whisper     |test |synthetic-1    |unknown           |2       |
+|whisper     |train|synthetic-1    |app_error         |1       |
+|whisper     |train|synthetic-1    |balance           |1       |
++------------+-----+---------------+------------------+--------+
+only showing top 20 rows
+
+```
+
+<!-- sail-output:end -->
 
 ## The workflow
 
@@ -138,51 +192,3 @@ is pinned to `0d3d19a32d3338f10357c0889762bd8d64bbdeba`. It runs on the CPU
 with greedy decoding, a fixed temperature, and one model thread. Cluster workers
 need the Python packages and access to the staged paths; model files are fetched
 where inference runs.
-
-<!-- sail-output:start variant=default -->
-
-## Example output
-
-Recorded output · Sail 0.7.3.
-
-The example has changed since this capture. This output comes from the earlier script.
-
-```text
-+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
-|text_source |split|selected_requests|correct_requests|unknown_requests|input_errors|observed_intents|accuracy|coverage|macro_f1_all_14    |
-+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
-|supplied_asr|test |8                |5               |3               |0           |7               |0.625   |0.625   |0.3333333333333333 |
-|supplied_asr|train|4                |2               |1               |0           |4               |0.5     |0.75    |0.14285714285714285|
-|whisper     |test |8                |5               |3               |0           |7               |0.625   |0.625   |0.3333333333333333 |
-|whisper     |train|4                |2               |1               |0           |4               |0.5     |0.75    |0.14285714285714285|
-+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
-
-+------------+-----+---------------+------------------+--------+
-|text_source |split|reporting_group|predicted_intent  |requests|
-+------------+-----+---------------+------------------+--------+
-|supplied_asr|test |synthetic-0    |abroad            |1       |
-|supplied_asr|test |synthetic-0    |high_value_payment|1       |
-|supplied_asr|test |synthetic-0    |unknown           |1       |
-|supplied_asr|test |synthetic-1    |app_error         |1       |
-|supplied_asr|test |synthetic-1    |card_issues       |1       |
-|supplied_asr|test |synthetic-1    |pay_bill          |1       |
-|supplied_asr|test |synthetic-1    |unknown           |2       |
-|supplied_asr|train|synthetic-1    |app_error         |1       |
-|supplied_asr|train|synthetic-1    |balance           |1       |
-|supplied_asr|train|synthetic-1    |cash_deposit      |1       |
-|supplied_asr|train|synthetic-1    |unknown           |1       |
-|whisper     |test |synthetic-0    |abroad            |1       |
-|whisper     |test |synthetic-0    |high_value_payment|1       |
-|whisper     |test |synthetic-0    |unknown           |1       |
-|whisper     |test |synthetic-1    |app_error         |1       |
-|whisper     |test |synthetic-1    |card_issues       |1       |
-|whisper     |test |synthetic-1    |pay_bill          |1       |
-|whisper     |test |synthetic-1    |unknown           |2       |
-|whisper     |train|synthetic-1    |app_error         |1       |
-|whisper     |train|synthetic-1    |balance           |1       |
-+------------+-----+---------------+------------------+--------+
-only showing top 20 rows
-
-```
-
-<!-- sail-output:end -->

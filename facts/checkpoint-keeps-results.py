@@ -1,5 +1,6 @@
 FACT = {
     "id": "checkpoint-keeps-results",
+    "title": "Use a checkpoint to reuse a result",
     "category": "configure",
     "text": """To reuse an expensive result without writing a table yourself, set
         `SAIL_EXECUTION__CHECKPOINT__PATH` to a directory before the server starts and call

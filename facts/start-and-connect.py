@@ -1,5 +1,6 @@
 FACT = {
     "id": "start-and-connect",
+    "title": "Start Sail and connect a PySpark session",
     "category": "run-and-connect",
     "core": True,
     "text": """Connect to Sail with a normal PySpark Spark Connect session. In a script, start Sail

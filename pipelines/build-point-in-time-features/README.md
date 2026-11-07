@@ -1,6 +1,8 @@
 ---
 title: Build features as they were known at each decision
 id: build-point-in-time-features
+facts: [collect-timestamps-local-time]
+summary: Build training features using only what was known at the time.
 description: Use when reconstructing demand-planning inputs from order revisions and product history, so late arrivals and later corrections cannot leak into earlier decisions.
 tier: pipelines
 level: advanced
@@ -25,8 +27,10 @@ planner did not yet have.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/build-point-in-time-features/main.py
 ```
 
 The example prints four tables: `features`, `naive_features`, `outcomes` and
@@ -186,8 +190,11 @@ For example, this complete input has one known order and an unavailable outcome:
 }
 ```
 
+Save the JSON above as `pipelines/build-point-in-time-features/planning-inputs.json`, then run:
+
 ```bash
-uv run main.py --input planning-inputs.json
+uv run pipelines/build-point-in-time-features/main.py \
+  --input pipelines/build-point-in-time-features/planning-inputs.json
 ```
 
 The console shows all bounded request results. No database or output directory

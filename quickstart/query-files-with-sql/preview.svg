@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" role="img" aria-labelledby="title desc">
+<style>:root{--background:#eff6ff;--ink:#172554;--bar-primary:#1e40af;--bar-secondary:#3b82f6;--bar-muted:#93c5fd;--muted:#5b5f6a}@media(prefers-color-scheme:dark){:root{--background:#303d52;--ink:#e7eefc;--bar-primary:#93c5fd;--bar-secondary:#60a5fa;--bar-muted:#3b82f6;--muted:#b7c3d6}}</style>
+
+<title id="title">Where New York catches a green taxi</title>
+<desc id="desc">Top five pickup zones in the January 2024 green taxi file. East Harlem North: 12,141. East Harlem South: 8,458. Forest Hills: 2,915. Central Park: 2,765. Morningside Heights: 2,649.</desc>
+<rect width="800" height="460" rx="16" fill="var(--background)"/>
+<g font-family="Arial, Liberation Sans, sans-serif" fill="var(--ink)">
+<text x="38" y="48" font-size="13" letter-spacing="2">NYC GREEN TAXIS · JANUARY 2024</text>
+<text x="38" y="91" font-size="29" font-weight="650">Where do people catch taxis?</text>
+<text x="38" y="153" font-size="16">East Harlem North</text>
+<rect x="242" y="130" width="400" height="33" rx="3" fill="var(--bar-primary)"/>
+<text x="654" y="153" font-size="16">12,141</text>
+<text x="38" y="206" font-size="16">East Harlem South</text>
+<rect x="242" y="183" width="279" height="33" rx="3" fill="var(--bar-secondary)"/>
+<text x="533" y="206" font-size="16">8,458</text>
+<text x="38" y="259" font-size="16">Forest Hills</text>
+<rect x="242" y="236" width="96" height="33" rx="3" fill="var(--bar-muted)"/>
+<text x="350" y="259" font-size="16">2,915</text>
+<text x="38" y="312" font-size="16">Central Park</text>
+<rect x="242" y="289" width="91" height="33" rx="3" fill="var(--bar-muted)"/>
+<text x="345" y="312" font-size="16">2,765</text>
+<text x="38" y="365" font-size="16">Morningside Heights</text>
+<rect x="242" y="342" width="87" height="33" rx="3" fill="var(--bar-muted)"/>
+<text x="341" y="365" font-size="16">2,649</text>
+<text x="38" y="430" font-size="13" fill="var(--muted)">Source: NYC TLC · top_zones output · Sail example</text>
+</g></svg>

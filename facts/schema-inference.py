@@ -1,5 +1,6 @@
 FACT = {
     "id": "schema-inference",
+    "title": "Declare schemas when types or column order matter",
     "category": "data-sources",
     "core": True,
     "text": """Inferred schemas differ from Apache Spark's in three ways: CSV `inferSchema` reads whole

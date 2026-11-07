@@ -1,6 +1,8 @@
 ---
 title: Enrich a table with a model
 id: enrich-with-a-model
+facts: [cache-does-not-keep-results, udf-reruns-when-filtered]
+summary: Run a model once per distinct value, then join its answers back.
 description: Use when you need a model's answer for every row of a large table and want to pay for one model call per distinct value, not per row.
 tier: ai
 level: intermediate
@@ -21,8 +23,10 @@ A model call is the slow, expensive, rate-limited step of an enrichment pipeline
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run ai/enrich-with-a-model/main.py
 ```
 
 A small local service stands in for the model, so the example runs offline with no API key. It labels a ticket with a fixed rule after a 20 ms delay and counts its calls.
