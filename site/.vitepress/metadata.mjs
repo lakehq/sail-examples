@@ -109,10 +109,6 @@ function pageUrl(path, address) {
   return new URL(path.replace(/index\.html$/, ""), address).href;
 }
 
-function markdown(text) {
-  return text.replace(/\s+/g, " ").replace(/[\\[\]*_<>`]/g, "\\$&");
-}
-
 async function writeNotices() {
   const notices = ["Third-party assets used by the Sail examples website\n"];
   for (const name of ["inter", "outfit", "jetbrains-mono"]) {
@@ -134,7 +130,6 @@ export async function prepareMetadata(base) {
   const logo = logoSvg.replace(/<svg[^>]*>|<\/svg>/g, "").trim();
   await mkdir(new URL("social/", publicDirectory), { recursive: true });
   const heads = new Map();
-  const sections = new Map();
   for (const page of pages) {
     if (!/^(?:[a-z0-9-]+\/)*[a-z0-9-]+\.html$/.test(page.url)) {
       throw new Error(`Invalid generated page path: ${page.url}`);
@@ -168,17 +163,7 @@ export async function prepareMetadata(base) {
         "twitter:description": page.description, "twitter:image": image, "twitter:image:alt": alt,
       }).map(([name, content]) => ["meta", { name, content }]),
     ]);
-    const group = page.url.startsWith("examples/") ? "Examples" : page.url.startsWith("facts/") ? "Behavior" : "Overview";
-    if (!sections.has(group)) sections.set(group, []);
-    sections.get(group).push(`- [${markdown(page.title)}](${canonical}): ${markdown(page.description)}`);
   }
-  const llms = ["# Sail examples", "", "> Runnable Spark SQL and Python examples, plus executable Sail behavior checks.", "",
-    "Outputs record specific Sail releases. Check each page's version notes before applying a result to another release.",
-    "", "Repository: https://github.com/lakehq/sail-examples", "Sail documentation: https://docs.lakesail.com/sail/latest/", ""];
-  for (const group of ["Overview", "Examples", "Behavior"]) {
-    llms.push(`## ${group}`, "", ...(sections.get(group) || []), "");
-  }
-  await writeFile(new URL("llms.txt", publicDirectory), llms.join("\n"));
   await writeFile(new URL("robots.txt", publicDirectory), `User-agent: *\nAllow: /\n\nSitemap: ${new URL("sitemap.xml", address).href}\n`);
   await writeNotices();
   return { address, heads };

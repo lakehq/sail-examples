@@ -571,7 +571,6 @@ def test_page_metadata_is_static_and_matches_generated_discovery_files(site):
     origin = os.environ.get("SAIL_EXAMPLES_ORIGIN", "https://examples.lakesail.com").rstrip("/")
     address = origin + base
     manifest = json.loads((ROOT / "site/.generated/pages.json").read_text())
-    llms = (site / "llms.txt").read_text()
     canonical_urls = set()
     images = set()
     for entry in manifest:
@@ -607,7 +606,6 @@ def test_page_metadata_is_static_and_matches_generated_discovery_files(site):
         assert image_path.name.endswith(f".{digest}.jpg")
         assert image_url not in images
         images.add(image_url)
-        assert f"]({canonical})" in llms
     sitemap = ET.parse(site / "sitemap.xml")
     locations = sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
     assert {location.text for location in locations} == canonical_urls
@@ -616,6 +614,39 @@ def test_page_metadata_is_static_and_matches_generated_discovery_files(site):
     assert "SIL OPEN FONT LICENSE Version 1.1" in notices
     assert "Copyright (c) 2026 GitHub Inc." in notices
     assert "MIT License" in notices
+
+
+def test_published_llms_preserves_repository_guidance_and_links(site):
+    repository = "https://github.com/lakehq/sail-examples/blob/main/"
+    original = (ROOT / "llms.txt").read_text()
+    expected = original
+    for example in discover_examples():
+        readme = example.path.with_name("README.md").relative_to(ROOT).as_posix()
+        expected = expected.replace(f"]({readme})", f"]({repository}{readme})")
+    expected = expected.replace("](agent-context.md)", f"]({repository}agent-context.md)")
+    assert (site / "llms.txt").read_text() == expected
+    assert (ROOT / "llms.txt").read_text() == original
+
+
+def test_published_llms_reads_repository_file_and_preserves_link_suffixes(tmp_path, monkeypatch):
+    import build_site
+
+    (tmp_path / "guide.md").write_text("# Guide\n")
+    content = (
+        "# Repository guidance\n\nKeep this exact text.\n\n"
+        "- [Guide](guide.md?plain=1#details): A description.\n"
+        "- [External](https://docs.lakesail.com/sail/latest/): Documentation.\n"
+    )
+    (tmp_path / "llms.txt").write_text(content)
+    public = tmp_path / "public"
+    public.mkdir()
+    monkeypatch.setattr(build_site, "ROOT", tmp_path)
+    build_site.publish_llms(public)
+    expected = content.replace(
+        "](guide.md?plain=1#details)",
+        "](https://github.com/lakehq/sail-examples/blob/main/guide.md?plain=1#details)",
+    )
+    assert (public / "llms.txt").read_text() == expected
 
 
 def test_social_preview_renderer_and_configuration(site):
