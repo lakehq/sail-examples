@@ -55,6 +55,8 @@ jobs:
       - name: Compile Python sources
         run: git ls-files -z '*.py' | xargs -0 uv run python -m py_compile
       - name: Check metadata, generated context, links and site
+        env:
+          SAIL_EXAMPLES_BASE: /sail/
         run: >-
           uv run pytest -q tests/test_catalog.py tests/test_context.py
           tests/test_readme_links.py tests/test_binary_files.py tests/test_output_comparison.py

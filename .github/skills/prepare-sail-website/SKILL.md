@@ -11,7 +11,7 @@ Do not ask contributors to create pages, record website captures, design preview
 or perform visual QA. This skill is the single website checklist; keep it here.
 
 Work from the repository root (`sail-examples/`). Scope preparation to the requested
-examples. Do not commit, push, enable Pages, or deploy unless the user authorizes it.
+examples. Do not commit, push, change hosting, or deploy unless the user authorizes it.
 
 ## Prepare the page
 
@@ -216,11 +216,11 @@ The site tests rebuild `_site/`. Open `http://localhost:8000`, then the requeste
 example pages. Use `npm run site:dev` for the VitePress development server;
 after editing README or Python sources, rerun `npm run site:prepare` to regenerate pages.
 Serve builds over HTTP; VitePress modules do not support opening HTML through `file://`.
-Production builds assume `https://examples.lakesail.com/`. Set `SAIL_EXAMPLES_ORIGIN`
-to another HTTPS origin when the domain changes. `SAIL_EXAMPLES_BASE` defaults to `/`;
-set it to `/sail-examples/` to test project-path hosting. The Pages workflow builds
-for the custom domain at `/`. Keep both variables the same for building and previewing.
-A `robots.txt` under a project path cannot control the host root.
+The site is published at `https://examples.lakesail.com/sail/`. Set
+`SAIL_EXAMPLES_ORIGIN` to another HTTPS origin when the domain changes.
+`SAIL_EXAMPLES_BASE` defaults to `/`; CI and the deploy workflow build with `/sail/`.
+Keep both variables the same for building and previewing. The deploy copies
+`robots.txt` and `404.html` to the host root.
 
 The theme pins the same stable VitePress release as the platform docs. `package.json`
 overrides its Vite dependency to a patched release; retain a compatible patched
@@ -244,13 +244,10 @@ requested pages still have unexplained gaps.
 ## Publishing, when authorized
 
 Local builds do not publish. The `Checks` workflow uploads a `site-preview`
-artifact; the `GitHub Pages` workflow deploys `main`. A maintainer can select
-**Settings → Pages → Build and deployment → GitHub Actions** after publishing the
-workflow. Require **Python, guides and site** and **Examples (pinned Sail)** in
-branch rules. Changes to hosting, branch rules, or publication need user authority;
-this skill does not grant it.
-
-Before the first custom-domain deployment, set the configured production hostname
-under **Settings → Pages → Custom domain**. Then point its DNS CNAME to
-`lakehq.github.io` and enable HTTPS in Pages. The workflow builds for the root of
-that domain. Follow [GitHub's custom-domain instructions](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
+artifact built for `/sail/`; serve it from a `sail/` folder to preview it. The
+`Deploy site` workflow builds `main` for `/sail/` in a job without secrets, then a
+separate job deploys it to Vercel with the `VERCEL_TOKEN`, `VERCEL_ORG_ID` and
+`VERCEL_PROJECT_ID` secrets of the `production` environment. `site/vercel.json` redirects paths outside `/sail/`
+to `/sail/`. Require **Python, guides and site** and **Examples (pinned Sail)** in
+branch rules. Changes to hosting, secrets, branch rules, or publication need user
+authority; this skill does not grant it.

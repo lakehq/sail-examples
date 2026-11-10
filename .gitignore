@@ -8,6 +8,8 @@ spark-warehouse/
 .ruff_cache/
 
 _site/
+.vercel-deploy/
+.vercel/
 .reports/
 
 node_modules/
