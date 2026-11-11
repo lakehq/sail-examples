@@ -78,6 +78,7 @@
 .sail-docs .guide-body .command-block {
   margin: 16px 0;
   padding-right: 64px;
+  background: var(--vp-code-block-bg);
   border: 1px solid var(--line);
   border-radius: 5px;
   overflow: hidden;
@@ -124,13 +125,16 @@
   font-size: 19px;
   color: var(--ink);
 }
+.sail-docs .guide-body img {
+  height: auto;
+}
 .sail-docs .guide-body > p > img {
   border-radius: 6px;
   margin: 26px 0;
   width: 100%;
 }
 .sail-docs .guide-body pre {
-  background: var(--surface-alt);
+  background: var(--vp-code-block-bg);
   border: 1px solid var(--line);
   padding: 20px;
   border-radius: 5px;
@@ -584,7 +588,7 @@
   padding-right: 12px;
   border-right: 1px solid var(--line);
   color: var(--muted);
-  background: var(--surface-alt);
+  background: var(--vp-code-block-bg);
   text-align: right;
   user-select: none;
 }
@@ -624,4 +628,24 @@
 .sail-docs .guide-body pre code {
   color: var(--ink);
   font-family: var(--vp-font-family-mono);
+}
+
+/* On phones, wrap commands and diff lines so nothing hides under the copy button or the edge. */
+@media (max-width: 639px) {
+  .sail-docs .guide-body .command-block pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .sail-docs .code-diff code {
+    min-width: 0;
+  }
+  .sail-docs .diff-line,
+  .sail-docs .diff-columns {
+    grid-template-columns: 4ch minmax(0, 1fr);
+    padding-inline: 12px;
+  }
+  .sail-docs .diff-code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 }

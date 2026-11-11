@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -26,6 +27,10 @@ from pygments.lexers import PythonLexer
 SOURCE = ROOT / "site"
 EXTERNAL_ARROW = (
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>'
+)
+# Links inside the site use a plain arrow; the up-right arrow marks links that leave it.
+INTERNAL_ARROW = (
+    '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 )
 REPOSITORY = "https://github.com/lakehq/sail-examples/blob/main/"
 CATEGORIES = {tier: title for title, tiers in GALLERY_GROUPS.items() for tier in tiers}
@@ -103,7 +108,7 @@ def highlight_diff(code, language, filename, script):
         source_line += kind != "added"
     url = REPOSITORY + quote(source.relative_to(ROOT).as_posix()) + f"#L{start}-L{source_line - 1}"
     return (
-        '<pre class="code-diff"><span class="diff-columns">'
+        '<pre class="code-diff" tabindex="0"><span class="diff-columns">'
         "<span>Line</span>"
         f'<a href="{url}">{escape(source.name)} · original lines {start}–{source_line - 1}</a></span>'
         '<code class="language-diff">' + "".join(lines) + "</code></pre>"
@@ -164,6 +169,26 @@ def rewrite_link(url, readme, examples_by_readme, output, base, *, image=False):
     return REPOSITORY + quote(relative.as_posix()) + suffix
 
 
+def image_size(path):
+    """Return (width, height) of an SVG viewBox or a JPEG/PNG header, or None."""
+    data = path.read_bytes()
+    if path.suffix == ".svg":
+        match = re.search(rb'viewBox="\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)', data)
+        return (round(float(match[1])), round(float(match[2]))) if match else None
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+    if data[:2] == b"\xff\xd8":
+        position = 2
+        while position + 9 < len(data):
+            marker, length = data[position + 1], int.from_bytes(data[position + 2 : position + 4], "big")
+            if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+                height = int.from_bytes(data[position + 5 : position + 7], "big")
+                width = int.from_bytes(data[position + 7 : position + 9], "big")
+                return width, height
+            position += 2 + length
+    return None
+
+
 def render_shell_commands(code):
     # VitePress's copy handler expects the button, language label, and pre in this order.
     return (
@@ -222,13 +247,22 @@ def render_guide(example, examples_by_readme, output, facts):
             token.attrSet("id", heading_id)
             if token.tag == "h2":
                 headings.append((heading_id, text))
+    # The first image above the first section is usually the preview, so load it right away.
+    first_image = None
+    for token in tokens:
+        if token.type == "heading_open" and token.tag == "h2":
+            break
+        first_image = next((child for child in token.children or [] if child.type == "image"), None)
+        if first_image:
+            break
     pending = list(tokens)
     while pending:
         token = pending.pop()
         attribute = {"link_open": "href", "image": "src"}.get(token.type)
         if attribute:
+            source = token.attrGet(attribute)
             value = rewrite_link(
-                token.attrGet(attribute),
+                source,
                 readme,
                 examples_by_readme,
                 output,
@@ -237,9 +271,22 @@ def render_guide(example, examples_by_readme, output, facts):
             )
             token.attrSet(attribute, value)
             if token.type == "image":
-                token.attrSet("loading", "lazy")
+                # Only files in the repository have a size to read; remote images keep none.
+                parts = urlsplit(source)
+                local = (readme.parent / unquote(parts.path)).resolve()
+                remote = parts.scheme or parts.netloc
+                size = image_size(local) if not remote and local.is_file() else None
+                if size:
+                    token.attrSet("width", str(size[0]))
+                    token.attrSet("height", str(size[1]))
+                if token is first_image:
+                    token.attrSet("fetchpriority", "high")
+                else:
+                    token.attrSet("loading", "lazy")
         pending.extend(token.children or [])
     rendered = markdown.renderer.render(tokens, markdown.options, {})
+    # Code blocks can scroll sideways, so keyboard users must be able to focus them.
+    rendered = rendered.replace("<pre><code", '<pre tabindex="0"><code')
     rendered = rendered.replace(
         "<table>", '<div class="table-scroll" tabindex="0" role="region" aria-label="Example data"><table>'
     )
@@ -501,6 +548,22 @@ def render_fact(fact, examples):
     )
 
 
+def render_not_found(base):
+    # The 404 page can be served at any depth, so its links are absolute under the site base.
+    links = [
+        ("index.html#examples", "Browse all examples"),
+        ("facts/index.html", "Read how Sail behaves"),
+        ("examples/hello-sail/index.html", "Run Hello Sail"),
+    ]
+    items = "".join(
+        f'<li><a href="{escape(base + url)}">{text} {INTERNAL_ARROW}</a></li>' for url, text in links
+    )
+    return (
+        "<h1>Page not found</h1><p>The page you asked for does not exist. "
+        f"Try one of these, or use search.</p><ul>{items}</ul>"
+    )
+
+
 def write_page(root, url, title, description, content, *, showcase=False, section="Sail examples"):
     path = root / url.replace(".html", ".md")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -606,7 +669,7 @@ def prepare_site():
         "404.html",
         "Page not found",
         "Find a Sail example or behavior note.",
-        "<h1>Page not found</h1><p>Use Explore, Behavior, or search to find a guide.</p>",
+        render_not_found(os.environ.get("SAIL_EXAMPLES_BASE") or "/"),
     )
     for fact in facts:
         if not fact.meta.get("private"):
