@@ -166,5 +166,6 @@ jobs:
         with:
           name: results-${{ matrix.sail }}
           path: .reports/
+          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14
