@@ -1,6 +1,8 @@
 ---
 title: Normalize nested order events without losing rejected records
 id: normalize-order-events
+facts: [json-multiline-unsupported, mapinarrow-arrow-types]
+summary: Turn nested orders into clean tables while keeping rejected records.
 description: Use when a bounded JSONL snapshot needs strict order and child validation, separate clean order and line tables, and original rejected records with source identity.
 tier: pipelines
 level: intermediate
@@ -24,15 +26,11 @@ number. This makes an invalid child's effect on its whole order visible.
 
 ## Run it
 
-Follow the [repository setup](../../README.md#run-an-example), then start from
-the repository root:
+Follow the [repository setup](../../README.md#your-first-result), then run all commands below from the repository root (`sail-examples/`):
 
 ```bash
-cd pipelines/normalize-order-events
-uv run main.py
+uv run pipelines/normalize-order-events/main.py
 ```
-
-Run the remaining commands from this example directory.
 
 The input is an authored [15-record JSONL snapshot](inputs/orders.jsonl).
 The program copies it into temporary input files, reads those actual files
@@ -44,7 +42,7 @@ orders, three clean line items and twelve rejected source occurrences.
 For a compact count check:
 
 ```bash
-uv run main.py --json
+uv run pipelines/normalize-order-events/main.py --json
 ```
 
 Expected output:
@@ -56,23 +54,28 @@ Expected output:
 For a larger local check, create independent copies with different order IDs:
 
 ```bash
-uv run main.py --copies 100 --json
+uv run pipelines/normalize-order-events/main.py --copies 100 --json
 ```
 
 This processes 1,500 physical records and returns counts of 300 orders, 300 line
 items and 1,200 rejects. The limit is 1,000 copies. This exercises repeated file
 ingestion and normalization, not production throughput or arbitrary event data.
 
-To read your own files instead, supply one or more `--input` arguments:
+Save your JSONL files as `pipelines/normalize-order-events/orders.jsonl` and
+`pipelines/normalize-order-events/more-orders.jsonl`, then run:
 
 ```bash
-uv run main.py --input orders.jsonl --input more-orders.jsonl --output-dir normalized-orders --json
+uv run pipelines/normalize-order-events/main.py \
+  --input pipelines/normalize-order-events/orders.jsonl \
+  --input pipelines/normalize-order-events/more-orders.jsonl \
+  --output-dir pipelines/normalize-order-events/.data/normalized-orders \
+  --json
 ```
 
 These files must follow the supported contract below. `--input` cannot be
-combined with `--copies`. `--output-dir` retains the complete `orders/`, `lines/`
-and `rejects/` Parquet datasets after process exit. The directory must not already
-exist. Writes are not an atomic publication protocol: failure can leave partial
+combined with `--copies`. `--output-dir` retains the `orders/`, `lines/`, and `rejects/` Parquet datasets
+under `pipelines/normalize-order-events/.data/normalized-orders/` after process exit.
+That output directory must not already exist. Writes are not an atomic publication protocol: failure can leave partial
 output, so inspect it and choose a new directory when retrying. Without this
 option, output datasets are temporary and removed at process exit.
 
@@ -156,7 +159,7 @@ version requires a new explicit contract.
 
 ## Separate parent and child tables
 
-Start with `normalize()` in [main.py](main.py) for the DataFrame transformation.
+Start with `normalize()` in [pipelines/normalize-order-events/main.py](main.py) for the DataFrame transformation.
 `run()` handles file ingestion and output readback; `parse_record()` defines the
 strict record-validation policy.
 

@@ -1,5 +1,6 @@
 FACT = {
     "id": "decimal-division",
+    "title": "Decimal division can change precision and rounding",
     "category": "silent-behavior",
     "core": True,
     "text": """Dividing DECIMAL values gives a different result type on Sail than on Apache Spark

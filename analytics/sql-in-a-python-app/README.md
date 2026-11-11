@@ -1,6 +1,8 @@
 ---
 title: Use SQL inside a Python app with pandas
 id: sql-in-a-python-app
+facts: [start-and-connect]
+summary: Query pandas data with SQL and bring the results back to Python.
 description: Use when a Python program (a script, a service, a notebook) keeps data in pandas and you want to query it with SQL, safely parameterized, and get pandas or Arrow results back.
 tier: analytics
 level: beginner
@@ -21,11 +23,13 @@ Your app already has its data in pandas. This example uses Sail as the SQL engin
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run analytics/sql-in-a-python-app/main.py
 ```
 
-The first run downloads the two files (1.4 MB) into `.data/` next to the script.
+The first run downloads the two files (1.4 MB) into `analytics/sql-in-a-python-app/.data/`.
 
 It prints the busiest Manhattan pickup zones in the first week of January 2024. East Harlem North leads with 2,578 trips.
 

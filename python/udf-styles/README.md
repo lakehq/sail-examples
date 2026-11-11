@@ -1,6 +1,8 @@
 ---
 title: Choose a Python UDF style
 id: udf-styles
+facts: [udfs-need-a-session, udfs-share-one-interpreter, mapinarrow-arrow-types, udf-setup-per-partition]
+summary: Choose the right way to run Python logic inside a query.
 description: Use when you need Python logic in a Spark query and want to pick between built-in functions, a row UDF, a pandas UDF, an Arrow UDF and mapInArrow.
 tier: python
 level: intermediate
@@ -21,8 +23,10 @@ This example computes one score, `sqrt(a² + b²) + ln(1 + c)`, over 100,000 row
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run python/udf-styles/main.py
 ```
 
 <!-- sail-output:start variant=default -->

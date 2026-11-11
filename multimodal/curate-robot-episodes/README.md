@@ -1,6 +1,8 @@
 ---
 title: Curate robot demonstration episodes
 id: curate-robot-episodes
+facts: [file-formats]
+summary: Check robot demonstrations before splitting them into training sets.
 description: Use when you need to check robot demonstration records for missing frames, duplicate frames, timestamp gaps and invalid state/action vectors before selecting whole episodes for training and validation.
 tier: multimodal
 level: intermediate
@@ -24,11 +26,13 @@ a manifest assigning usable episodes to training or validation.
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/curate-robot-episodes/main.py
 ```
 
-The first run downloads about 786 KB of Parquet and metadata into `.data/`.
+The first run downloads about 786 KB of Parquet and metadata into `multimodal/curate-robot-episodes/.data/`.
 No account, key, model, GPU or robot is needed. The dataset revision and file
 SHA-256s are pinned; a checksum mismatch fails the run.
 

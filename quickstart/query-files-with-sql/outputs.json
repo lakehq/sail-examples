@@ -49,5 +49,38 @@
         }
       ]
     }
-  ]
+  ],
+  "variants": {
+    "queens": {
+      "snapshots": [
+        {
+          "output": "+-----+-------------------+-------------------+------------+---------+\n|trips|first_pickup       |last_pickup        |median_miles|max_miles|\n+-----+-------------------+-------------------+------------+---------+\n|56551|2023-12-31 14:38:47|2024-01-31 23:57:29|1.79        |201421.68|\n+-----+-------------------+-------------------+------------+---------+\n\n+----------------+-------+-----+\n|pickup_zone     |borough|trips|\n+----------------+-------+-----+\n|Forest Hills    |Queens |2915 |\n|Elmhurst        |Queens |2623 |\n|Astoria         |Queens |1521 |\n|Jackson Heights |Queens |1398 |\n|Jamaica         |Queens |1339 |\n|Woodside        |Queens |981  |\n|Kew Gardens     |Queens |649  |\n|Elmhurst/Maspeth|Queens |523  |\n|Flushing        |Queens |380  |\n|Steinway        |Queens |370  |\n+----------------+-------+-----+\n\n+------------+-----+---------+\n|payment     |trips|tip_share|\n+------------+-----+---------+\n|Credit card |36660|0.226    |\n|Cash        |15913|0.0      |\n|Not recorded|3415 |0.11     |\n|No charge   |434  |0.003    |\n|Dispute     |128  |0.0      |\n|Unknown     |1    |0.0      |\n+------------+-----+---------+\n\n",
+          "runs": [
+            {
+              "sail": "0.7.3",
+              "python": "3.14.10",
+              "captured_at": "2026-11-06T22:12:25.814710+00:00",
+              "script_sha256": "b02b7fa93a8634d91602e976f4c1a3e7db1eb536a64a658f0b39f41dfeb8e553",
+              "packages": {
+                "PyYAML": "6.0.3",
+                "googleapis-common-protos": "1.76.0",
+                "grpcio": "1.85.1",
+                "grpcio-status": "1.85.1",
+                "numpy": "2.5.4",
+                "pandas": "3.0.6",
+                "protobuf": "7.36.2",
+                "pyarrow": "26.0.0",
+                "pysail": "0.7.3",
+                "pyspark-client": "4.1.3",
+                "python-dateutil": "4.0.0",
+                "typing_extensions": "4.16.0",
+                "tzdata": "2026.6",
+                "zstandard": "0.25.0"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
 }

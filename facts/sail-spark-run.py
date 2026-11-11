@@ -1,5 +1,6 @@
 FACT = {
     "id": "sail-spark-run",
+    "title": "Run a script with a ready Spark session",
     "category": "run-and-connect",
     "text": """`sail spark run -f script.py` (or `-f -` to read the script from stdin) starts a temporary
         Sail server, runs the script with a ready `spark` session, and stops the server. A

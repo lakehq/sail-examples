@@ -1,5 +1,6 @@
 FACT = {
     "id": "day-of-week-numbering",
+    "title": "Use dayofweek for consistent weekday numbers",
     "category": "silent-behavior",
     "text": """Use `dayofweek(d)` (Sunday 1 to Saturday 7) for the day of the week: it agrees on Sail and
         Apache Spark. The other forms differ on Sail, for dates and timestamps alike: `EXTRACT(DOW FROM d)`

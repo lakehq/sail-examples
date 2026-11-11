@@ -1,6 +1,8 @@
 ---
 title: Manage an Apache Iceberg table and read old snapshots
 id: iceberg-tables
+facts: [iceberg-support, schema-inference]
+summary: Update an Iceberg table and read its earlier snapshots.
 description: Use when you keep data in an Apache Iceberg table on Sail and need to create it with a declared partitioned schema, insert, update, delete and merge rows, and read any earlier snapshot by its id.
 tier: pipelines
 level: advanced
@@ -21,11 +23,13 @@ Apache Iceberg keeps a table as data files plus metadata that records every chan
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/iceberg-tables/main.py
 ```
 
-The first run downloads two months of trip records and the zone lookup (2.7 MB) into `.data/` next to the script. Sail reads and writes Iceberg without extra packages.
+The first run downloads two months of trip records and the zone lookup (2.7 MB) into `pipelines/iceberg-tables/.data/`. Sail reads and writes Iceberg without extra packages.
 
 The table goes through five snapshots. The first holds January's 182 rows, and the current one holds 293. Every snapshot, read back by its id, has the row count the metadata recorded for it.
 

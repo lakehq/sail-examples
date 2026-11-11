@@ -1,5 +1,6 @@
 FACT = {
     "id": "collect-timestamps-local-time",
+    "title": "Collected timestamps use the client’s time zone",
     "category": "run-and-connect",
     "text": """`collect()` returns `TIMESTAMP` values as Python datetimes in the client process's local
         time zone, whatever `spark.sql.session.timeZone` is; `TIMESTAMP_NTZ` values come back unchanged.

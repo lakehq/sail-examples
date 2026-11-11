@@ -1,6 +1,8 @@
 ---
 title: Manage a Delta Lake table through its life
 id: delta-table-lifecycle
+facts: [delta-lake-support, partition-overwrite]
+summary: Evolve a Delta table and inspect its earlier versions.
 description: Use when you maintain a Delta Lake table over time (declare it, append, add a column, rebuild one partition, update, delete, merge late corrections) and want to check time travel across the versions this example creates.
 tier: pipelines
 level: advanced
@@ -22,11 +24,13 @@ A table changes as data arrives, a new column appears, a month gets rebuilt, lab
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run pipelines/delta-table-lifecycle/main.py
 ```
 
-The first run downloads three months of trip records and the zone lookup (4 MB) into `.data/` next to the script. Sail reads and writes Delta Lake without extra packages.
+The first run downloads three months of trip records and the zone lookup (4 MB) into `pipelines/delta-table-lifecycle/.data/`. Sail reads and writes Delta Lake without extra packages.
 
 The table ends at version 7. Reading version 3 shows March 31 before the corrections: Manhattan with 740 trips, and the borough labels `N/A` and `Unknown` that later versions relabeled or removed.
 

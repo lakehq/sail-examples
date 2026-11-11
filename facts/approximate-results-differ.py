@@ -1,5 +1,6 @@
 FACT = {
     "id": "approximate-results-differ",
+    "title": "Approximate results and random samples can differ",
     "category": "silent-behavior",
     "text": """Approximate and random results can differ from Apache Spark's: `percentile_approx`,
         `approx_count_distinct`, the percentiles from `df.summary()`, and the rows chosen by

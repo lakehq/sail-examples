@@ -1,24 +1,24 @@
 # Sail examples
 
-Runnable examples of Spark SQL and DataFrame code on [Sail](https://github.com/lakehq/sail), from querying a file on your laptop to Delta Lake pipelines and AI on images, audio and video.
+**Ask a question. Run some code. See what you can build with Sail.**
 
-Every example is a folder with a script and a README. The script starts Sail inside its own Python process: no Java, no cluster, no separate server.
+Explore NYC taxi trips, search photos with a sentence, or update a customer table.
+These examples run Spark SQL and Python DataFrame code on [Sail](https://github.com/lakehq/sail),
+on your laptop. No Java, cluster, account or API key needed.
 
-## What can I do with Sail?
+## Start with a question
 
-- **Query files with SQL:** [read Parquet and CSV, join tables and summarize results](quickstart/query-files-with-sql/README.md).
-- **Analyze events:** [build sessions, conversion funnels and retention cohorts](analytics/sessions-funnels-retention/README.md).
-- **Build batch pipelines:** [validate records, preserve rejects and write partitioned reporting tables](pipelines/taxi-etl-job/README.md).
-- **Use Delta Lake:** [apply inserts, updates and deletes with MERGE](pipelines/delta-merge-upsert/README.md).
-- **Use Apache Iceberg:** [create a table, apply changes and read earlier snapshots](pipelines/iceberg-tables/README.md).
-- **Add Python logic:** [choose a UDF style](python/udf-styles/README.md) or [read a REST API as a table](python/rest-api-as-a-table/README.md).
-- **Prepare data with AI:** [embed and search text](ai/embed-and-search/README.md), [extract text from scanned PDFs](multimodal/ocr-scanned-pdfs/README.md) or [transcribe audio](multimodal/transcribe-audio/README.md).
+| Where do people catch taxis? | Can I find a photo with words? | How do I apply customer changes? |
+| --- | --- | --- |
+| [![Busiest NYC green taxi pickup zones](quickstart/query-files-with-sql/preview.svg)](quickstart/query-files-with-sql/README.md) | [![A dog in the snow, the first match for the example query](multimodal/search-images-by-text/images/dog-snow.jpg)](multimodal/search-images-by-text/README.md) | [![Customer records before and after a Delta merge](pipelines/delta-merge-upsert/preview.svg)](pipelines/delta-merge-upsert/README.md) |
+| [Query real taxi files with SQL](quickstart/query-files-with-sql/README.md) | [Search photos by description](multimodal/search-images-by-text/README.md) | [Update a Delta Lake table](pipelines/delta-merge-upsert/README.md) |
+| **Start here.** A small download and a familiar SQL query. | See how a model matches text with images. Runs on CPU. | Insert, update and delete rows, then read the old version. |
 
-## Run an example
+Photo source and license: [image credits](multimodal/search-images-by-text/images/CREDITS.md).
 
-You need [uv](https://docs.astral.sh/uv/). Each script's header lists the Python versions it needs and its packages, each pinned to an exact version, and uv installs them on the first run.
+## Your first result
 
-The repository's `.python-version` selects Python 3.12 for uv runs. uv downloads that interpreter if needed.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run:
 
 ```bash
 git clone https://github.com/lakehq/sail-examples.git
@@ -26,96 +26,117 @@ cd sail-examples
 uv run quickstart/query-files-with-sql/main.py
 ```
 
-The images and video that some examples read are stored with [Git LFS](https://git-lfs.com). Install it and run `git lfs install` once before you clone, or run `git lfs pull` in a clone made without it.
+After `cd sail-examples`, your terminal is at the repository root, the directory
+containing `pyproject.toml`. Run all guide commands from that directory.
 
-Examples that use public data or pretrained models download them on the first run. None needs an account or an API key.
+`uv` installs Python and the script's pinned packages if needed. The example downloads
+about 1.4 MB of trip data plus a small zone lookup. You will see **East Harlem North**
+first in the pickup-zone table, with **12,141 trips**.
 
-You only need Sail to run the examples. Apache Spark is used by the maintenance checks described below.
+Open the [guide](quickstart/query-files-with-sql/README.md) to see the query and try a change.
+Each script starts Sail in its own Python process, then closes it when finished.
 
-## Examples
+For examples with images, audio, PDFs or video, install [Git LFS](https://git-lfs.com)
+and run `git lfs install` once before cloning. If you already cloned, run `git lfs pull` from the repository root (`sail-examples/`).
+Model examples download their weights on the first run; each guide states what it needs.
 
-Browse by task. Each example's difficulty is shown beside its title.
+## Find your next example
 
-- [Analytics](#analytics): explore files, query pandas data and analyze events.
-- [Data pipelines](#data-pipelines): validate records, apply changes and work with table versions.
-- [AI data preparation](#ai-data-preparation): prepare documents and media, run models and maintain embeddings.
+Browse by task below. **Beginner** examples start with familiar SQL or Python;
+**intermediate** and **advanced** examples explain more involved workflows.
 
 <!-- gallery:start (generated by tools/build_context.py from each README's front matter) -->
 
 ### Start here
 
-| Example | Use it when |
+| Example | What you will do |
 |---|---|
-| [Hello Sail](quickstart/hello-sail/README.md) (beginner) | you want to run existing Spark SQL and DataFrame code on your laptop with Sail, with no Java and no cluster. |
-| [Query Parquet and CSV files with SQL](quickstart/query-files-with-sql/README.md) (beginner) | you want to explore data files on your laptop with plain SQL (query a Parquet or CSV file in place, name files as views, join, group and sort) without loading a database or starting a cluster. |
+| [Hello Sail](quickstart/hello-sail/README.md) (beginner) | Run your first Spark SQL and DataFrame queries on Sail. |
+| [Query Parquet and CSV files with SQL](quickstart/query-files-with-sql/README.md) (beginner) | Find the busiest taxi pickup zones with SQL on real files. |
 
 ### Analytics
 
-| Example | Use it when |
+| Example | What you will do |
 |---|---|
-| [Explore a year of taxi trips with SQL](analytics/explore-taxi-trips/README.md) (beginner) | you want to analyze a real dataset on your laptop with SQL (read a folder of Parquet files as one table, filter out bad records, trend by month, find peak hours, compute exact medians and percentiles, rank within groups). |
-| [Use SQL inside a Python app with pandas](analytics/sql-in-a-python-app/README.md) (beginner) | a Python program (a script, a service, a notebook) keeps data in pandas and you want to query it with SQL, safely parameterized, and get pandas or Arrow results back. |
-| [Reconcile orders, captures and refunds](analytics/reconcile-orders-payments/README.md) (intermediate) | separate order and payment feeds contain repeated deliveries, split captures, partial refunds or orphan transactions, and you need an explainable reconciliation at an explicit cutoff. |
-| [Sessions, funnels and cohort retention with SQL](analytics/sessions-funnels-retention/README.md) (intermediate) | you analyze event or clickstream data and need sessions from exact time gaps, an ordered session-scoped conversion funnel, or weekly cohort retention that distinguishes observed inactivity from future weeks. |
-| [Reproduce a report from saved Iceberg snapshots](analytics/reproduce-iceberg-report/README.md) (advanced) | a sales report joins changing Iceberg tables and you need to record its exact input snapshot pair, then replay the original logical rows in another process. |
-| [Turn spoken requests into intent analytics](analytics/support-intent-analytics/README.md) (advanced) | you want to transcribe short spoken requests, compare intent predictions with labels, and aggregate the results with SQL. |
+| [Explore a year of taxi trips with SQL](analytics/explore-taxi-trips/README.md) (beginner) | Find seasonal trends and rush hours in a year of NYC taxi trips. |
+| [Use SQL inside a Python app with pandas](analytics/sql-in-a-python-app/README.md) (beginner) | Query pandas data with SQL and bring the results back to Python. |
+| [Reconcile orders, captures and refunds](analytics/reconcile-orders-payments/README.md) (intermediate) | Find payment discrepancies without counting repeated deliveries twice. |
+| [Sessions, funnels and cohort retention with SQL](analytics/sessions-funnels-retention/README.md) (intermediate) | See where users drop out and which cohorts come back. |
+| [Reproduce a report from saved Iceberg snapshots](analytics/reproduce-iceberg-report/README.md) (advanced) | Recreate an earlier report after its source tables have changed. |
+| [Turn spoken requests into intent analytics](analytics/support-intent-analytics/README.md) (advanced) | Turn spoken support requests into a report of customer needs. |
 
 ### Data pipelines
 
-| Example | Use it when |
+| Example | What you will do |
 |---|---|
-| [Upsert into a Delta Lake table with MERGE](pipelines/delta-merge-upsert/README.md) (intermediate) | you need to apply a batch of changes (updates, inserts and deletes) to a Delta Lake table with one MERGE INTO statement, and read the table as it was before. |
-| [Normalize nested order events without losing rejected records](pipelines/normalize-order-events/README.md) (intermediate) | a bounded JSONL snapshot needs strict order and child validation, separate clean order and line tables, and original rejected records with source identity. |
-| [Build a batch ETL job with data quality checks](pipelines/taxi-etl-job/README.md) (intermediate) | you build a batch pipeline that turns raw files into clean, partitioned Parquet and reporting tables, preserves original rejected records with their source provenance, removes clean duplicates, and replaces one month's outputs on a completed re-run. |
-| [Apply replayed changes without resurrecting deleted records](pipelines/apply-versioned-changes/README.md) (advanced) | captured change batches contain retries, stale updates and deletes, and you need a current-state table that retains version barriers and quarantines conflicting equal-version payloads. |
-| [Build features as they were known at each decision](pipelines/build-point-in-time-features/README.md) (advanced) | reconstructing demand-planning inputs from order revisions and product history, so late arrivals and later corrections cannot leak into earlier decisions. |
-| [Manage a Delta Lake table through its life](pipelines/delta-table-lifecycle/README.md) (advanced) | you maintain a Delta Lake table over time (declare it, append, add a column, rebuild one partition, update, delete, merge late corrections) and want to check time travel across the versions this example creates. |
-| [Build a versioned search evaluation dataset](pipelines/evaluate-search-dataset/README.md) (advanced) | you need to curate versioned documents, queries and relevance judgments, compare two retrieval methods, and validate a Parquet snapshot with a dataset loader. |
-| [Manage an Apache Iceberg table and read old snapshots](pipelines/iceberg-tables/README.md) (advanced) | you keep data in an Apache Iceberg table on Sail and need to create it with a declared partitioned schema, insert, update, delete and merge rows, and read any earlier snapshot by its id. |
-| [Reconcile invoice documents against purchase orders](pipelines/reconcile-invoice-documents/README.md) (advanced) | a small set of known invoice layouts needs real CPU OCR followed by supplier, duplicate, currency and gross purchase-order checks, with explicit exceptions and a structured-input baseline. |
-| [Repair daily reports after corrected order records](pipelines/repair-daily-reports/README.md) (advanced) | corrected orders, cancellations and deletes change already reported store totals, and a retry must also repair the old store and date after an interrupted source update. |
+| [Upsert into a Delta Lake table with MERGE](pipelines/delta-merge-upsert/README.md) (intermediate) | Apply customer updates, inserts and deletes in one SQL statement. |
+| [Normalize nested order events without losing rejected records](pipelines/normalize-order-events/README.md) (intermediate) | Turn nested orders into clean tables while keeping rejected records. |
+| [Build a batch ETL job with data quality checks](pipelines/taxi-etl-job/README.md) (intermediate) | Build reporting tables from raw taxi files with data quality checks. |
+| [Apply replayed changes without resurrecting deleted records](pipelines/apply-versioned-changes/README.md) (advanced) | Replay updates safely without bringing deleted records back. |
+| [Build features as they were known at each decision](pipelines/build-point-in-time-features/README.md) (advanced) | Build training features using only what was known at the time. |
+| [Manage a Delta Lake table through its life](pipelines/delta-table-lifecycle/README.md) (advanced) | Evolve a Delta table and inspect its earlier versions. |
+| [Build a versioned search evaluation dataset](pipelines/evaluate-search-dataset/README.md) (advanced) | Compare search methods against a versioned set of relevance judgments. |
+| [Manage an Apache Iceberg table and read old snapshots](pipelines/iceberg-tables/README.md) (advanced) | Update an Iceberg table and read its earlier snapshots. |
+| [Reconcile invoice documents against purchase orders](pipelines/reconcile-invoice-documents/README.md) (advanced) | Read scanned invoices and check them against purchase orders. |
+| [Repair daily reports after corrected order records](pipelines/repair-daily-reports/README.md) (advanced) | Repair past sales totals when orders are corrected or deleted. |
 
 ### AI data preparation
 
-| Example | Use it when |
+| Example | What you will do |
 |---|---|
-| [Embed text and search it with vector functions](ai/embed-and-search/README.md) (intermediate) | you want to compute text embeddings inside the engine with an ONNX model and find the most similar documents with SQL vector functions. |
-| [Enrich a table with a model](ai/enrich-with-a-model/README.md) (intermediate) | you need a model's answer for every row of a large table and want to pay for one model call per distinct value, not per row. |
-| [Route support tickets with a model in SQL (Jev)](ai/jev-sql-routing/README.md) (intermediate) | you want to classify table rows with a model from plain SQL on Sail, using the built-in Jev functions, and call the model once per distinct value. |
-| [Classify images with an ONNX model](multimodal/classify-images/README.md) (intermediate) | you need to label a folder of images with a pretrained image classifier (batch inference in ONNX Runtime) inside the engine, and send low-confidence predictions to review. |
-| [Curate robot demonstration episodes](multimodal/curate-robot-episodes/README.md) (intermediate) | you need to check robot demonstration records for missing frames, duplicate frames, timestamp gaps and invalid state/action vectors before selecting whole episodes for training and validation. |
-| [Make thumbnails from a folder of images](multimodal/image-thumbnails/README.md) (intermediate) | you need to process a folder of image files (decode, resize, extract metadata) with Python in the engine, one row per file, without moving image bytes between stages. |
-| [Search a folder of PDFs](multimodal/pdf-search/README.md) (intermediate) | you need to turn PDF documents into searchable text chunks with embeddings (extract, chunk, embed, search) inside the engine, one row per file in and small rows out. |
-| [Search photos by text with CLIP](multimodal/search-images-by-text/README.md) (intermediate) | you want to find photos that match a plain-language description, by embedding images and text with CLIP (ONNX) inside the engine and ranking them with SQL vector functions, and to measure retrieval quality in SQL. |
-| [Transcribe audio files with Whisper](multimodal/transcribe-audio/README.md) (intermediate) | you need speech-to-text for a folder of audio files inside the engine (Whisper on CPU with faster-whisper), one transcript per file, and want to score the transcripts against references in SQL. |
-| [Maintain document embeddings as sources change](ai/maintain-document-embeddings/README.md) (advanced) | you need to update a local embedding table after documents are added, edited or removed, while reusing compatible vectors for unchanged content. |
-| [Align robot camera frames with state and actions](multimodal/align-robot-camera-frames/README.md) (advanced) | robot demonstrations store camera video separately from state/action records and you need sampled frames joined to nearby state timestamps with alignment errors and unmatched frames visible. |
-| [Curate humanoid robot episodes with every camera frame](multimodal/curate-humanoid-episodes/README.md) (advanced) | real-robot demonstrations with several cameras and many joints need episode-level quality checks, a whole-episode training split, and every camera frame of an episode decoded and matched to its state record. |
-| [Extract text from scanned PDFs with OCR](multimodal/ocr-scanned-pdfs/README.md) (advanced) | you need the text of scanned or image-only PDFs (no text layer) inside the engine, one row per page with an explicit status for blank pages and unreadable files, using OCR on the CPU (RapidOCR with ONNX Runtime), and want to measure OCR accuracy in SQL. |
-| [Find scenes in videos with text search](multimodal/search-video-frames/README.md) (advanced) | you need to search inside video files by description, by sampling frames, embedding them with CLIP (ONNX) inside the engine, splitting videos into scenes with SQL window functions, and ranking scenes per text query. |
+| [Embed text and search it with vector functions](ai/embed-and-search/README.md) (intermediate) | Find related documents using text embeddings and SQL. |
+| [Enrich a table with a model](ai/enrich-with-a-model/README.md) (intermediate) | Run a model once per distinct value, then join its answers back. |
+| [Route support tickets with a model in SQL (Jev)](ai/jev-sql-routing/README.md) (intermediate) | Classify support tickets with a model called from SQL. |
+| [Classify images with an ONNX model](multimodal/classify-images/README.md) (intermediate) | Label photos and send uncertain predictions for review. |
+| [Curate robot demonstration episodes](multimodal/curate-robot-episodes/README.md) (intermediate) | Check robot demonstrations before splitting them into training sets. |
+| [Make thumbnails from a folder of images](multimodal/image-thumbnails/README.md) (intermediate) | Turn a folder of images into thumbnails and a metadata table. |
+| [Search a folder of PDFs](multimodal/pdf-search/README.md) (intermediate) | Turn PDFs into searchable passages. |
+| [Search photos by description](multimodal/search-images-by-text/README.md) (intermediate) | Find a photo by describing what you want to see. |
+| [Transcribe audio files with Whisper](multimodal/transcribe-audio/README.md) (intermediate) | Turn audio files into transcripts and check their accuracy. |
+| [Maintain document embeddings as sources change](ai/maintain-document-embeddings/README.md) (advanced) | Update a search dataset without re-embedding unchanged documents. |
+| [Align robot camera frames with state and actions](multimodal/align-robot-camera-frames/README.md) (advanced) | Match robot camera frames to nearby state and action records. |
+| [Curate humanoid robot episodes with every camera frame](multimodal/curate-humanoid-episodes/README.md) (advanced) | Check humanoid robot recordings and align every camera frame. |
+| [Extract text from scanned PDFs with OCR](multimodal/ocr-scanned-pdfs/README.md) (advanced) | Extract text from old scans and see where OCR makes mistakes. |
+| [Find scenes in videos with text search](multimodal/search-video-frames/README.md) (advanced) | Find a scene in a video by describing it. |
 
 ### Python integration and testing
 
-| Example | Use it when |
+| Example | What you will do |
 |---|---|
-| [Choose a Python UDF style](python/udf-styles/README.md) (intermediate) | you need Python logic in a Spark query and want to pick between built-in functions, a row UDF, a pandas UDF, an Arrow UDF and mapInArrow. |
-| [Test Spark code with pytest on Sail](migrate/test-spark-code-with-pytest/README.md) (intermediate) | you want local unit tests for Spark DataFrame code in pytest, with a Sail session fixture and no Java. |
-| [Read a REST API as a table](python/rest-api-as-a-table/README.md) (advanced) | you want to query a paginated REST API with Spark SQL and DataFrames by writing a Python data source that fetches pages in parallel. |
+| [Choose a Python UDF style](python/udf-styles/README.md) (intermediate) | Choose the right way to run Python logic inside a query. |
+| [Test Spark code with pytest on Sail](migrate/test-spark-code-with-pytest/README.md) (intermediate) | Test Spark DataFrame code locally without Java. |
+| [Read a REST API as a table](python/rest-api-as-a-table/README.md) (advanced) | Query a paginated REST API as a table. |
 
 <!-- gallery:end -->
 
-## How the examples are checked
+## Can I trust the results?
 
-For maintainers, `uv run pytest` runs every example on Sail, at the pysail release pinned in `tests/engines.toml`. Portable examples also run on Apache Spark 4.2 (which needs Java 17), each engine in its own environment. The checks compare the returned tables' column names, normalized types and values on the supplied inputs, preserving declared order and using a stated float tolerance. The robot, versioned-change and maintained-embedding examples also check both engines against independent references. Jev and Iceberg use an independent Python reference with pyarrow instead. The same run also executes each example's own `uv run main.py`.
+The [checks workflow](.github/workflows/checks.yml) runs Python lint and formatting,
+validates the guides and site, and runs the test suite on pushes and pull requests.
+The tests execute the standalone scripts and compare portable examples with Apache Spark.
+Some examples also check independent reference results or expected answers.
 
-These are correctness checks on the example inputs. They do not establish performance or compatibility for every input and behavior.
+A weekly compatibility run tests the latest stable `pysail` package available for the test
+Python version, while keeping the other engine dependencies pinned. It checks examples and
+facts without changing the repository's pins. This detects release regressions on the
+supplied inputs; it does not prove every workload or every Sail build compatible.
 
-The `facts/` folder holds short notes on where Sail needs specific knowledge, such as how it differs from Apache Spark. Each note has a check that runs on Sail, and on Apache Spark when the comparison matters, so the notes are tested with every run. For coding agents, [`llms.txt`](llms.txt) collects every note and [`agent-context.md`](agent-context.md) the core ones.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the commands, limits and release-check process.
+Contributors provide runnable examples; maintainers prepare recorded outputs
+with the [prepare-sail-website skill](.github/skills/prepare-sail-website/SKILL.md).
 
-The same test run checks that relative file links and images in every README point to existing paths in the repository. External URLs and heading anchors are not checked.
+## Learn the Sail details
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for adding examples, expected-answer checks and updating the generated context.
+The executable notes in [facts/](facts/) cover setup, Python functions, data sources,
+and differences from Spark. Each note states which engines it checks and targets
+the pinned versions.
+
+## For coding assistants
+
+[Agent context](agent-context.md) contains the core checked Sail guidance.
+[llms.txt](llms.txt) includes the full facts and example catalog.
 
 ## License
 
-The code is licensed under the [Apache License 2.0](LICENSE). The images, video and scans keep their own licenses, credited in each example's README.
+The code is licensed under [Apache License 2.0](LICENSE). Media keeps its original
+licenses, credited in each example's guide.

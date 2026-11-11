@@ -1,5 +1,6 @@
 FACT = {
     "id": "udfs-need-a-session",
+    "title": "Create Python UDFs after starting the session",
     "category": "python-udfs",
     "text": """Create UDFs after the Spark session exists. With PySpark 4 clients, `@udf`,
         `@pandas_udf` and `@arrow_udf` applied at import time, before any session, fail with

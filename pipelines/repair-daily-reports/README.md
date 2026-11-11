@@ -1,6 +1,8 @@
 ---
 title: Repair daily reports after corrected order records
 id: repair-daily-reports
+facts: [delta-lake-support, cache-does-not-keep-results]
+summary: Repair past sales totals when orders are corrected or deleted.
 description: Use when corrected orders, cancellations and deletes change already reported store totals, and a retry must also repair the old store and date after an interrupted source update.
 tier: pipelines
 level: advanced
@@ -27,15 +29,11 @@ changes.
 ## Run it
 
 This example requires a POSIX system and a local directory for its file lock.
-Follow the [repository setup](../../README.md#run-an-example), then start from
-the repository root:
+Follow the [repository setup](../../README.md#your-first-result), then run all commands below from the repository root (`sail-examples/`):
 
 ```bash
-cd pipelines/repair-daily-reports
-uv run main.py
+uv run pipelines/repair-daily-reports/main.py
 ```
-
-Run the remaining commands from this example directory.
 
 The example creates temporary Delta tables, applies three batches and replays the
 last batch. It prints `orders` and `daily`. Initially north has two orders totaling
@@ -49,7 +47,7 @@ Each final daily row has `order_count=1`. The `orders` table contains active
 order `a` at version 2, active order `b` at version 3, and a retained deleted row
 for order `c` at version 2. Temporary state is removed on normal process exit.
 
-To follow [main.py](main.py), start with `apply_batch()` for orchestration,
+To follow [pipelines/repair-daily-reports/main.py](main.py), start with `apply_batch()` for orchestration,
 `prepare()` and `affected_groups()` for accepted changes and old/new report
 keys, then `recover_locked()` for the source MERGE and report repair. `run()`
 supplies the small demonstration batches.
@@ -159,11 +157,15 @@ recovery or prune order tombstones without a separate retention policy.
 
 ## Retain state across commands
 
-Save the complete JSON object above as `orders.json`, then run:
+Save the complete JSON object above as `pipelines/repair-daily-reports/orders.json`, then run:
 
 ```bash
-uv run main.py --state-dir .data/order-report --batch orders.json
-uv run main.py --state-dir .data/order-report --recover
+uv run pipelines/repair-daily-reports/main.py \
+  --state-dir pipelines/repair-daily-reports/.data/order-report \
+  --batch pipelines/repair-daily-reports/orders.json
+uv run pipelines/repair-daily-reports/main.py \
+  --state-dir pipelines/repair-daily-reports/.data/order-report \
+  --recover
 ```
 
 The first command retains `orders` and `daily` Delta tables, the workspace
@@ -182,10 +184,12 @@ streaming and scheduling are outside this example.
 ## Optional larger qualification
 
 ```bash
-uv run main.py --state-dir .data/report-qualification --qualify-batches 18
+uv run pipelines/repair-daily-reports/main.py \
+  --state-dir pipelines/repair-daily-reports/.data/report-qualification \
+  --qualify-batches 18
 ```
 
-Use a new empty directory. This optional longer run loads 18 batches of 512
+The state directory `pipelines/repair-daily-reports/.data/report-qualification/` must be new and empty. This optional longer run loads 18 batches of 512
 orders, for 9,216 retained source rows in one skewed store/date group, then
 applies a correction batch with moves, cancellations and deletes. It interrupts
 after that source commit and recovers from the journal. The final tables must

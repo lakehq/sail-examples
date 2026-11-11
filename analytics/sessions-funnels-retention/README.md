@@ -1,6 +1,8 @@
 ---
 title: Sessions, funnels and cohort retention with SQL
 id: sessions-funnels-retention
+facts: [sql-clauses-to-rewrite, date-trunc-timestamp-ntz, day-of-week-numbering]
+summary: See where users drop out and which cohorts come back.
 description: Use when you analyze event or clickstream data and need sessions from exact time gaps, an ordered session-scoped conversion funnel, or weekly cohort retention that distinguishes observed inactivity from future weeks.
 tier: analytics
 level: intermediate
@@ -26,8 +28,10 @@ The input is a clickstream of 1,500 users over eight weeks: one row per event (p
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run analytics/sessions-funnels-retention/main.py
 ```
 
 It prints a session summary, the ordered funnel and the retention matrix. Funnel counts are sessions, not users or individual purchases. Retention counts distinct users, not events.

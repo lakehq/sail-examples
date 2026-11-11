@@ -6,10 +6,13 @@ for portable Spark SQL and DataFrame code.
 
 ## Set up and check a change
 
+Run the commands in this document from the repository root (`sail-examples/`),
+the directory containing `pyproject.toml`. Start with the [clone instructions](README.md#your-first-result).
+
 Use [uv](https://docs.astral.sh/uv/) 0.13.4 or newer and Java 17 for the Apache Spark
-checks. The repository's `.python-version` selects Python for local runs and tests.
-Keep it on the newest stable Python minor supported by PySail, and check the
-example dependencies when updating it. Install
+checks. The repository's `.python-version` selects Python for local runs, captures,
+and CI. Keep it on the newest stable Python minor supported by PySail, and check
+the example dependencies when updating it. Install
 [Git LFS](https://git-lfs.com) and run `git lfs install` once before cloning, since it stores the
 examples' images and video.
 
@@ -33,6 +36,16 @@ uv run pytest tests/test_examples.py tests/test_entry_points.py -k hello-sail
 Use one directory containing `main.py` and `README.md`. Follow a nearby example's
 layout and metadata. Keep the default small enough for a laptop, without an API
 key or GPU. Clearly separate any optional longer run and its requirements.
+
+Give the example a unique `id`, a task-focused `title` and `summary`, and accurate
+`tags`. Keep `description` for fuller selection guidance. Explain the task,
+prerequisites, downloads, and how to run and check the result in the README.
+
+Write runnable commands from the repository root (`sail-examples/`), such as
+`uv run quickstart/query-files-with-sql/main.py`. State that working directory
+before the first command and use it for reruns, tests, and optional commands.
+Name exact input, download, and output locations, including files readers must
+create. The README heading wording does not need to match a website template.
 
 The script has a PEP 723 header with Python requirements and exact dependency
 versions. Its `run(spark)` returns a DataFrame or a dictionary of named DataFrames

@@ -1,6 +1,8 @@
 ---
 title: Make thumbnails from a folder of images
 id: image-thumbnails
+facts: [load-files-through-a-path-table, mapinarrow-arrow-types]
+summary: Turn a folder of images into thumbnails and a metadata table.
 description: Use when you need to process a folder of image files (decode, resize, extract metadata) with Python in the engine, one row per file, without moving image bytes between stages.
 tier: multimodal
 level: intermediate
@@ -21,8 +23,10 @@ This example creates 24 test images (PNG and JPEG, 320 to 1280 pixels wide). It 
 
 ## Run it
 
+Run all commands below from the repository root (`sail-examples/`):
+
 ```bash
-uv run main.py
+uv run multimodal/image-thumbnails/main.py
 ```
 
 <!-- sail-output:start variant=default -->
