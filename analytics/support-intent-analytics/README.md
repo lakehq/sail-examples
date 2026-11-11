@@ -50,6 +50,8 @@ uv run analytics/support-intent-analytics/main.py --max-clips 96 --max-seconds 6
 ```
 
 `--json` prints all result tables, including per-request statuses and predictions.
+The console table rounds macro-F1 to 12 decimal places for stable display.
+JSON output and returned result tables retain the unrounded values.
 The CLI rejects more than 563 clips, more than 3,600 seconds, or nonpositive or
 nonfinite bounds before starting the engine. The larger run may take longer than
 the default example. Inspect test-split metrics and class coverage independently
@@ -59,19 +61,17 @@ for both text sources; a successful run alone does not establish routing quality
 
 ## Example output
 
-Recorded output · Sail 0.7.3.
-
-The example has changed since this capture. This output comes from the earlier script.
+Current output · Sail 0.7.3 (revision 2).
 
 ```text
-+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
-|text_source |split|selected_requests|correct_requests|unknown_requests|input_errors|observed_intents|accuracy|coverage|macro_f1_all_14    |
-+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
-|supplied_asr|test |8                |5               |3               |0           |7               |0.625   |0.625   |0.3333333333333333 |
-|supplied_asr|train|4                |2               |1               |0           |4               |0.5     |0.75    |0.14285714285714285|
-|whisper     |test |8                |5               |3               |0           |7               |0.625   |0.625   |0.3333333333333333 |
-|whisper     |train|4                |2               |1               |0           |4               |0.5     |0.75    |0.14285714285714285|
-+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+-------------------+
++------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+---------------+
+|text_source |split|selected_requests|correct_requests|unknown_requests|input_errors|observed_intents|accuracy|coverage|macro_f1_all_14|
++------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+---------------+
+|supplied_asr|test |8                |5               |3               |0           |7               |0.625   |0.625   |0.333333333333 |
+|supplied_asr|train|4                |2               |1               |0           |4               |0.5     |0.75    |0.142857142857 |
+|whisper     |test |8                |5               |3               |0           |7               |0.625   |0.625   |0.333333333333 |
+|whisper     |train|4                |2               |1               |0           |4               |0.5     |0.75    |0.142857142857 |
++------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+---------------+
 
 +------------+-----+---------------+------------------+--------+
 |text_source |split|reporting_group|predicted_intent  |requests|

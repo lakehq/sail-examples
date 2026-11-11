@@ -466,6 +466,7 @@ def main(argv=None):
     args = parse_args(argv)
     from pysail.spark import SparkConnectServer
     from pyspark.sql import SparkSession
+    from pyspark.sql import functions as F
 
     server = SparkConnectServer()
     server.start()
@@ -481,7 +482,9 @@ def main(argv=None):
                 )
             )
         else:
-            results["summary"].show(truncate=False)
+            # Keep floating-point aggregation noise out of the displayed metric.
+            display_summary = results["summary"].withColumn("macro_f1_all_14", F.round("macro_f1_all_14", 12))
+            display_summary.show(truncate=False)
             results["topics"].show(truncate=False)
     finally:
         spark.stop()

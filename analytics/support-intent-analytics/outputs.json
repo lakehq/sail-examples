@@ -47,6 +47,52 @@
           }
         }
       ]
+    },
+    {
+      "output": "+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+---------------+\n|text_source |split|selected_requests|correct_requests|unknown_requests|input_errors|observed_intents|accuracy|coverage|macro_f1_all_14|\n+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+---------------+\n|supplied_asr|test |8                |5               |3               |0           |7               |0.625   |0.625   |0.333333333333 |\n|supplied_asr|train|4                |2               |1               |0           |4               |0.5     |0.75    |0.142857142857 |\n|whisper     |test |8                |5               |3               |0           |7               |0.625   |0.625   |0.333333333333 |\n|whisper     |train|4                |2               |1               |0           |4               |0.5     |0.75    |0.142857142857 |\n+------------+-----+-----------------+----------------+----------------+------------+----------------+--------+--------+---------------+\n\n+------------+-----+---------------+------------------+--------+\n|text_source |split|reporting_group|predicted_intent  |requests|\n+------------+-----+---------------+------------------+--------+\n|supplied_asr|test |synthetic-0    |abroad            |1       |\n|supplied_asr|test |synthetic-0    |high_value_payment|1       |\n|supplied_asr|test |synthetic-0    |unknown           |1       |\n|supplied_asr|test |synthetic-1    |app_error         |1       |\n|supplied_asr|test |synthetic-1    |card_issues       |1       |\n|supplied_asr|test |synthetic-1    |pay_bill          |1       |\n|supplied_asr|test |synthetic-1    |unknown           |2       |\n|supplied_asr|train|synthetic-1    |app_error         |1       |\n|supplied_asr|train|synthetic-1    |balance           |1       |\n|supplied_asr|train|synthetic-1    |cash_deposit      |1       |\n|supplied_asr|train|synthetic-1    |unknown           |1       |\n|whisper     |test |synthetic-0    |abroad            |1       |\n|whisper     |test |synthetic-0    |high_value_payment|1       |\n|whisper     |test |synthetic-0    |unknown           |1       |\n|whisper     |test |synthetic-1    |app_error         |1       |\n|whisper     |test |synthetic-1    |card_issues       |1       |\n|whisper     |test |synthetic-1    |pay_bill          |1       |\n|whisper     |test |synthetic-1    |unknown           |2       |\n|whisper     |train|synthetic-1    |app_error         |1       |\n|whisper     |train|synthetic-1    |balance           |1       |\n+------------+-----+---------------+------------------+--------+\nonly showing top 20 rows\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.14.7",
+          "captured_at": "2026-11-11T04:32:14.853742+00:00",
+          "script_sha256": "eb2aa0134c4a842ad9dc17b2e5f31867200ba77217f44b73312722be8d2c5792",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "av": "18.0.0",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "ctranslate2": "4.8.2",
+            "faster-whisper": "1.2.1",
+            "filelock": "4.2.10",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "idna": "3.20",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.31.1",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          },
+          "revision": 2,
+          "revision_reason": "Round displayed macro-F1 to 12 decimal places while retaining unrounded results"
+        }
+      ]
     }
   ]
 }
