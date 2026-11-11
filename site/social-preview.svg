@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="0.25" y2="1">
+      <stop stop-color="#93c5fd"/>
+      <stop offset=".42" stop-color="#1e40af"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <clipPath id="panel"><path d="M840 0h360v630H840z"/></clipPath>
+  </defs>
+  <path fill="#f7f9fc" d="M0 0h1200v630H0z"/>
+  <path fill="url(#blue)" d="M840 0h360v630H840z"/>
+  <g clip-path="url(#panel)" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="2">
+    <circle cx="1200" cy="80" r="210"/>
+    <circle cx="1200" cy="80" r="285"/>
+    <circle cx="1200" cy="80" r="360"/>
+    <path d="M820 510c150-80 250 110 420-20M820 535c150-80 250 110 420-20"/>
+  </g>
+  <g transform="translate(64 50) scale(.16)">{{logo}}</g>
+  <text x="138" y="98" font-family="Outfit" font-weight="700" font-size="38" fill="#2345bd">LakeSail</text>
+  <text x="72" y="174" font-family="Outfit" font-size="20" fill="#1e40af">{{section}}</text>
+  <text font-family="Outfit" font-weight="700" font-size="{{titleSize}}" fill="#10182b">{{title}}</text>
+  <text font-family="Outfit" font-size="{{descriptionSize}}" fill="#536079">{{description}}</text>
+  <path d="M72 542h696" stroke="#dae2ee"/>
+  <text x="72" y="580" font-family="Outfit" font-size="22" fill="#2345bd">Sail examples</text>
+  <text x="768" y="580" text-anchor="end" font-family="Outfit" font-size="19" fill="#536079">{{hostname}}</text>
+  <g transform="translate(897 210) scale(.62)" opacity=".9">{{whiteLogo}}</g>
+  <text x="1020" y="580" text-anchor="middle" font-family="Outfit" font-size="22" fill="#fff">SQL + Python</text>
+</svg>

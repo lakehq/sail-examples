@@ -7,4 +7,11 @@ spark-warehouse/
 .pytest_cache/
 .ruff_cache/
 
+_site/
+.vercel-deploy/
+.vercel/
 .reports/
+
+node_modules/
+site/.generated/
+site/.vitepress/cache/

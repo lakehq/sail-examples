@@ -64,7 +64,7 @@ def readmes():
             name
             for name in dirs
             if not name.startswith(".")
-            and name not in {"__pycache__", "spark-warehouse"}
+            and name not in {"__pycache__", "spark-warehouse", "node_modules"}
             and not (directory == str(ROOT) and name == "internal")
         ]
         if "README.md" in files:

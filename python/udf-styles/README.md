@@ -33,24 +33,26 @@ uv run python/udf-styles/main.py
 
 ## Example output
 
-Current output · Sail 0.7.3.
+Current output · Sail 0.7.3 (revision 2).
 
 ```text
-+---+-------------------+-------------------+-------------------+-------------------+-------------------+
-| id|            builtin|            row_udf|         pandas_udf|          arrow_udf|       map_in_arrow|
-+---+-------------------+-------------------+-------------------+-------------------+-------------------+
-|  0|                0.0|                0.0|                0.0|                0.0|                0.0|
-|  1|0.45701200505444706|0.45701200505444706|0.45701200505444706|0.45701200505444706|0.45701200505444706|
-|  2|  0.849485488971323|  0.849485488971323|  0.849485488971323|  0.849485488971323|  0.849485488971323|
-|  3|  1.201136978367944|  1.201136978367944|  1.201136978367944|  1.201136978367944|  1.201136978367944|
-|  4|  1.524617590797868| 1.5246175907978683| 1.5246175907978683| 1.5246175907978683| 1.5246175907978683|
-+---+-------------------+-------------------+-------------------+-------------------+-------------------+
+Scores (rounded to 12 decimal places):
++---+--------------+--------------+--------------+--------------+--------------+
+| id|       builtin|       row_udf|    pandas_udf|     arrow_udf|  map_in_arrow|
++---+--------------+--------------+--------------+--------------+--------------+
+|  0|           0.0|           0.0|           0.0|           0.0|           0.0|
+|  1|0.457012005054|0.457012005054|0.457012005054|0.457012005054|0.457012005054|
+|  2|0.849485488971|0.849485488971|0.849485488971|0.849485488971|0.849485488971|
+|  3|1.201136978368|1.201136978368|1.201136978368|1.201136978368|1.201136978368|
+|  4|1.524617590798|1.524617590798|1.524617590798|1.524617590798|1.524617590798|
++---+--------------+--------------+--------------+--------------+--------------+
 
-+--------------------+--------------------+--------------------+--------------------+
-|             row_udf|          pandas_udf|           arrow_udf|        map_in_arrow|
-+--------------------+--------------------+--------------------+--------------------+
-|3.552713678800501...|3.552713678800501...|3.552713678800501...|3.552713678800501...|
-+--------------------+--------------------+--------------------+--------------------+
+Maximum absolute difference from built-in <= 1e-12:
++-------+----------+---------+------------+
+|row_udf|pandas_udf|arrow_udf|map_in_arrow|
++-------+----------+---------+------------+
+|   true|      true|     true|        true|
++-------+----------+---------+------------+
 
 ```
 
@@ -66,7 +68,11 @@ Current output · Sail 0.7.3.
 | Arrow UDF (`@arrow_udf`) | once per batch of rows, with Arrow arrays | the logic is `pyarrow.compute` code, or you want to avoid pandas. |
 | `mapInArrow` | once per partition, over its record batches | you need setup once per partition (a model, a client), or the output has different rows or columns than the input. |
 
-The `max_difference_from_builtin` result shows how far each Python style lands from the built-in one; all four are within floating-point rounding.
+The console rounds scores to 12 decimal places and shows whether each style's
+maximum absolute difference from the built-in result is at most `1e-12`.
+Smaller rounding differences can vary across CPUs and math libraries. The `run()`
+results, including `max_difference_from_builtin`, retain full precision for the
+Sail/Spark comparison tests.
 
 ## On Sail
 

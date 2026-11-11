@@ -28,7 +28,7 @@ as measured separately are not covered by that check.
 - Parquet, CSV, JSON, text and Delta Lake read and write with the standard `spark.read` and `df.write` calls and need no extra packages. Avro can be read but not written. ORC (read or write) and the `image` source are not available.
 - Inferred schemas differ from Apache Spark's in three ways: CSV `inferSchema` reads whole numbers as `BIGINT` (Spark: `INT`); JSON keeps columns in file order (Spark sorts them by name); and partition columns of a partitioned directory come back as strings (Spark infers numbers and dates). Pass an explicit schema (`spark.read.schema(...)`) when types or column order matter.
 
-## Not available
+## What to use instead
 
 - `pyspark.ml` (MLlib) is not available, although Spark Connect 4.x supports it. Train and score models with Python libraries (scikit-learn, PyTorch, ONNX Runtime) inside `mapInArrow` or a pandas UDF, or outside the engine.
 - `spark.sparkContext` and the RDD API are not available, as on any Spark Connect server. Use the DataFrame and SQL APIs instead, for example `spark.createDataFrame([], schema)` rather than `sparkContext.emptyRDD()`.

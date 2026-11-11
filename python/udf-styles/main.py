@@ -99,7 +99,14 @@ if __name__ == "__main__":
     _, port = server.listening_address
     spark = SparkSession.builder.remote(f"sc://localhost:{port}").getOrCreate()
     results = run(spark)
-    results["first_rows"].show()
-    results["max_difference_from_builtin"].show()
+    # Keep the console comparison readable across math libraries and CPU instruction sets.
+    print("Scores (rounded to 12 decimal places):")
+    first_rows = results["first_rows"]
+    first_rows.select(
+        "id", *[F.round(F.col(name), 12).alias(name) for name in first_rows.columns if name != "id"]
+    ).show()
+    print("Maximum absolute difference from built-in <= 1e-12:")
+    differences = results["max_difference_from_builtin"]
+    differences.select(*[(F.col(name) <= 1e-12).alias(name) for name in differences.columns]).show()
     spark.stop()
     server.stop()

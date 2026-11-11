@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.11"
 
 [[package]]
@@ -230,6 +230,7 @@ source = { virtual = "." }
 dev = [
     { name = "markdown-it-py" },
     { name = "pyarrow" },
+    { name = "pygments" },
     { name = "pytest" },
     { name = "pyyaml" },
     { name = "ruff" },
@@ -241,6 +242,7 @@ dev = [
 dev = [
     { name = "markdown-it-py", specifier = "==4.0.0" },
     { name = "pyarrow", specifier = ">=17" },
+    { name = "pygments", specifier = "==2.21.0" },
     { name = "pytest", specifier = ">=8" },
     { name = "pyyaml", specifier = ">=6" },
     { name = "ruff", specifier = ">=0.6" },

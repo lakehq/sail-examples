@@ -2,7 +2,9 @@
 
 import importlib.util
 import io
+import json
 import os
+import re
 import wave
 from pathlib import Path
 
@@ -140,6 +142,44 @@ def test_invalid_cli_bounds_fail_before_engine_startup(example, arguments):
     with pytest.raises(SystemExit) as error:
         example.parse_args(arguments)
     assert error.value.code == 2
+
+
+@pytest.mark.parametrize("json_output", [False, True], ids=["table", "json"])
+def test_cli_stabilizes_display_without_rounding_json(tmp_path, json_output):
+    script = tmp_path / "summary_cli.py"
+    source = ROOT / "analytics/support-intent-analytics/main.py"
+    values = [0.3333333333333333, 0.33333333333333337, 0.3333333433333333]
+    arguments = ["--json"] if json_output else []
+    # Supply results at the audio/model boundary, keeping the real CLI and Sail display.
+    script.write_text(f"""import importlib.util
+from unittest.mock import patch
+
+spec = importlib.util.spec_from_file_location("support_intent_cli", {str(source)!r})
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+
+def fixture_results(spark, *args):
+    summary = spark.createDataFrame(
+        list(enumerate({values!r})), "case int, macro_f1_all_14 double"
+    ).orderBy("case")
+    topics = spark.createDataFrame([("fixture",)], "topic string")
+    return {{"summary": summary, "topics": topics}}
+
+with patch.object(module, "run", fixture_results):
+    module.main({arguments!r})
+""")
+    meta = run("sail", "entry-point", script, tmp_path / "run", [], 120)
+    assert meta["status"] == "ok", meta
+    output = meta["capture"]["output"]
+    if json_output:
+        assert [row["macro_f1_all_14"] for row in json.loads(output)["summary"]] == values
+    else:
+        displayed = re.findall(r"^\|[012]\s*\|([^|]+)\|$", output, re.MULTILINE)
+        assert [value.strip() for value in displayed] == [
+            "0.333333333333",
+            "0.333333333333",
+            "0.333333343333",
+        ]
 
 
 @pytest.mark.parametrize("engine", ["sail", "spark"])

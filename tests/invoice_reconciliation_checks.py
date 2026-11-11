@@ -30,7 +30,8 @@ def check(spark, engine):
             "doc-corrupt": "extraction_error",
             "doc-blank": "extraction_error",
         }
-        assert len(documents) == 7 and {row["document_id"]: row["status"] for row in documents} == expected
+        statuses = {row["document_id"]: row["status"] for row in documents}
+        assert len(documents) == 7 and statuses == expected, (engine, statuses)
         by_source = {row["source_id"]: row for row in documents}
         for answer in gold:
             actual = by_source[answer["source_id"]]

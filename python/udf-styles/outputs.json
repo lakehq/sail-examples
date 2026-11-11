@@ -26,6 +26,35 @@
           }
         }
       ]
+    },
+    {
+      "output": "Scores (rounded to 12 decimal places):\n+---+--------------+--------------+--------------+--------------+--------------+\n| id|       builtin|       row_udf|    pandas_udf|     arrow_udf|  map_in_arrow|\n+---+--------------+--------------+--------------+--------------+--------------+\n|  0|           0.0|           0.0|           0.0|           0.0|           0.0|\n|  1|0.457012005054|0.457012005054|0.457012005054|0.457012005054|0.457012005054|\n|  2|0.849485488971|0.849485488971|0.849485488971|0.849485488971|0.849485488971|\n|  3|1.201136978368|1.201136978368|1.201136978368|1.201136978368|1.201136978368|\n|  4|1.524617590798|1.524617590798|1.524617590798|1.524617590798|1.524617590798|\n+---+--------------+--------------+--------------+--------------+--------------+\n\nMaximum absolute difference from built-in <= 1e-12:\n+-------+----------+---------+------------+\n|row_udf|pandas_udf|arrow_udf|map_in_arrow|\n+-------+----------+---------+------------+\n|   true|      true|     true|        true|\n+-------+----------+---------+------------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.14.10",
+          "captured_at": "2026-11-07T15:06:06.119122+00:00",
+          "script_sha256": "33ac37180a718570d87c3b8223e4fde334d76c0dba25cf924c1a11039ee45070",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          },
+          "revision": 2,
+          "revision_reason": "Display scores to 12 decimal places and compare full-precision UDF differences against an explicit 1e-12 threshold across CPUs"
+        }
+      ]
     }
   ]
 }
