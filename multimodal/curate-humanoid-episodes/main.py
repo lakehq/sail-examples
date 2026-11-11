@@ -41,10 +41,10 @@ TIME_TOLERANCE = 1e-4  # seconds, accommodates this dataset's float32 timestamps
 # SHA-256 over the concatenated hex SHA-256 of every decoded RGB frame, in frame order.
 # The videos are read in byte ranges, so the decoded pixels are verified instead of whole files.
 FRAME_DIGESTS = {
-    "cam_left_high": "8cac56cfea9fa18cf0d2b3d92d8c7933c35173f829e1017cb9f2734fd585220c",
-    "cam_right_high": "dd817452c211fea2a30eb87d4298d4407ebcdc28eb6a33a385c0005713d30dbe",
-    "cam_left_wrist": "670929d773d9c01d1589f1fb8843a71864028d544bde920443d4e4cad78d2343",
-    "cam_right_wrist": "7057d2b0f27c5c111e263679aa11f30ad2ba67f5545e2eac6619bfe28cd46f55",
+    "cam_left_high": "a844c9ceecdac821347a992562b70e36905e8b9c8594ae7607c77f4915b8f87d",
+    "cam_right_high": "72f604941280f8962e623296c3bec444f55ad20e8baea0a864cd09a628af7d84",
+    "cam_left_wrist": "dbf0767a9b396c1ea90a497e7b37eea224bd8b9bb586834ce077abc0083fd62a",
+    "cam_right_wrist": "0f4c9b535211444b9a5df038f7070e8335ded98d19c5c7c9d9102fdd8c8154fa",
 }
 
 
@@ -97,6 +97,10 @@ FRAME_SCHEMA = pa.schema(
 def decode_every_frame(batches):
     """Decode every frame of each camera segment and emit one small record per frame."""
     import av
+    from av.video.reformatter import Interpolation
+
+    # Pixel integrity checks must not depend on the worker's CPU acceleration path.
+    conversion = Interpolation.BILINEAR | Interpolation.BITEXACT | Interpolation.ACCURATE_RND
 
     for batch in batches:
         for segment in batch.to_pylist():
@@ -116,7 +120,8 @@ def decode_every_frame(batches):
                         continue
                     if video_time >= end - 1e-6:
                         break
-                    rgb_sha256 = hashlib.sha256(frame.to_ndarray(format="rgb24").tobytes()).hexdigest()
+                    rgb = frame.to_ndarray(format="rgb24", interpolation=conversion)
+                    rgb_sha256 = hashlib.sha256(rgb.tobytes()).hexdigest()
                     digest.update(rgb_sha256.encode())
                     rows.append(
                         {

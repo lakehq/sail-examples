@@ -8,7 +8,7 @@
 #   "pandas==3.0.6",
 #   "numpy==2.5.4",
 #   "rapidocr==3.10.0",
-#   "onnxruntime==1.23.2",
+#   "onnxruntime==1.31.1",
 #   "pypdfium2==5.14.0",
 #   "pillow==13.0.0",
 #   "opencv-python-headless==5.0.0.93",

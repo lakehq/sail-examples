@@ -7,7 +7,7 @@
 #   "pyarrow==26.0.0",
 #   "pandas==3.0.6",
 #   "numpy==2.5.4",
-#   "onnxruntime==1.23.2",
+#   "onnxruntime==1.31.1",
 #   "tokenizers==0.22.1",
 #   "huggingface-hub==0.36.0",
 # ]
@@ -226,7 +226,7 @@ def embedding_spec(max_tokens=MAX_TOKENS, model_revision=MODEL_REVISION):
         "provider": "CPUExecutionProvider",
         "intra_op_threads": 1,
         "encoder": "minilm-onnx-v1",
-        "onnxruntime": "1.23.2",
+        "onnxruntime": "1.31.1",
         "tokenizers": "0.22.1",
         "numpy": "2.5.4",
     }

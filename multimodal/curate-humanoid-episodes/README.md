@@ -94,6 +94,8 @@ files.
 Every downloaded file is checked against a pinned SHA-256, including cached
 copies. The four camera videos are 200 to 500 MB each and are read by seeking, not
 downloaded, so instead of hashing whole files the example pins a digest of every
-decoded frame of each camera and fails if the pixels differ. Files are downloaded locally and the videos are read
+decoded frame of each camera and fails if the pixels differ. RGB conversion uses
+FFmpeg's bit-exact mode with accurate rounding so CPU acceleration does not change
+the checked pixels. Files are downloaded locally and the videos are read
 over HTTPS where each task runs; a multi-machine deployment needs the same
 network access, or storage reachable from its workers.

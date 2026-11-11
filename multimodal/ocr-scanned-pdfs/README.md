@@ -31,7 +31,7 @@ The OCR models ship inside the `rapidocr` package, so nothing is downloaded at r
 |---|---|---|---|
 | Book page, 1896 | 0.0 | 0.0 | 1.0 |
 | Newspaper column, 1915 | 0.032 | 0.061 | 0.95 |
-| Handbill, 1888, downscaled | 0.044 | 0.055 | 0.932 |
+| Handbill, 1888, downscaled | 0.043 | 0.049 | 0.932 |
 | Fare table, 1892 | 0.314 | 0.02 | 0.981 |
 
 The fare table shows why the example reports more than one measure. OCR returns the table one printed line at a time across its columns, so a cell printed on two lines comes out in two pieces, while the transcription keeps each cell whole. The printout shows the first lines of both. The character error rate counts order, so it is 0.314. With the words of both texts sorted it is 0.02, and the word recall is 0.981, so almost all of the 0.314 comes from the order, not from misread words. The blank page comes back as `blank`, and the file that is not a PDF as one `error` row whose `error` column gives the reason.

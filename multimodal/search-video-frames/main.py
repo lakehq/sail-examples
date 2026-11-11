@@ -8,7 +8,7 @@
 #   "pandas==3.0.6",
 #   "numpy==2.5.4",
 #   "av==18.0.0",
-#   "onnxruntime==1.23.2",
+#   "onnxruntime==1.31.1",
 #   "tokenizers==0.22.1",
 #   "huggingface-hub==0.36.0",
 #   "pillow==13.0.0",

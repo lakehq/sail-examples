@@ -10,7 +10,7 @@
 #   "faster-whisper==1.2.1",
 #   "ctranslate2==4.8.2",
 #   "av==18.0.0",
-#   "onnxruntime==1.23.2",
+#   "onnxruntime==1.31.1",
 #   "tokenizers==0.22.1",
 #   "huggingface-hub==1.5.0",
 #   "tqdm==4.70.1",

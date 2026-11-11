@@ -1,7 +1,12 @@
 """Adversarial inputs for the robot examples, executed inside each engine environment."""
 
+import hashlib
 import importlib.util
+from contextlib import contextmanager
+from fractions import Fraction
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -12,6 +17,48 @@ def example(name):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def check_decoded_pixel_integrity(module):
+    import av
+    import numpy as np
+    import pyarrow as pa
+
+    pixels = np.arange(384, dtype=np.uint8).reshape(24, 16)
+    expected_rgb = "adcf0f3adbd535ee56774d4029cad8750d8008f4a8b1c16e5e90e99af46f8fde"
+    segment = {
+        "camera": "fixture",
+        "episode_index": 0,
+        "video_start": 0.0,
+        "video_end": 1 / 30,
+        "video_url": "fixture.mp4",
+    }
+    stream = SimpleNamespace(time_base=Fraction(1, 30))
+
+    @contextmanager
+    def fixture_video(*args, **kwargs):
+        frame = av.VideoFrame.from_ndarray(pixels, format="yuv420p")
+        frame.pts = 0
+        frame.time_base = stream.time_base
+        yield SimpleNamespace(
+            streams=SimpleNamespace(video=[stream]),
+            seek=lambda *args, **kwargs: None,
+            decode=lambda _: iter([frame]),
+        )
+
+    digest = hashlib.sha256(expected_rgb.encode()).hexdigest()
+    with patch.object(av, "open", fixture_video), patch.object(module, "FRAME_DIGESTS", {"fixture": digest}):
+        batches = list(module.decode_every_frame([pa.RecordBatch.from_pylist([segment])]))
+        assert len(batches) == 1
+        rows = batches[0].to_pylist()
+        assert rows[0]["rgb_sha256"] == expected_rgb
+        pixels[0, 0] = 255
+        try:
+            list(module.decode_every_frame([pa.RecordBatch.from_pylist([segment])]))
+        except ValueError as error:
+            assert "decoded frames differ" in str(error)
+        else:
+            raise AssertionError("Changed pixels must fail the pinned digest check")
 
 
 def check(spark, engine):
@@ -85,6 +132,7 @@ def check(spark, engine):
     assert coverage[1]["unmatched_frames"] == 1 and coverage[1]["max_time_error_seconds"] is None
     # The humanoid example: 28-joint vectors at 30 Hz, and every decoded frame kept even when unmatched.
     humanoid = example("curate-humanoid-episodes")
+    check_decoded_pixel_integrity(humanoid)
     joints, fps = [0.5] * 28, 30
     records = []
     for episode in range(5):
