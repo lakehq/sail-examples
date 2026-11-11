@@ -54,6 +54,34 @@ To follow [main.py](main.py), start with `apply_batch()` for orchestration,
 keys, then `recover_locked()` for the source MERGE and report repair. `run()`
 supplies the small demonstration batches.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+orders
++--------+--------------+-------+--------+-------------+------------+
+|order_id|source_version|status |store_id|business_date|amount_minor|
++--------+--------------+-------+--------+-------------+------------+
+|a       |2             |active |south   |2026-01-02   |1200        |
+|b       |3             |active |north   |2026-01-02   |600         |
+|c       |2             |deleted|NULL    |NULL         |NULL        |
++--------+--------------+-------+--------+-------------+------------+
+
+daily
++--------+-------------+-----------+------------+
+|store_id|business_date|order_count|amount_minor|
++--------+-------------+-----------+------------+
+|north   |2026-01-02   |1          |600         |
+|south   |2026-01-02   |1          |1200        |
++--------+-------------+-----------+------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## Input and version contract
 
 Each batch is a JSON object with `batch_id` and `records`. Each record contains

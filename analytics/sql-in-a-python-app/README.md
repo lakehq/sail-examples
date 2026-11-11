@@ -29,6 +29,24 @@ The first run downloads the two files (1.4 MB) into `.data/` next to the script.
 
 It prints the busiest Manhattan pickup zones in the first week of January 2024. East Harlem North leads with 2,578 trips.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
+Busiest Manhattan pickup zones, January 1 to 7, 2024:
+               zone  trips  median_fare
+  East Harlem North   2578         12.8
+  East Harlem South   1516         10.7
+     Central Harlem    631         11.4
+Morningside Heights    524         13.5
+       Central Park    462         11.4
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **pandas in.** `spark.createDataFrame(pandas_df)` turns each pandas DataFrame into a Spark DataFrame, and `createOrReplaceTempView` names it for SQL. The trip dates become a `DATE` column. pandas reads the payment type as `float64`, because the column has missing values, so it is cast to pandas' nullable `Int64` first and arrives as a `BIGINT` column. The zone lookup is read with `keep_default_na=False`, so its literal `N/A` labels stay text instead of becoming missing values.

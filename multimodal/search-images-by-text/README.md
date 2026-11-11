@@ -29,6 +29,45 @@ The first run downloads the two CLIP ViT-B/32 encoders in ONNX format (about 600
 
 "a dog playing in the snow" ranks the dog in the snow first, and "a city street at night" ranks the night street first. Of the 53 captions, 52 rank their own photo first, and all 53 rank it in the top five.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
+a dog playing in the snow
+  1. 0.279  dog-snow.jpg
+  2. 0.254  fox.jpg
+  3. 0.225  snow-trees.jpg
+a sailboat on the water
+  1. 0.268  sailboat-bay.jpg
+  2. 0.254  sailboat.jpg
+  3. 0.243  beach-tropical.jpg
+a cat asleep
+  1. 0.303  cat-sleeping-orange.jpg
+  2. 0.295  cat-sleeping-curled.jpg
+  3. 0.259  cat-tabby.jpg
+a city street at night
+  1. 0.307  street-night.jpg
+  2. 0.234  bridge-night.jpg
+  3. 0.196  bicycle-snow-night.jpg
+breakfast on a plate
+  1. 0.283  food-english-breakfast.jpg
+  2. 0.265  food-pizza.jpg
+  3. 0.242  food-caesar-salad.jpg
++--------+------------------+-----------+
+|captions|       recall_at_1|recall_at_5|
++--------+------------------+-----------+
+|      53|0.9811320754716981|        1.0|
++--------+------------------+-----------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **A table of paths.** `images/captions.csv` lists each photo and its caption. The photos become a DataFrame with one `path` per file. Each task opens only the files in its own rows.

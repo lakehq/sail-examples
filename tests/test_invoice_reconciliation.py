@@ -12,6 +12,8 @@ import pytest
 from catalog import ROOT, script_dependencies
 from harness import run
 
+pytestmark = pytest.mark.examples("reconcile-invoice-documents")
+
 EXAMPLE = ROOT / "pipelines/reconcile-invoice-documents"
 LINES = {
     "clean-us-clean-simple": [

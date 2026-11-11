@@ -5,6 +5,10 @@ from pathlib import Path
 import pytest
 from harness import run
 
+pytestmark = pytest.mark.examples(
+    "curate-robot-episodes", "align-robot-camera-frames", "curate-humanoid-episodes"
+)
+
 
 @pytest.mark.parametrize("engine", ["sail", "spark"])
 def test_robot_negative_controls(engine, tmp_path):

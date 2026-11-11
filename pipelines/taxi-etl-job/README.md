@@ -29,6 +29,60 @@ The first run downloads the files (16 MB) into `.data/` next to the script.
 
 Of 660,218 raw records, 24,946 fail a rule and 635,272 are kept. Most rejected rows (23,603) fail the duration rule. No kept row is an exact duplicate of another. Running March again leaves the table unchanged: the same row count and the same checksum over every row.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++--------+-------------+------------------+----------+----------------------+---------------------+
+|raw_rows|rejected_rows|duplicates_removed|clean_rows|clean_rows_after_rerun|same_rows_after_rerun|
++--------+-------------+------------------+----------+----------------------+---------------------+
+|660218  |24946        |0                 |635272    |635272                |true                 |
++--------+-------------+------------------+----------+----------------------+---------------------+
+
++-------------------------------+-----+
+|reject_reason                  |rows |
++-------------------------------+-----+
+|duration not 1 to 180 minutes  |23603|
+|negative amount                |947  |
+|distance not 0 to 100 miles    |232  |
+|pickup outside the file's month|164  |
++-------------------------------+-----+
+
++-----+-----+
+|month|count|
++-----+-----+
+|1    |54583|
+|2    |51752|
+|3    |55503|
+|4    |54413|
+|5    |58714|
+|6    |52689|
+|7    |49708|
+|8    |49560|
+|9    |52232|
+|10   |54053|
+|11   |50265|
+|12   |51800|
++-----+-----+
+
++-----------+-----+--------+---------+----------+
+|pickup_date|trips|   fares|avg_miles|card_share|
++-----------+-----+--------+---------+----------+
+| 2024-01-01| 1115|20206.63|    3.197|    0.6233|
+| 2024-01-02| 1609|28336.04|    2.791|    0.6283|
+| 2024-01-03| 1730|30518.56|     2.88|    0.6318|
+| 2024-01-04| 2026|34110.44|    2.707|    0.6713|
+| 2024-01-05| 2050| 35397.2|    2.734|    0.6249|
++-----------+-----+--------+---------+----------+
+only showing top 5 rows
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 1. **A fixed schema.** Each raw file is mapped to the job's own column names and types (`CLEAN_COLUMNS`), so later steps do not depend on how the source names things. The month comes from the file being loaded.

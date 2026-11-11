@@ -1,0 +1,63 @@
+{
+  "snapshots": [
+    {
+      "output": "+-------------+------------+----------+---------+----------------+------------------+-----------------+---------------------+------------------+------------------+------------------+\n|method       |query_id    |split     |documents|judged_documents|relevant_documents|unjudged_in_top_k|status               |recall_at_k       |mrr_at_k          |ndcg_at_k         |\n+-------------+------------+----------+---------+----------------+------------------+-----------------+---------------------+------------------+------------------+------------------+\n|minilm       |address     |validation|7        |7               |1                 |0                |scored               |1.0               |1.0               |1.0               |\n|minilm       |missing     |train     |7        |5               |2                 |1                |incomplete_judgments |NULL              |NULL              |NULL              |\n|minilm       |password    |test      |7        |7               |2                 |0                |scored               |1.0               |1.0               |1.0               |\n|minilm       |refund      |train     |7        |7               |3                 |0                |scored               |1.0               |1.0               |1.0               |\n|minilm       |return      |train     |7        |7               |3                 |0                |scored               |1.0               |1.0               |1.0               |\n|minilm       |security    |test      |7        |7               |1                 |0                |scored               |1.0               |1.0               |1.0               |\n|minilm       |shipping    |validation|7        |7               |1                 |0                |scored               |1.0               |0.5               |0.6309297535714574|\n|minilm       |unanswerable|test      |7        |7               |0                 |0                |no_relevant_documents|NULL              |NULL              |NULL              |\n|token_overlap|address     |validation|7        |7               |1                 |0                |scored               |1.0               |1.0               |1.0               |\n|token_overlap|missing     |train     |7        |5               |2                 |0                |incomplete_judgments |NULL              |NULL              |NULL              |\n|token_overlap|password    |test      |7        |7               |2                 |0                |scored               |0.5               |1.0               |0.8262346571285599|\n|token_overlap|refund      |train     |7        |7               |3                 |0                |scored               |0.3333333333333333|0.3333333333333333|0.3631143808977028|\n|token_overlap|return      |train     |7        |7               |3                 |0                |scored               |0.6666666666666666|1.0               |0.7002755876478819|\n|token_overlap|security    |test      |7        |7               |1                 |0                |scored               |1.0               |0.5               |0.6309297535714574|\n|token_overlap|shipping    |validation|7        |7               |1                 |0                |scored               |0.0               |0.0               |0.0               |\n|token_overlap|unanswerable|test      |7        |7               |0                 |0                |no_relevant_documents|NULL              |NULL              |NULL              |\n+-------------+------------+----------+---------+----------------+------------------+-----------------+---------------------+------------------+------------------+------------------+\n\n+----------+----+--------------+\n|split     |rows|snapshot_id   |\n+----------+----+--------------+\n|test      |42  |support-faq-v1|\n|train     |42  |support-faq-v1|\n|validation|28  |support-faq-v1|\n+----------+----+--------------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:43.458608+00:00",
+          "script_sha256": "6670c9bba64a9caecd8c703426f1dedec7811ff7310e601ba796344e75ccf86f",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "aiohappyeyeballs": "2.7.1",
+            "aiohttp": "3.14.5",
+            "aiosignal": "1.4.0",
+            "anyio": "4.16.0",
+            "attrs": "26.1.0",
+            "certifi": "2026.10.19",
+            "click": "8.5.0",
+            "coloredlogs": "15.0.1",
+            "datasets": "5.1.0",
+            "dill": "0.4.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "frozenlist": "1.8.0",
+            "fsspec": "2026.7.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "h11": "0.16.0",
+            "hf-xet": "1.8.0",
+            "httpcore": "1.0.9",
+            "httpx": "0.28.1",
+            "huggingface_hub": "1.31.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "multidict": "7.2.1",
+            "multiprocess": "0.70.19",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "propcache": "0.5.4",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "sympy": "1.14.0",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "xxhash": "4.0.2",
+            "yarl": "1.25.1",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

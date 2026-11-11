@@ -133,3 +133,31 @@ writer transactions, object-store publication or distributed filesystem support.
 
 Use the simpler [embed-and-search](../embed-and-search/) example for a single
 embedding/search pass without maintained state.
+
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3 (revision 2).
+
+```text
++-------+---------+------+--------------+--------------+-------------+-------------+
+|phase  |documents|chunks|unique_content|encoded_chunks|encoder_calls|reused_chunks|
++-------+---------+------+--------------+--------------+-------------+-------------+
+|initial|4        |5     |5             |5             |1            |0            |
+|no-op  |5        |6     |5             |0             |0            |5            |
+|updated|5        |6     |5             |2             |1            |3            |
++-------+---------+------+--------------+--------------+-------------+-------------+
+
++----+-------------+-----------------+-----------+---------------------------------------------------------------+
+|rank|doc_id       |score            |chunk_index|text                                                           |
++----+-------------+-----------------+-----------+---------------------------------------------------------------+
+|1   |parquet-copy |1.0              |0          |Parquet stores data by column.                                 |
+|2   |parquet-guide|1.0              |0          |Parquet stores data by column.                                 |
+|3   |table-guide  |0.581671953201294|0          |Delta Lake adds transactions and time travel to Parquet tables.|
++----+-------------+-----------------+-----------+---------------------------------------------------------------+
+
+The demo uses isolated temporary state. Use --documents and --state-dir to retain your table.
+```
+
+<!-- sail-output:end -->

@@ -27,6 +27,32 @@ uv run main.py
 
 The first run downloads the all-MiniLM-L6-v2 ONNX model (about 90 MB) into the Hugging Face cache. The model revision is pinned.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Recorded output · Sail 0.7.3.
+
+The example has changed since this capture. This output comes from the earlier script.
+
+```text
++----------------+-----+------+
+|             doc|pages|chunks|
++----------------+-----+------+
+|  billing-policy|    3|     3|
+|  data-retention|    2|     2|
+| incident-report|    2|     2|
+|onboarding-guide|    3|     5|
++----------------+-----+------+
+
+What happens if a customer is charged twice?
+  1. 0.688  billing-policy page 2: If a customer is charged twice, the duplicate charge is refunded within five bus
+  2. 0.425  billing-policy page 3: Annual plans are billed upfront. A customer who cancels in the first fourteen da
+  3. 0.275  billing-policy page 1: Invoices are issued on the first day of each month. Payment is due within thirty
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 1. **Extract and chunk.** A table of paths, one PDF per row, goes through `mapInArrow`. `pypdf` reads each page, and the text is split into chunks of 60 words that overlap by 15. The function emits at most 32 text chunks per output batch, each with its document, page, chunk number and text. It skips pages with no text. The PDF reader and extracted text for an individual page still consume memory.

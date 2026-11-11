@@ -36,6 +36,49 @@ each of the four camera videos. Each video file holds many episodes, so the run
 seeks to that episode over HTTP instead of downloading the whole file. No key,
 model, GPU or robot is needed.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++----------+-----+
+|     split|count|
++----------+-----+
+|     train|  240|
+|validation|   61|
++----------+-----+
+
++-------------+----+---------------+------+----------------+--------------+---------------+------+
+|episode_index|task|expected_frames|frames|duplicate_frames|bad_timestamps|invalid_vectors|usable|
++-------------+----+---------------+------+----------------+--------------+---------------+------+
++-------------+----+---------------+------+----------------+--------------+---------------+------+
+
++---------------+--------------+--------------+----------------+----------------------+
+|camera         |decoded_frames|matched_frames|distinct_records|max_time_error_seconds|
++---------------+--------------+--------------+----------------+----------------------+
+|cam_left_high  |666           |666           |666             |8.900960324353946E-7  |
+|cam_left_wrist |666           |666           |666             |8.900960324353946E-7  |
+|cam_right_high |666           |666           |666             |8.900965440261643E-7  |
+|cam_right_wrist|666           |666           |666             |8.900960892788135E-7  |
++---------------+--------------+--------------+----------------+----------------------+
+
++-------------+-------------+------------+-----------------------+-----------+----------------------+-------+
+|camera       |episode_index|frame_number|episode_timestamp      |frame_index|time_error_seconds    |matched|
++-------------+-------------+------------+-----------------------+-----------+----------------------+-------+
+|cam_left_high|279          |0           |-5.6843418860808015E-14|0          |5.6843418860808015E-14|true   |
+|cam_left_high|279          |1           |0.03333333333330302    |1          |1.7384991224389523E-9 |true   |
+|cam_left_high|279          |2           |0.06666666666666288    |2          |3.476941401459044E-9  |true   |
+|cam_left_high|279          |3           |0.0999999999999659     |3          |1.4901502254360821E-9 |true   |
+|cam_left_high|279          |4           |0.13333333333332575    |4          |6.953882802918088E-9  |true   |
++-------------+-------------+------------+-----------------------+-----------+----------------------+-------+
+only showing top 5 rows
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 1. **Check every episode.** Window functions compare each record's timestamp with

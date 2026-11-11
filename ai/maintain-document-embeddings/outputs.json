@@ -1,0 +1,92 @@
+{
+  "snapshots": [
+    {
+      "output": "+-------+---------+------+--------------+--------------+-------------+-------------+\n|phase  |documents|chunks|unique_content|encoded_chunks|encoder_calls|reused_chunks|\n+-------+---------+------+--------------+--------------+-------------+-------------+\n|initial|4        |5     |5             |5             |1            |0            |\n|no-op  |5        |6     |5             |0             |0            |5            |\n|updated|5        |6     |5             |2             |1            |3            |\n+-------+---------+------+--------------+--------------+-------------+-------------+\n\n+----+-------------+------------------+-----------+---------------------------------------------------------------+\n|rank|doc_id       |score             |chunk_index|text                                                           |\n+----+-------------+------------------+-----------+---------------------------------------------------------------+\n|1   |parquet-copy |1.0               |0          |Parquet stores data by column.                                 |\n|2   |parquet-guide|1.0               |0          |Parquet stores data by column.                                 |\n|3   |table-guide  |0.5816718935966492|0          |Delta Lake adds transactions and time travel to Parquet tables.|\n+----+-------------+------------------+-----------+---------------------------------------------------------------+\n\nThe demo uses isolated temporary state. Use --documents and --state-dir to retain your table.\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:58.640381+00:00",
+          "script_sha256": "1c26fcd7150f54b2af0328235eedad6c0ec7c34f05069408f2dd278a8dbc8328",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "coloredlogs": "15.0.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "sympy": "1.14.0",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    },
+    {
+      "output": "+-------+---------+------+--------------+--------------+-------------+-------------+\n|phase  |documents|chunks|unique_content|encoded_chunks|encoder_calls|reused_chunks|\n+-------+---------+------+--------------+--------------+-------------+-------------+\n|initial|4        |5     |5             |5             |1            |0            |\n|no-op  |5        |6     |5             |0             |0            |5            |\n|updated|5        |6     |5             |2             |1            |3            |\n+-------+---------+------+--------------+--------------+-------------+-------------+\n\n+----+-------------+-----------------+-----------+---------------------------------------------------------------+\n|rank|doc_id       |score            |chunk_index|text                                                           |\n+----+-------------+-----------------+-----------+---------------------------------------------------------------+\n|1   |parquet-copy |1.0              |0          |Parquet stores data by column.                                 |\n|2   |parquet-guide|1.0              |0          |Parquet stores data by column.                                 |\n|3   |table-guide  |0.581671953201294|0          |Delta Lake adds transactions and time travel to Parquet tables.|\n+----+-------------+-----------------+-----------+---------------------------------------------------------------+\n\nThe demo uses isolated temporary state. Use --documents and --state-dir to retain your table.\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.14.10",
+          "captured_at": "2026-11-07T00:42:04.758408+00:00",
+          "script_sha256": "36e94a3819f26200d13763213f56c59754861030db69f33b08983714e6381910",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "idna": "3.20",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.31.1",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "tokenizers": "0.22.1",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          },
+          "revision": 2,
+          "revision_reason": "Reviewed the small cosine-score change after the Python 3.14 compatible ONNX Runtime upgrade; semantic checks remain unchanged"
+        }
+      ]
+    }
+  ]
+}

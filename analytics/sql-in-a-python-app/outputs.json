@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "output": "Busiest Manhattan pickup zones, January 1 to 7, 2024:\n               zone  trips  median_fare\n  East Harlem North   2578         12.8\n  East Harlem South   1516         10.7\n     Central Harlem    631         11.4\nMorningside Heights    524         13.5\n       Central Park    462         11.4\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:58:31.493751+00:00",
+          "script_sha256": "c1728a3c2d196ccda96ac3fa9e2eda2c3f2168ab27cf6388cf0363b828cb9db3",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

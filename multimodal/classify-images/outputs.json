@@ -1,0 +1,49 @@
+{
+  "snapshots": [
+    {
+      "output": "+---------------------+----------------+-----+\n|file                 |label           |score|\n+---------------------+----------------+-----+\n|espresso.jpg         |espresso        |0.779|\n|golden-retriever.jpg |golden retriever|0.493|\n|monarch-butterfly.jpg|monarch         |0.994|\n|red-fox.jpg          |red fox         |0.954|\n|siamese-cat.jpg      |Siamese cat     |0.413|\n|strawberries.jpg     |strawberry      |0.995|\n|tabby-cat.jpg        |tabby           |0.533|\n|zebra.jpg            |zebra           |0.999|\n+---------------------+----------------+-----+\n\nNeeds review:\n+--------------------+----------------+-----+-----------+---------------+\n|file                |label           |score|runner_up  |runner_up_score|\n+--------------------+----------------+-----+-----------+---------------+\n|golden-retriever.jpg|golden retriever|0.493|kuvasz     |0.231          |\n|siamese-cat.jpg     |Siamese cat     |0.413|Persian cat|0.379          |\n|tabby-cat.jpg       |tabby           |0.533|hyena      |0.155          |\n+--------------------+----------------+-----+-----------+---------------+\n\n",
+      "runs": [
+        {
+          "sail": "0.7.3",
+          "python": "3.12.14",
+          "captured_at": "2026-11-05T22:59:00.564454+00:00",
+          "script_sha256": "755a92ccce415151b129b4ff1fc266614da759db4d73d2c60bb6893f7db161b4",
+          "packages": {
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.19",
+            "charset-normalizer": "3.5.2",
+            "coloredlogs": "15.0.1",
+            "filelock": "4.2.9",
+            "flatbuffers": "25.12.19",
+            "fsspec": "2026.9.0",
+            "googleapis-common-protos": "1.76.0",
+            "grpcio": "1.85.1",
+            "grpcio-status": "1.85.1",
+            "hf-xet": "1.8.0",
+            "huggingface-hub": "0.36.0",
+            "humanfriendly": "10.0",
+            "idna": "3.20",
+            "mpmath": "1.3.0",
+            "numpy": "2.5.4",
+            "onnxruntime": "1.23.2",
+            "packaging": "26.3",
+            "pandas": "3.0.6",
+            "pillow": "13.0.0",
+            "protobuf": "7.36.2",
+            "pyarrow": "26.0.0",
+            "pysail": "0.7.3",
+            "pyspark-client": "4.1.3",
+            "python-dateutil": "4.0.0",
+            "requests": "2.34.2",
+            "sympy": "1.14.0",
+            "tqdm": "4.70.1",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "urllib3": "2.8.0",
+            "zstandard": "0.25.0"
+          }
+        }
+      ]
+    }
+  ]
+}

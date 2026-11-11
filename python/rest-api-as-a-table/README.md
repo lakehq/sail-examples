@@ -27,6 +27,32 @@ uv run main.py
 
 A small local service stands in for the API (`GET /tickets?page=N`, 50 tickets per page), so the example runs offline.
 
+<!-- sail-output:start variant=default -->
+
+## Example output
+
+Current output · Sail 0.7.3.
+
+```text
++-------+------------+
+|tickets|distinct_ids|
++-------+------------+
+|    487|         487|
++-------+------------+
+
++-------+-------+------------+
+| status|tickets|avg_priority|
++-------+-------+------------+
+| closed|    122|         2.0|
+|   open|    122|         1.0|
+|pending|    121|         4.0|
+| solved|    122|         3.0|
++-------+-------+------------+
+
+```
+
+<!-- sail-output:end -->
+
 ## How it works
 
 - **`TicketsDataSource`** subclasses `pyspark.sql.datasource.DataSource`. It declares the schema and returns a reader for the `url` option.
