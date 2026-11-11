@@ -1,9 +1,9 @@
-/* Brand and typography from docs.lakesail.com/platform, platform-docs/.vitepress/theme/custom.css. */
+/* LakeSail brand blue (the logo color) and the typography of docs.lakesail.com/platform. */
 :root {
-  --vp-c-brand-1: #3762e0;
-  --vp-c-brand-2: #2c4fbc;
-  --vp-c-brand-3: #2c4fbc;
-  --vp-c-brand-soft: rgba(55, 98, 224, 0.14);
+  --vp-c-brand-1: #1e40af;
+  --vp-c-brand-2: #1d4ed8;
+  --vp-c-brand-3: #1e40af;
+  --vp-c-brand-soft: rgba(30, 64, 175, 0.12);
   --vp-font-family-base: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --vp-font-family-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
   --ls-font-display: "Outfit Variable", var(--vp-font-family-base);
@@ -17,7 +17,10 @@
   --line: var(--vp-c-divider);
   --brand: var(--vp-c-brand-1);
   --brand-hover: var(--vp-c-brand-2);
-  --on-brand: light-dark(#fff, #1b1b1f);
+  /* Filled buttons keep the brand blue with white text in both modes. */
+  --brand-fill: #1e40af;
+  --brand-fill-hover: #1d4ed8;
+  --on-brand: #fff;
   --accent: var(--vp-c-brand-1);
   --success: var(--vp-c-green-1);
   --terminal: var(--vp-code-block-bg);
@@ -35,14 +38,13 @@
   --syntax-string: light-dark(#235d3f, #9cdbad);
   --syntax-number: light-dark(#914522, #ffc28c);
   --syntax-name: light-dark(#225b87, #93c5fd);
-  --serif: Georgia, "Times New Roman", serif;
   color-scheme: light;
 }
 .dark {
-  --vp-c-brand-1: #6b8eef;
-  --vp-c-brand-2: #5378e3;
-  --vp-c-brand-3: #5378e3;
-  --vp-c-brand-soft: rgba(107, 142, 239, 0.16);
+  --vp-c-brand-1: #60a5fa;
+  --vp-c-brand-2: #93c5fd;
+  --vp-c-brand-3: #1e40af;
+  --vp-c-brand-soft: rgba(96, 165, 250, 0.16);
   color-scheme: dark;
 }
 .vp-doc h1,
@@ -143,7 +145,7 @@
   line-height: 1.75;
 }
 .sail-docs .guide-body code {
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--vp-font-family-mono);
   font-size: 0.88em;
   background: var(--surface-alt);
   padding: 2px 4px;

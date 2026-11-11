@@ -110,7 +110,7 @@ def highlight_diff(code, language, filename, script):
     return (
         '<pre class="code-diff" tabindex="0"><span class="diff-columns">'
         "<span>Line</span>"
-        f'<a href="{url}">{escape(source.name)} · original lines {start}–{source_line - 1}</a></span>'
+        f'<a href="{url}">{escape(source.name)} · original lines {start} to {source_line - 1}</a></span>'
         '<code class="language-diff">' + "".join(lines) + "</code></pre>"
     )
 
@@ -431,7 +431,7 @@ def render_card(example):
     return (
         f'<article class="example-card" data-example data-category="{escape(category)}" '
         f'data-level="{escape(meta["level"])}" data-search="{escape(search, quote=True)}">'
-        f'<span class="tag">{escape(meta["level"])}</span><span class="arrow" aria-hidden="true">{EXTERNAL_ARROW}</span>'
+        f'<span class="tag">{escape(meta["level"])}</span><span class="arrow" aria-hidden="true">{INTERNAL_ARROW}</span>'
         f'<h3><a href="{guide_url(example)}">{escape(meta["title"])}</a></h3>'
         f'<p>{escape(summary(example))}</p><span class="category">{topic_icon(meta["tier"])} {escape(category)}</span></article>'
     )
@@ -445,7 +445,7 @@ def render_featured(example, output):
         f'alt="Preview: {escape(summary(example))}" loading="lazy">'
         f'<div class="featured-body"><span class="tag">{escape(example.meta["level"])}</span>'
         f'<h3><a href="{guide_url(example)}">{escape(example.meta["title"])}</a></h3>'
-        f'<p>{escape(summary(example))}</p><span class="card-link">Open the guide {EXTERNAL_ARROW}</span></div></article>'
+        f'<p>{escape(summary(example))}</p><span class="card-link">Open the guide {INTERNAL_ARROW}</span></div></article>'
     )
 
 

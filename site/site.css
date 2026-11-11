@@ -1,19 +1,12 @@
 .sail-showcase {
   font-synthesis: none;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    "Liberation Sans",
-    sans-serif;
+  font-family: var(--vp-font-family-base);
   color: var(--ink);
   background: var(--paper);
 }
 .sail-showcase code,
 .sail-showcase pre {
-  font-family: monospace;
+  font-family: var(--vp-font-family-mono);
 }
 .sail-showcase p {
   margin: 1em 0;
@@ -141,21 +134,22 @@
 }
 .sail-showcase h1,
 .sail-showcase h2 {
-  font-family: var(--serif);
-  font-weight: 400;
-  letter-spacing: -1.9px;
-  line-height: 1.09;
+  font-family: var(--ls-font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
 }
 .sail-showcase h1 {
-  font-size: clamp(42px, 5vw, 70px);
+  font-size: clamp(40px, 4.4vw, 60px);
   margin-bottom: 28px;
 }
 .sail-showcase h1 em {
-  font-weight: 400;
+  font-style: normal;
   color: var(--brand);
 }
 .sail-showcase h2 {
-  font-size: 42px;
+  font-size: 36px;
   margin-bottom: 20px;
 }
 .sail-showcase h3 {
@@ -189,7 +183,7 @@
   margin-top: 30px;
 }
 .sail-showcase .button {
-  background: var(--brand);
+  background: var(--brand-fill);
   color: var(--on-brand);
   padding: 13px 20px;
   text-decoration: none;
@@ -201,7 +195,7 @@
   align-items: center;
 }
 .sail-showcase .button:hover {
-  background: var(--brand-hover);
+  background: var(--brand-fill-hover);
 }
 .sail-showcase .text-link {
   font-size: 14px;
@@ -342,8 +336,10 @@
   color: var(--muted);
 }
 .sail-showcase .featured-card h3 {
-  font-family: var(--serif);
-  font-size: 25px;
+  font-family: var(--ls-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 21px;
   margin: 12px 0;
 }
 .sail-showcase .featured-card h3 a {
@@ -478,6 +474,24 @@
 }
 .sail-showcase .level-field {
   width: 200px;
+  position: relative;
+}
+/* The theme removes the native select arrow, so draw one that follows the text color. */
+.sail-showcase .level-field::after {
+  content: "";
+  position: absolute;
+  right: 17px;
+  bottom: calc(1.5rem - 2px);
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.sail-showcase .catalog-controls select {
+  padding-right: 40px;
+  cursor: pointer;
 }
 .sail-showcase .category-filters {
   display: flex;
@@ -494,8 +508,8 @@
   font-size: 12px;
 }
 .sail-showcase .category-filters button[aria-pressed="true"] {
-  background: var(--brand);
-  border-color: var(--brand);
+  background: var(--brand-fill);
+  border-color: var(--brand-fill);
   color: var(--on-brand);
 }
 .sail-showcase .result-count {
@@ -548,7 +562,7 @@
   border-radius: 5px;
 }
 .sail-showcase .empty-state button {
-  background: var(--brand);
+  background: var(--brand-fill);
   color: var(--on-brand);
   border: 0;
   border-radius: 4px;
@@ -720,6 +734,24 @@
   }
   .sail-showcase .level-field {
     width: 100%;
+  }
+  /* 16px stops iOS Safari from zooming into the page when a field gets focus. */
+  .sail-showcase .catalog-controls input,
+  .sail-showcase .catalog-controls select {
+    font-size: 16px;
+  }
+  /* One row of topics that scrolls sideways keeps the results near the top. */
+  .sail-showcase .category-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .sail-showcase .category-filters::-webkit-scrollbar {
+    display: none;
+  }
+  .sail-showcase .category-filters button {
+    flex: none;
   }
   .sail-showcase .catalog-grid {
     grid-template-columns: 1fr;

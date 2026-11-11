@@ -30,7 +30,7 @@ CATEGORY_TITLES = {
     "configure": "Configure",
     "python-udfs": "Python UDFs",
     "data-sources": "Data sources",
-    "missing-features": "Not available",
+    "missing-features": "What to use instead",
     "silent-behavior": "Behaves differently from Spark",
     "ai-functions": "AI and vector functions",
 }
