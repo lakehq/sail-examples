@@ -42,7 +42,7 @@ Model examples download their weights on the first run; each guide states what i
 
 ## Find your next example
 
-Prefer a visual catalog? [Preview the showcase website locally](.github/skills/prepare-sail-website/SKILL.md#validate-and-preview).
+Explore the [Sail examples website](https://examples.lakesail.com/sail/).
 
 Browse by task below. **Beginner** examples start with familiar SQL or Python;
 **intermediate** and **advanced** examples explain more involved workflows.
