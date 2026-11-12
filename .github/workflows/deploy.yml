@@ -68,12 +68,12 @@ jobs:
           mkdir .vercel-deploy
           cp -R _site .vercel-deploy/sail
           cp _site/404.html _site/robots.txt site/vercel.json .vercel-deploy/
-      # The CLI reads VERCEL_TOKEN from the environment, so the token never appears in a
-      # command line. Install scripts stay off, as for npm ci.
+      # The pinned CLI requires an explicit token when no credentials are saved.
+      # Install scripts stay off, as for npm ci.
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           NPM_CONFIG_IGNORE_SCRIPTS: "true"
-        run: npx --yes vercel@50.23.2 deploy .vercel-deploy --prod --yes
+        run: npx --yes vercel@50.23.2 deploy .vercel-deploy --prod --yes --token "$VERCEL_TOKEN"
